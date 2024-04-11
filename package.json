@@ -10,8 +10,14 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.5.18",
     "@astrojs/check": "^0.5.10",
+    "@astrojs/node": "^8.2.5",
+    "@types/node": "^20.12.7",
+    "astro": "^4.5.18",
     "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/cssesc": "^3.0.2",
+    "@types/html-escaper": "^3.0.2"
   }
 }
