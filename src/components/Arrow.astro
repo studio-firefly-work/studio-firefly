@@ -1,0 +1,72 @@
+---
+const { size, color, bg } = Astro.props;
+---
+
+<div class=`arrow --${bg}-bg --${size}`>
+  <span class=`arrow__arrow --${color} --${size}`></span>
+</div>
+
+<style lang="scss">
+  .arrow {
+    align-items: center;
+    background-color: white;
+    border-radius: 999px;
+    display: flex;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+
+    &.--xl {
+      height: 100px;
+      width: 100px;
+    }
+
+    &.--orange-bg {
+      background-color: orange;
+    }
+
+    &__arrow {
+      background: currentColor;
+      color: #333;
+      display: inline-block;
+      line-height: 1;
+      height: 4px;
+      position: relative;
+      width: 1em;
+      vertical-align: middle;
+
+      &::before {
+        content: "";
+        border: 4px solid currentColor;
+        border-bottom: 0;
+        border-left: 0;
+        box-sizing: border-box;
+        height: 0.65em;
+        position: absolute;
+        right: -0.05em;
+        top: 50%;
+        transform: rotate(45deg);
+        transform-origin: top right;
+        width: 0.65em;
+      }
+
+      &.--xl {
+        $wiidth: 3em;
+        width: $wiidth;
+        &::before {
+          width: calc($wiidth / 2);
+          height: calc($wiidth / 2);
+        }
+      }
+
+      &.--blue {
+        background: blue;
+        &::before {
+          border: 4px solid blue;
+          border-bottom: 0;
+          border-left: 0;
+        }
+      }
+    }
+  }
+</style>

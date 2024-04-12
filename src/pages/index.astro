@@ -1,17 +1,19 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Arrow from "../components/Arrow.astro";
 
-const res = await fetch('http://localhost:3001/api');
-const data = await res.json();
-console.log(data);
+// const res = await fetch('http://localhost:3001/api');
+// const data = await res.json();
+// console.log(data);
 
-const users = data;
+// const users = data;
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
-    {users.map((user: any) => <div>{user.name}</div>)}
+    <Arrow bg="orange" color="blue" size="xl" />
+    <!-- {users.map((user: any) => <div>{user.name}</div>)} -->
     <svg class="astro-a" width="495" height="623" viewBox="0 0 495 623" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path
         fill-rule="evenodd"
