@@ -1,0 +1,47 @@
+@use "./design" as *;
+@use "../../node_modules/destyle.css/destyle.css";
+
+:root {
+  @each $name, $color in $colors {
+    --#{$name}: #{$color};
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "heisei-kaku-gothic-std", sans-serif;
+  color: var(--black);
+}
+
+main {
+  padding-top: 94px;
+}
+
+a[href^="tel:"] {
+  pointer-events: none;
+  @include sp {
+    pointer-events: initial;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.visible-xs {
+  display: none !important;
+  @include sp {
+    display: block !important;
+  }
+}
+
+.hidden-xs {
+  display: block !important;
+  @include sp {
+    display: none !important;
+  }
+}
