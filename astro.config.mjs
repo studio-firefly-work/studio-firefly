@@ -7,5 +7,14 @@ export default defineConfig({
   output: "hybrid",
   adapter: node({
     mode: "standalone"
-  })
+  }),
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@import "@/styles/design.scss";`,
+        },
+      },
+    },
+  },
 });

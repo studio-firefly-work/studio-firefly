@@ -1,0 +1,21 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro';
+
+const page = {
+  name: 'About Me',
+};
+---
+
+<PageLayout page={page}>
+  <div>test</div>
+</PageLayout>
+
+<style lang="scss">
+  div {
+    @include text(xl);
+    color: blue;
+    @include sp {
+      color: red;
+    }
+  }
+</style>

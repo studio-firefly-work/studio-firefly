@@ -1,0 +1,15 @@
+@use "./media" as *;
+
+@mixin button() {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+  transition: 0.3s;
+
+  &:hover {
+    color: var(--dark-orange);
+  }
+}

@@ -1,0 +1,22 @@
+@use "./media" as *;
+
+@mixin section() {
+  padding-top: 130px;
+  @include sp {
+    padding-top: 80px;
+  }
+
+  &.--has-bottom-padding {
+    padding-bottom: 130px;
+    @include sp {
+      padding-bottom: 80px;
+    }
+  }
+
+  &.--has-bottom-radius {
+    border-radius: 0 0 130px 130px;
+    @include sp {
+      border-radius: 0 0 80px 80px;
+    }
+  }
+}

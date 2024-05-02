@@ -1,0 +1,9 @@
+@use "./media" as *;
+
+@mixin card($bgColor: none) {
+  border-radius: 130px 10px 10px 10px;
+  background-color: $bgColor;
+  @include sp {
+    border-radius: 80px 10px 10px 10px;
+  }
+}
