@@ -1,13 +1,22 @@
 ---
+import { getPageDatasExceptNoindex } from '@/constants/pageDatas';
+import type { PageData } from '@/constants/pageDatas';
 
+const pages = getPageDatasExceptNoindex();
 ---
 
 <header class="header">
   <nav>
     <ul class="header__menu">
-      <li><a href="#" class="header__menu-link">test</a></li>
-      <li><a href="#" class="header__menu-link">test</a></li>
-      <li><a href="#" class="header__menu-link">test</a></li>
+      {
+        pages.map((page: PageData) => (
+          <li>
+            <a href={page.url} class="header__menu-link">
+              {page.title}
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </nav>
 </header>

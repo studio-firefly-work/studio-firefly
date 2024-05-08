@@ -1,56 +1,36 @@
 ---
 import Header from '@/components/common/Header/Header.astro';
 import Footer from '@/components/common/Footer/Footer.astro';
+import { getPageDataByUrl } from '@/constants/pageDatas';
+import { getSiteDatasAll } from '@/constants/siteDatas';
 
-interface Props {
-	title: string;
-}
-
-const { title } = Astro.props;
+const { url } = Astro.props;
+const page = getPageDataByUrl(url);
+const site = getSiteDatasAll();
 ---
 
 <!doctype html>
 <html lang="jp">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
+
+		<title>{site.name}{page.title != 'Home' && ' - ' + page.title}</title>
+		<meta name="description" content={page.description} />
+		<meta name="keyword" content={page.keyword} />
+
+		{page.noindex && <meta name="robots" content="noindex" />}
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
 	</head>
+
 	<body>
 		<Header />
 		<slot />
 		<Footer />
 	</body>
 </html>
-<style is:global lang="scss">
-	@import "@/styles/style.scss";
 
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(45deg, rgb(var(--accent)), rgb(var(--accent-light)) 30%, white 60%);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-	* {
-		color: white;
-	}
+<style is:global lang="scss">
+	@import '@/styles/index.scss';
 </style>

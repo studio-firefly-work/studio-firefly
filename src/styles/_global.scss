@@ -8,12 +8,15 @@
 }
 
 html {
+  background: var(--black);
+  background-size: 224px;
+  font-family: system-ui, sans-serif;
   scroll-behavior: smooth;
 }
 
 body {
   font-family: "heisei-kaku-gothic-std", sans-serif;
-  color: var(--black);
+  color: var(--white);
 }
 
 main {
