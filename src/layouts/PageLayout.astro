@@ -1,12 +1,14 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
+import BaseLayout from './BaseLayout.astro';
+import { getPageDataByUrl } from '@/constants/pageDatas';
 
-const { page } = Astro.props;
+const { url } = Astro.props;
+const page = getPageDataByUrl(url);
 ---
 
-<BaseLayout title={page.name}>
+<BaseLayout url={url}>
   <main>
-    <h1>{page.name}</h1>
+    <h1>{page.title}</h1>
     <slot />
   </main>
 </BaseLayout>
