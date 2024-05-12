@@ -2,8 +2,20 @@
 @use "./design" as *;
 
 :root {
-  @each $name, $color in $colors {
-    --#{$name}: #{$color};
+  @each $key, $color in $colors {
+    --#{$key}: #{$color};
+  }
+
+  // Light Mode
+  @each $key, $color in $theme-colors {
+    --color-#{$key}: #{$color};
+  }
+
+  // Dark Mode
+  &[data-theme="dark"] {
+    @each $key, $color in $dark-theme-colors {
+      --color-#{$key}: #{$color};
+    }
   }
 }
 

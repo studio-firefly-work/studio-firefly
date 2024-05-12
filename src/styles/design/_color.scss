@@ -1,18 +1,48 @@
-$colors: (
-  "black": #01011c,
-  "dark-gray": #8d8d95,
-  "gray": #dcdcdc,
-  "light-gray": #f6f6f6,
-  "white": #fff,
+$colors: ();
 
-  "dark-orange": #f38300,
-  "orange": #ffb74b,
-  "light-orange": #ffe2b4,
+// Light Theme Colors
+$theme-colors: (
+  primary: #e0ca72,
+  on-primary: #161616,
+  primary-container: #a3903f,
+  on-primary-container: #000,
 
-  "blue": #1071e2,
-  "blue2": #2c77cd,
-  "light-blue": #e7f2ff,
+  secondary: #d6caa5,
+  on-secondary: #161616,
+  secondary-container: #9a916f,
+  on-secondary-container: #000,
 
-  "dark-navy": #284181,
-  "navy": #172a88
+  tertiary: #add4b7,
+  on-tertiary: #161616,
+  tertiary-container: #75997f,
+  on-tertiary-container: #000,
+
+  error: #ffbab1,
+  on-error: #370001,
+  error-container: #ff5449,
+  on-error-container: #000000,
+
+  surface-dim: #141313,
+  surface: #141313,
+  surface-light: #3a3939,
+  surf-container-lowest: #0e0e0e,
+  surf-container-low: #1c1b1b,
+  surf-container: #201f1f,
+  surf-container-high: #2b2a2a,
+  surf-container-highest: #353434,
+  on-surface: #fefaf9,
+  on-surface-var: #c8cbcc,
+
+  inverse-surface: #e5e2e1,
+  inverse-on-surface: #2b2a2a,
+  inverse-primary: #554700,
+
+  outline: #a9a292,
+  outline-variant: #888373,
+
+  scrim: #000,
+  shadow: #000
 );
+
+// Dark Theme Colors
+$dark-theme-colors: ();
