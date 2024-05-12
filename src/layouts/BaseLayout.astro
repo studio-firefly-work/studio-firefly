@@ -1,8 +1,8 @@
 ---
-import Header from '@/components/common/Header/Header.astro';
-import Footer from '@/components/common/Footer/Footer.astro';
-import { getPageDataByUrl } from '@/constants/pageDatas';
-import { getSiteDatasAll } from '@/constants/siteDatas';
+import Header from "@/components/common/Header/Header.astro";
+import Footer from "@/components/common/Footer/Footer.astro";
+import { getPageDataByUrl } from "@/constants/pageDatas";
+import { getSiteDatasAll } from "@/constants/siteDatas";
 
 const { url } = Astro.props;
 const page = getPageDataByUrl(url);
@@ -11,26 +11,30 @@ const site = getSiteDatasAll();
 
 <!doctype html>
 <html lang="jp">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
 
-		<title>{site.name}{page.title != 'Home' && ' - ' + page.title}</title>
-		<meta name="description" content={page.description} />
-		<meta name="keyword" content={page.keyword} />
+    <title>{site.name}{page.title != "Home" && " - " + page.title}</title>
+    <meta name="description" content={page.description} />
+    <meta name="keyword" content={page.keyword} />
 
-		{page.noindex && <meta name="robots" content="noindex" />}
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-	</head>
+    {page.noindex && <meta name="robots" content="noindex" />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
 
-	<body>
-		<Header />
-		<slot />
-		<Footer />
-	</body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  </head>
+
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+  </body>
 </html>
 
 <style is:global lang="scss">
-	@import '@/styles/index.scss';
+  @import "@/styles/index.scss";
 </style>

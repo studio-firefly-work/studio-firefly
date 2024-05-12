@@ -1,5 +1,5 @@
-@use "./design" as *;
 @use "../../node_modules/destyle.css/destyle.css";
+@use "./design" as *;
 
 :root {
   @each $name, $color in $colors {
@@ -9,25 +9,24 @@
 
 html {
   background: var(--black);
-  background-size: 224px;
-  font-family: system-ui, sans-serif;
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: "heisei-kaku-gothic-std", sans-serif;
   color: var(--white);
-}
-
-main {
-  padding-top: 94px;
-}
-
-a[href^="tel:"] {
-  pointer-events: none;
-  @include sp {
-    pointer-events: initial;
-  }
+  font-family:
+    "Noto Sans",
+    "Noto Sans JP",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Hiragino Sans",
+    "Noto Sans CJK JP",
+    "Original Yu Gothic",
+    "Yu Gothic",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Sans Emoji";
+  scroll-behavior: smooth;
 }
 
 img {
