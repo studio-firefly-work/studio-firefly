@@ -1,12 +1,12 @@
 ---
 export const prerender = false;
-import PageLayout from '@/layouts/PageLayout.astro';
+import PageLayout from "@/layouts/PageLayout.astro";
 
-const url = '/works';
+const url = "/works";
 
-const res = await fetch('http://localhost:3001/api');
-const data = await res.json();
-console.log(data);
+// const res = await fetch('http://localhost:3001/api');
+// const data = await res.json();
+// console.log(data);
 ---
 
 <PageLayout url={url} />

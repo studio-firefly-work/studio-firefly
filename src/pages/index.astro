@@ -1,8 +1,7 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Arrow from '../components/Arrow.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-const url = '/';
+const url = "/";
 
 // const res = await fetch('http://localhost:3001/api');
 // const data = await res.json();
@@ -13,18 +12,65 @@ const url = '/';
 
 <BaseLayout url={url}>
   <main>
-    <Arrow bg="orange" color="blue" size="xl" />
+    <div class="test">
+      <div class="test__container --lowest">
+        <p class="test__container-text">Test</p>
+        <button class="test__container-button">button</button>
+      </div>
+
+      <div class="test__container --low">
+        <p class="test__container-text">Test</p>
+      </div>
+
+      <div class="test__container">
+        <p class="test__container-text">Test</p>
+      </div>
+
+      <div class="test__container --high">
+        <p class="test__container-text">Test</p>
+      </div>
+
+      <div class="test__container --highest">
+        <p class="test__container-text">Test</p>
+      </div>
+    </div>
   </main>
 </BaseLayout>
 
-<style>
-  main {
-    margin: auto;
-    padding: 1rem;
-    width: 800px;
-    max-width: calc(100% - 2rem);
-    color: white;
-    font-size: 20px;
-    line-height: 1.6;
+<style lang="scss">
+  .test {
+    &__container {
+      padding: 30px;
+      margin: 20px;
+      background: var(--color-surf-cont);
+      color: var(--color-on-surf);
+      width: fit-content;
+
+      &.--lowest {
+        background-color: var(--color-surf-cont-lowest);
+      }
+
+      &.--low {
+        background-color: var(--color-surf-cont-low);
+      }
+
+      &.--high {
+        background-color: var(--color-surf-cont-high);
+      }
+
+      &.--highest {
+        background-color: var(--color-surf-cont-highest);
+      }
+
+      &-text {
+        @include text(xl);
+      }
+
+      &-button {
+        padding: 10px 5px;
+        background-color: var(--color-primary);
+        color: var(--color-on-primary);
+      }
+    }
   }
 </style>

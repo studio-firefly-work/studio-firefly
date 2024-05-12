@@ -2,90 +2,59 @@
 
 // set News article text size
 $defaultFontSize: (
-  pc: (size: 14px, height: 26px),
-  sp: (size: 13px, height: 26px)
+  pc: 14px,
+  sp: 13px
 );
 
 // set News article heading sizes
 $fontSizes: (
-  2xl: (
-    pc: (size: 28px, height: 48px),
-    sp: (size: 28px, height: 40px)
-  ),
   xl: (
-    pc: (size: 26px, height: 44px),
-    sp: (size: 26px, height: 38px)
+    pc: 26px,
+    sp: 26px
   ),
   l: (
-    pc: (size: 24px, height: 40px),
-    sp: (size: 24px, height: 34px)
+    pc: 24px,
+    sp: 24px
   ),
   m: (
-    pc: (size: 20px, height: 33px),
-    sp: (size: 20px, height: 31px)
+    pc: 20px,
+    sp: 20px
   ),
   s: (
-    pc: (size: 17px, height: 30px),
-    sp: (size: 17px, height: 25px)
+    pc: 17px,
+    sp: 17px
   ),
   xs: (
-    pc: (size: 14px, height: 25px),
-    sp: (size: 14px, height: 23px)
+    pc: 14px,
+    sp: 14px
   )
 );
 
 @mixin text($fontSize: null, $fontWeight: 500) {
   // $fontSizeの指定が無い場合
-  $fontSizePc: map-get($defaultFontSize, pc, size);
-  $fontSizeSp: map-get($defaultFontSize, sp, size);
-  $lineHeightPc: map-get($defaultFontSize, pc, height);
-  $lineHeightSp: map-get($defaultFontSize, sp, height);
+  $fontSizePc: map-get($defaultFontSize, pc);
+  $fontSizeSp: map-get($defaultFontSize, sp);
 
   // 指定が有る場合
   @if $fontSize != null {
     @if map-has-key($fontSizes, $fontSize) {
-      // 記号(xs～2xl)で指定されていた場合
-      $fontSizePc: map-get($fontSizes, $fontSize, pc, size);
-      $fontSizeSp: map-get($fontSizes, $fontSize, sp, size);
-      $lineHeightPc: map-get($fontSizes, $fontSize, pc, height);
-      $lineHeightSp: map-get($fontSizes, $fontSize, sp, height);
+      // 記号で指定されていた場合
+      $fontSizePc: map-get($fontSizes, $fontSize, pc);
+      $fontSizeSp: map-get($fontSizes, $fontSize, sp);
     } @else {
-      // 数値(ex. (pc:(size:28px, height:48px), sp:(size:28px, height:40px)) )で指定されていた場合
-      @if (map-has-key($fontSize, pc, size)) {
-        $fontSizePc: map-get($fontSize, pc, size);
-      }      
-      @if (map-has-key($fontSize, pc, height)) {
-        $lineHeightPc: map-get($fontSize, pc, height);
+      // 数値で指定されていた場合
+      @if (map-has-key($fontSize, pc)) {
+        $fontSizePc: map-get($fontSize, pc);
       }
-      @if (map-has-key($fontSize, sp, size)) {
-        $fontSizeSp: map-get($fontSize, sp, size);
-      }
-      @if (map-has-key($fontSize, pc, height)) {
-        $lineHeightSp: map-get($fontSize, sp, height);
+      @if (map-has-key($fontSize, sp)) {
+        $fontSizeSp: map-get($fontSize, sp);
       }
     }
   }
 
   font-size: $fontSizePc;
-  font-weight: $fontWeight;
-  line-height: $lineHeightPc;
+  font-weight: 1.5;
   @include sp {
     font-size: $fontSizeSp;
-    line-height: $lineHeightSp;
-  }
-
-  // CSS for Adjusting Positional Changes Due to Font Baseline Influence
-  &::before,
-  &::after {
-    content: "";
-    display: block;
-    width: 0;
-    height: 0;
-  }
-  &::before{
-    margin-top: 0.2em
-  }  
-  &::after{
-    margin-top: -0.2em;
   }
 }
