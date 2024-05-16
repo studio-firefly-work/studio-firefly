@@ -1,10 +1,10 @@
 ---
-import PageLayout from '@/layouts/PageLayout.astro';
+import PageLayout from '@/layouts/PageLayout.astro'
 
-const url = '/contact';
+const url = '/contact'
 ---
 
-<PageLayout url={url}>
+<PageLayout {url}>
   <form action="/contact/submit" method="POST">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required /><br />

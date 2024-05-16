@@ -1,9 +1,9 @@
 export type PageData = {
-  url: string;
-  title: string;
-  description: string;
-  keyword: string;
-  noindex?: boolean;
+  url: string
+  title: string
+  description: string
+  keyword: string
+  noindex?: boolean
 }
 
 export const pageDatas: PageData[] = [
@@ -47,17 +47,17 @@ export const pageDatas: PageData[] = [
 ]
 
 export function getPageDatasAll() {
-  return pageDatas;
+  return pageDatas
 }
 
 export function getPageDatasExceptNoindex() {
-  return pageDatas.filter(page => !page.noindex);
+  return pageDatas.filter((page) => !page.noindex)
 }
 
 export function getPageDataByUrl(url: string) {
-  const pageData = pageDatas.find((page) => page.url === url);
+  const pageData = pageDatas.find((page) => page.url === url)
   if (pageData === undefined) {
-    throw new Error();
+    throw new Error()
   }
-  return pageData;
+  return pageData
 }
