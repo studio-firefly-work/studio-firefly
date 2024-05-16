@@ -1,12 +1,14 @@
 ---
-import * as utils from '@/utils';
-import { getSiteDatasAll } from '@/constants/siteDatas';
+import * as utils from '@/utils'
+import { getSiteDatasAll } from '@/constants/siteDatas'
 
-const site = getSiteDatasAll();
-const tel = utils.normalizeTelNumber(site.tel);
+const site = getSiteDatasAll()
+const tel = utils.normalizeTelNumber(site.tel)
 ---
 
 <footer class="footer">
-  <address class="footer__address">{site.postalCode}{site.address}<a href=`tel:${tel}`>{site.tel}</a></address>
+  <address class="footer__address">
+    {site.postalCode}{site.address}<a href=`tel:${tel}`>{site.tel}</a>
+  </address>
   <small class="footer__copy">{site.copy}</small>
 </footer>

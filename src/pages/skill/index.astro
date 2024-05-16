@@ -1,14 +1,14 @@
 ---
-export const prerender = false;
-import PageLayout from '@/layouts/PageLayout.astro';
+export const prerender = false
+import PageLayout from '@/layouts/PageLayout.astro'
 
-const url = '/skill';
+const url = '/skill'
 
-const res = await fetch('http://localhost:3001/api');
-const data = await res.json();
-console.log(data);
+const res = await fetch('http://localhost:3001/api')
+const data = await res.json()
+console.log(data)
 ---
 
-<PageLayout url={url} />
+<PageLayout {url} />
 
 <style lang="scss"></style>

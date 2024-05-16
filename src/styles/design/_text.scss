@@ -1,33 +1,33 @@
-@use "./media" as *;
+@use './media' as *;
 
 // set News article text size
 $defaultFontSize: (
   pc: 14px,
-  sp: 13px
+  sp: 13px,
 );
 
 // set News article heading sizes
 $fontSizes: (
   xl: (
     pc: 26px,
-    sp: 26px
+    sp: 26px,
   ),
   l: (
     pc: 24px,
-    sp: 24px
+    sp: 24px,
   ),
   m: (
     pc: 20px,
-    sp: 20px
+    sp: 20px,
   ),
   s: (
     pc: 17px,
-    sp: 17px
+    sp: 17px,
   ),
   xs: (
     pc: 14px,
-    sp: 14px
-  )
+    sp: 14px,
+  ),
 );
 
 @mixin text($fontSize: null, $fontWeight: 500) {

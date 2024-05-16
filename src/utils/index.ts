@@ -6,11 +6,13 @@
 export function normalizeTelNumber(telNumber: string): string {
   // 数字と記号以外の文字が含まれているかチェック
   if (!/^[\d()-]+$/.test(telNumber)) {
-    throw new Error('Invalid tel number format. Only digits, hyphens, and parentheses are allowed.');
+    throw new Error(
+      'Invalid tel number format. Only digits, hyphens, and parentheses are allowed.'
+    )
   }
 
   // 電話番号から数字以外の文字を取り除く
-  const normalizedTelNumber = telNumber.replace(/\D/g, '');
+  const normalizedTelNumber = telNumber.replace(/\D/g, '')
 
-  return normalizedTelNumber;
+  return normalizedTelNumber
 }

@@ -1,12 +1,13 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig } from 'astro/config'
+import node from '@astrojs/node'
 
-import node from "@astrojs/node";
+import tailwind from '@astrojs/tailwind'
 
 // https://astro.build/config
 export default defineConfig({
-  output: "hybrid",
+  output: 'hybrid',
   adapter: node({
-    mode: "standalone"
+    mode: 'standalone',
   }),
   vite: {
     css: {
@@ -17,4 +18,5 @@ export default defineConfig({
       },
     },
   },
-});
+  integrations: [tailwind()],
+})
