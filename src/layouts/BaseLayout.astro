@@ -1,6 +1,6 @@
 ---
-import Header from '@/components/common/Header/Header.astro'
-import Footer from '@/components/common/Footer/Footer.astro'
+import Header from '@/components/organisms/Header/Header.astro'
+import Footer from '@/components/organisms/Footer/Footer.astro'
 import { getPageDataByUrl } from '@/constants/pageDatas'
 import { getSiteDatasAll } from '@/constants/siteDatas'
 
@@ -31,7 +31,9 @@ const site = getSiteDatasAll()
     />
   </head>
 
-  <body class="bg-white font-body text-black dark:bg-slate-900 dark:text-white">
+  <body
+    class="bg-white font-body text-black dark:bg-slate-900 dark:text-white"
+  >
     <Header />
     <main>
       <slot />
