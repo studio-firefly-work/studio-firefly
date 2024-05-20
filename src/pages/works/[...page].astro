@@ -22,10 +22,10 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
     { name: 'サイト14', category: 'web' },
     { name: 'サイト15', category: 'web' },
   ]
-  return paginate(sites, { pageSize: 5 })
+  return paginate(sites, { pageSize: 4 })
 }
 const { page } = Astro.props
-const totalPages = page.total / 5
+const totalPages = Math.ceil(page.total / 4)
 const currentPage = page.currentPage
 ---
 
