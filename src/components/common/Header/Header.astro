@@ -5,28 +5,16 @@ import type { PageData } from '@/constants/pageDatas'
 const pages = getPageDatasExceptNoindex()
 ---
 
-<header class="header">
+<header class="sticky top-0 z-50">
   <nav>
-    <ul class="header__menu">
+    <ul class="flex gap-3">
       {
         pages.map((page: PageData) => (
           <li>
-            <a href={page.url} class="header__menu-link">
-              {page.title}
-            </a>
+            <a href={page.url}>{page.title}</a>
           </li>
         ))
       }
     </ul>
   </nav>
 </header>
-
-<style lang="scss">
-  .header {
-    &__menu {
-      &-link {
-        @include button();
-      }
-    }
-  }
-</style>
