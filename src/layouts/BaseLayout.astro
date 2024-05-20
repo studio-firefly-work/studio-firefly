@@ -10,7 +10,7 @@ const site = getSiteDatasAll()
 ---
 
 <!doctype html>
-<html lang="jp">
+<html lang="jp" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -31,7 +31,7 @@ const site = getSiteDatasAll()
     />
   </head>
 
-  <body>
+  <body class="bg-white font-body text-black dark:bg-slate-900 dark:text-white">
     <Header />
     <main>
       <slot />
@@ -39,7 +39,3 @@ const site = getSiteDatasAll()
     <Footer />
   </body>
 </html>
-
-<style is:global lang="scss">
-  @import '@/styles/index.scss';
-</style>
