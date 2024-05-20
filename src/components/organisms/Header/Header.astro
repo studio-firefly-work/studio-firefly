@@ -1,0 +1,28 @@
+---
+import { getPageDatasExceptNoindex } from '@/constants/pageDatas'
+import Button from '@/components/atoms/Button/Button.astro'
+import CustomImage from '@/components/atoms/CustomImage/CustomImage.astro'
+import type { PageData } from '@/constants/pageDatas'
+
+import logo from '@/assets/images/common/logo.svg'
+
+const pages = getPageDatasExceptNoindex()
+---
+
+<header class="sticky top-0 z-50 mx-8">
+  <nav class="flex justify-between">
+    <Button href="/">
+      <CustomImage src={logo} alt="logo" />
+    </Button>
+
+    <ul class="flex gap-4">
+      {
+        pages.map((page: PageData) => (
+          <li>
+            <Button href={page.url}>{page.title}</Button>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>

@@ -6,7 +6,7 @@ const { url } = Astro.props
 const page = getPageDataByUrl(url)
 ---
 
-<BaseLayout url={url}>
-  <h1>{page.title}</h1>
+<BaseLayout {url}>
+  <h1 class="text-2xl md:text-4xl">{page.title}</h1>
   <slot />
 </BaseLayout>
