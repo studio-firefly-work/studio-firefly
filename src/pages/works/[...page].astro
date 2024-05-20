@@ -1,29 +1,39 @@
 ---
-export const prerender = false
+import type { GetStaticPathsOptions } from 'astro'
 import PageLayout from '@/layouts/PageLayout.astro'
 
 const url = '/works'
 
-// const res = await fetch('http://localhost:3001/api');
-// const data = await res.json();
-// console.log(data);
-
-export const getStaticPaths = async ({ paginate }) => {
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sites = [
     { name: 'サイト1', category: 'web' },
     { name: 'サイト2', category: 'web' },
     { name: 'サイト3', category: 'web' },
+    { name: 'サイト4', category: 'web' },
+    { name: 'サイト5', category: 'web' },
+    { name: 'サイト6', category: 'web' },
+    { name: 'サイト7', category: 'web' },
+    { name: 'サイト8', category: 'web' },
+    { name: 'サイト9', category: 'web' },
+    { name: 'サイト10', category: 'web' },
+    { name: 'サイト11', category: 'web' },
+    { name: 'サイト12', category: 'web' },
+    { name: 'サイト13', category: 'web' },
+    { name: 'サイト14', category: 'web' },
+    { name: 'サイト15', category: 'web' },
   ]
-  return paginate(sites, { pageSize: 2 })
+  return paginate(sites, { pageSize: 5 })
 }
 const { page } = Astro.props
+const totalPages = page.total / 5
+const currentPage = page.currentPage
 ---
 
 <PageLayout {url}>
-  <h2 class="md:3xl text-xl">一覧</h2>
+  <h2 class="md:3xl text-xl">現在のページ：{page.currentPage}ページ</h2>
   <ul class="grid grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-5">
     {
-      page.data.map(({ site }) => (
+      page.data.map((site) => (
         <li>
           <a
             href="#"
@@ -36,4 +46,21 @@ const { page } = Astro.props
       ))
     }
   </ul>
+  <div>
+    {page.url.prev ? <a href={page.url.prev}>Previous</a> : null}
+    {
+      [...Array(totalPages)].map((_, index) => {
+        const pageNum = index + 1
+        const isCurrent = pageNum === currentPage
+        const pageLink = pageNum === 1 ? '/works' : `/works/${pageNum}`
+
+        return (
+          <a href={pageLink} style={isCurrent ? { fontWeight: 'bold' } : null}>
+            {pageNum}
+          </a>
+        )
+      })
+    }
+    {page.url.next ? <a href={page.url.next}>Next</a> : null}
+  </div>
 </PageLayout>
