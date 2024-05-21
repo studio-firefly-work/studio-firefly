@@ -1,5 +1,5 @@
 export type PageData = {
-  url: string
+  permalink: string
   title: string
   description: string
   keyword: string
@@ -8,37 +8,37 @@ export type PageData = {
 
 export const pageDatas: PageData[] = [
   {
-    url: '/',
+    permalink: '/',
     title: 'Home',
     description: 'description test',
     keyword: 'keyword test',
   },
   {
-    url: '/about',
+    permalink: '/about',
     title: 'About',
     description: 'description test',
     keyword: 'keyword test',
   },
   {
-    url: '/skill',
+    permalink: '/skill',
     title: 'Skill',
     description: 'description test',
     keyword: 'keyword test',
   },
   {
-    url: '/works',
+    permalink: '/works',
     title: 'Works',
     description: 'description test',
     keyword: 'keyword test',
   },
   {
-    url: '/contact',
+    permalink: '/contact',
     title: 'Contact',
     description: 'description test',
     keyword: 'keyword test',
   },
   {
-    url: '/thanks',
+    permalink: '/thanks',
     title: 'Thanks',
     description: 'description test',
     keyword: 'keyword test',
@@ -54,8 +54,8 @@ export function getPageDatasExceptNoindex() {
   return pageDatas.filter((page) => !page.noindex)
 }
 
-export function getPageDataByUrl(url: string) {
-  const pageData = pageDatas.find((page) => page.url === url)
+export function getPageDataByPermalink(permalink: string) {
+  const pageData = pageDatas.find((page) => page.permalink === permalink)
   if (pageData === undefined) {
     throw new Error()
   }
