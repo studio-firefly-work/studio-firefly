@@ -9,6 +9,10 @@ export default {
         'tertiary': '#add4b7',
         'error': '#ffbab1',
       },
+      maxWidth: {
+        'artboard': '1920px',
+        'content': '1024px',
+      },
     },
     fontFamily: {
       body: [

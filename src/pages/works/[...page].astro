@@ -2,7 +2,7 @@
 import type { GetStaticPathsOptions } from 'astro'
 import PageLayout from '@/layouts/PageLayout.astro'
 
-const url = '/works'
+const permalink = '/works'
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sites = [
@@ -29,7 +29,7 @@ const totalPages = Math.ceil(page.total / 4)
 const currentPage = page.currentPage
 ---
 
-<PageLayout {url}>
+<PageLayout {permalink}>
   <h2 class="md:3xl text-xl">現在のページ：{page.currentPage}ページ</h2>
   <ul class="grid grid-cols-2 gap-2 md:grid-cols-4 lg:grid-cols-5">
     {

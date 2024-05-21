@@ -3,12 +3,14 @@ import * as utils from '@/utils'
 import { getSiteDatasAll } from '@/constants/siteDatas'
 
 const site = getSiteDatasAll()
-const tel = utils.normalizeTelNumber(site.tel)
+const normalizeTelNumber = utils.normalizeTelNumber(site.tel)
 ---
 
-<footer class="footer">
-  <address class="footer__address">
-    {site.postalCode}{site.address}<a href=`tel:${tel}`>{site.tel}</a>
+<footer class="px-4 md:px-8 mt-auto">
+  <address>
+    {site.postalCode}{site.address}<a href=`tel:${normalizeTelNumber}`
+      >{site.tel}</a
+    >
   </address>
-  <small class="footer__copy">{site.copy}</small>
+  <small>{site.copy}</small>
 </footer>

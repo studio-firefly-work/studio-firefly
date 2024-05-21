@@ -1,11 +1,11 @@
 ---
 import Header from '@/components/organisms/Header/Header.astro'
 import Footer from '@/components/organisms/Footer/Footer.astro'
-import { getPageDataByUrl } from '@/constants/pageDatas'
+import { getPageDataByPermalink } from '@/constants/pageDatas'
 import { getSiteDatasAll } from '@/constants/siteDatas'
 
-const { url } = Astro.props
-const page = getPageDataByUrl(url)
+const { permalink } = Astro.props
+const page = getPageDataByPermalink(permalink)
 const site = getSiteDatasAll()
 ---
 
@@ -32,7 +32,7 @@ const site = getSiteDatasAll()
   </head>
 
   <body
-    class="bg-white font-body text-black dark:bg-slate-900 dark:text-white"
+    class="max-w-artboard mx-auto flex min-h-screen flex-col bg-white font-body text-black dark:bg-slate-900 dark:text-white"
   >
     <Header />
     <main>

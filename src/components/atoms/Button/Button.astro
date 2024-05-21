@@ -1,21 +1,21 @@
 ---
-const { href, class: additionalClasses = '', ...rest } = Astro.props
+const { href, addClasses = '', ...rest } = Astro.props
 const baseClasses =
   'flex min-h-12 min-w-12 items-center justify-center transition-all hover:text-primary cursor-pointer'
-const allClasses = `${baseClasses} ${additionalClasses}`
+const classes = `${baseClasses} ${addClasses}`
 ---
 
 {
   href ? (
     <a
-      href={href}
+      {href}
       class="flex min-h-12 min-w-12 cursor-pointer items-center justify-center transition-all hover:text-primary"
       {...rest}
     >
       <slot />
     </a>
   ) : (
-    <button class={allClasses} {...rest}>
+    <button class={classes} {...rest}>
       <slot />
     </button>
   )
