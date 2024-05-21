@@ -1,7 +1,25 @@
 ---
-const { addClasses = '', ...rest } = Astro.props
-const baseClasses = 'max-w-content mx-auto px-4 md:px-8'
-const classes = `${baseClasses} ${addClasses}`
+const { width, maxWidth, class: addClasses = '', ...rest } = Astro.props
+const baseClasses = 'mx-auto'
+let optionClasses = ''
+
+switch (width) {
+  case 'full':
+    optionClasses += ' w-full'
+    break
+  default:
+    optionClasses += ' w-11/12'
+}
+
+switch (maxWidth) {
+  case 'artboard':
+    optionClasses += ' max-w-artboard'
+    break
+  default:
+    optionClasses += ' max-w-content'
+}
+
+const classes = `${baseClasses} ${optionClasses} ${addClasses}`
 ---
 
 <div class={classes} {...rest}>

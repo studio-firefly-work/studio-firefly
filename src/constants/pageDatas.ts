@@ -50,8 +50,12 @@ export function getPageDatasAll() {
   return pageDatas
 }
 
-export function getPageDatasExceptNoindex() {
+export function exceptNoindex(pageDatas: PageData[]) {
   return pageDatas.filter((page) => !page.noindex)
+}
+
+export function exceptHome(pageDatas: PageData[]) {
+  return pageDatas.filter((page) => page.permalink !== '/')
 }
 
 export function getPageDataByPermalink(permalink: string) {
