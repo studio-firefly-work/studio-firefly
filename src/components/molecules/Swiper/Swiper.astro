@@ -75,13 +75,10 @@ import slide13 from '@/assets/images/test/ged050.jpg'
   }
 </style>
 
-<script>
-  import Swiper from 'swiper'
-  import { Navigation, Pagination } from 'swiper/modules'
-  import 'swiper/css/bundle'
+<script type="module">
+  import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.esm.browser.min.js'
 
   export const swiperConfig = {
-    modules: [Navigation, Pagination],
     centeredSlides: true,
     speed: 500,
     slidesPerView: 1.5,
