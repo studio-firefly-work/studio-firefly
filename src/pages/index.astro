@@ -1,9 +1,27 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
+import Container from '@/components/atoms/Container/Container.astro'
+import Swiper from '@/components/molecules/Swiper/Swiper.astro'
 
 const permalink = '/'
 ---
 
 <BaseLayout {permalink}>
-  <div>test</div>
+  <section>
+    <Container class="h-screen" width="full" maxWidth="artboard">
+      <div>fv</div>
+    </Container>
+  </section>
+
+  <section class="bg-secondary">
+    <Container class="py-10">
+      <div>コンテンツ</div>
+    </Container>
+  </section>
+
+  <section class="bg-tertiary">
+    <div class="overflow-hidden py-10">
+      <Swiper />
+    </div>
+  </section>
 </BaseLayout>

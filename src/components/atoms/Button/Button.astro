@@ -1,17 +1,19 @@
 ---
-const { href, addClasses = '', ...rest } = Astro.props
-const baseClasses =
-  'flex min-h-12 min-w-12 items-center justify-center transition-all hover:text-primary cursor-pointer'
-const classes = `${baseClasses} ${addClasses}`
+const { href, class: addClasses = '', center, ...rest } = Astro.props
+let baseClasses =
+  'shadow-l flex min-h-12 min-w-12 transition-all hover:text-primary'
+let optionClasses = ''
+
+if (center != false) {
+  optionClasses += ' items-center justify-center'
+}
+
+const classes = `${baseClasses} ${optionClasses} ${addClasses}`
 ---
 
 {
   href ? (
-    <a
-      {href}
-      class="flex min-h-12 min-w-12 cursor-pointer items-center justify-center transition-all hover:text-primary"
-      {...rest}
-    >
+    <a {href} class={classes} {...rest}>
       <slot />
     </a>
   ) : (

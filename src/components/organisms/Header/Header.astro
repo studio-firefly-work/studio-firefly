@@ -1,28 +1,39 @@
 ---
-import { getPageDatasExceptNoindex } from '@/constants/pageDatas'
 import Button from '@/components/atoms/Button/Button.astro'
+import Container from '@/components/atoms/Container/Container.astro'
+import {
+  getPageDatasAll,
+  exceptHome,
+  exceptNoindex,
+} from '@/constants/pageDatas'
 import type { PageData } from '@/constants/pageDatas'
 
 import { Image } from 'astro:assets'
 import logo from '@/assets/images/common/logo.svg'
 
-const pages = getPageDatasExceptNoindex()
+const pages = getPageDatasAll()
+const pagesExceptNoindex = exceptNoindex(pages)
+const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
+
+const isHomePage = Astro.url.pathname === '/'
 ---
 
-<header class="sticky top-0 z-50 px-4 md:px-8">
-  <nav class="flex justify-between">
-    <Button href="/">
-      <Image src={logo} alt="logo" />
-    </Button>
+<header class={isHomePage ? 'absolute top-0 w-full' : null}>
+  <Container maxWidth="artboard">
+    <nav class="flex justify-between" aria-label="Main navigation">
+      <Button href="/">
+        <Image src={logo} alt="logo" />
+      </Button>
 
-    <ul class="flex gap-4">
-      {
-        pages.map((page: PageData) => (
-          <li>
-            <Button href={page.permalink}>{page.title}</Button>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
+      <ul class="flex gap-4">
+        {
+          pagesExceptNoindexAndHome.map((page: PageData) => (
+            <li>
+              <Button href={page.permalink}>{page.title}</Button>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </Container>
 </header>
