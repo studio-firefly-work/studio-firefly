@@ -4,7 +4,7 @@ import Footer from '@/components/organisms/Footer/Footer.astro'
 import { getSiteDataAll } from '@/constants/siteDatas'
 
 const { pageData } = Astro.props
-const site = getSiteDataAll()
+const siteData = getSiteDataAll()
 ---
 
 <!doctype html>
@@ -13,7 +13,7 @@ const site = getSiteDataAll()
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
 
-    <title>{site.name}{pageData.title != 'Home' && ' - ' + pageData.title}</title>
+    <title>{siteData.name}{pageData.title != 'Home' && ' - ' + pageData.title}</title>
     <meta name="description" content={pageData.description} />
     <meta name="keyword" content={pageData.keyword} />
 
