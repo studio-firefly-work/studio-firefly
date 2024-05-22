@@ -1,9 +1,11 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro'
+import { getPageDataByPermalink } from '@/constants/pageDatas'
 
 const permalink = '/about'
+const pageData = getPageDataByPermalink(permalink)
 ---
 
-<PageLayout {permalink}>
+<PageLayout {pageData}>
   <p class="text-primary">test</p>
 </PageLayout>

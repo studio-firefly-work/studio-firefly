@@ -1,15 +1,13 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import Container from '@/components/atoms/Container/Container.astro'
-import { getPageDataByPermalink } from '@/constants/pageDatas'
 
-const { permalink } = Astro.props
-const page = getPageDataByPermalink(permalink)
+const { pageData } = Astro.props
 ---
 
-<BaseLayout {permalink}>
+<BaseLayout {pageData}>
   <Container class="py-10 md:py-20">
-    <h1 class="text-2xl md:text-4xl">{page.title}</h1>
+    <h1 class="text-2xl md:text-4xl">{pageData.title}</h1>
   </Container>
   <slot />
 </BaseLayout>

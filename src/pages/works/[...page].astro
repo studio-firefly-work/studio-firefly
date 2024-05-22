@@ -1,10 +1,12 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro'
 import Button from '@/components/atoms/Button/Button.astro'
-import type { GetStaticPathsOptions } from 'astro'
 import Container from '@/components/atoms/Container/Container.astro'
+import { getPageDataByPermalink } from '@/constants/pageDatas'
+import type { GetStaticPathsOptions } from 'astro'
 
 const permalink = '/works'
+const pageData = getPageDataByPermalink(permalink)
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sites = [
@@ -30,7 +32,7 @@ const { page } = Astro.props
 const totalPages = Math.ceil(page.total / page.size)
 ---
 
-<PageLayout {permalink}>
+<PageLayout {pageData}>
   <section>
     <Container>
       <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

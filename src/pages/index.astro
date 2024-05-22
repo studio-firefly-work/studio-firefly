@@ -2,11 +2,13 @@
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import Container from '@/components/atoms/Container/Container.astro'
 import Swiper from '@/components/molecules/Swiper/Swiper.astro'
+import { getPageDataByPermalink } from '@/constants/pageDatas'
 
 const permalink = '/'
+const pageData = getPageDataByPermalink(permalink)
 ---
 
-<BaseLayout {permalink}>
+<BaseLayout {pageData}>
   <section>
     <div class="h-screen">
       <div>fv</div>
