@@ -9,11 +9,7 @@ const permalink = '/works'
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sites = [
     { name: 'サイト1', category: 'web', url: '#' },
-    {
-      name: 'サイト2サイト2サイト2サイト2サイト2サイト2サイト2',
-      category: 'web',
-      url: '#',
-    },
+    { name: 'サイト2サイト2サイト2サイト2サイト2サイト2サイト2', category: 'web', url: '#' },
     { name: 'サイト3', category: 'web', url: '#' },
     { name: 'サイト4', category: 'web', url: '#' },
     { name: 'サイト5', category: 'web', url: '#' },
@@ -37,17 +33,11 @@ const totalPages = Math.ceil(page.total / page.size)
 <PageLayout {permalink}>
   <section>
     <Container>
-      <ul
-        class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-      >
+      <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {
           page.data.map((site) => (
             <li>
-              <Button
-                href={site.url}
-                class="h-full flex-col gap-2 bg-white p-4 transition-all hover:bg-white/60 hover:transition-all dark:bg-slate-800 hover:dark:bg-slate-800/60"
-                center={false}
-              >
+              <Button href={site.url} class="h-full flex-col items-start gap-2 bg-white p-4 hover:bg-white/60 dark:bg-slate-800 hover:dark:bg-slate-800/60">
                 <h2 class="grow">{site.name}</h2>
                 <p>{site.category}</p>
               </Button>
@@ -55,6 +45,7 @@ const totalPages = Math.ceil(page.total / page.size)
           ))
         }
       </ul>
+
       <nav class="flex justify-center gap-4" aria-label="Page navigation">
         {page.url.prev ? <Button href={page.url.prev}>Previous</Button> : null}
 
@@ -62,14 +53,10 @@ const totalPages = Math.ceil(page.total / page.size)
           [...Array(totalPages)].map((_, index) => {
             const pageNum = index + 1
             const isCurrent = pageNum === page.currentPage
-            const pageLink =
-              pageNum === 1 ? permalink : `${permalink}/${pageNum}`
+            const pageLink = pageNum === 1 ? permalink : `${permalink}/${pageNum}`
 
             return (
-              <Button
-                href={pageLink}
-                style={isCurrent ? { fontWeight: 'bold' } : null}
-              >
+              <Button href={pageLink} class={isCurrent ? 'font-bold' : null}>
                 {pageNum}
               </Button>
             )

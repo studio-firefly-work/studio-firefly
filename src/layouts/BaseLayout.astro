@@ -1,12 +1,12 @@
 ---
 import Header from '@/components/organisms/Header/Header.astro'
 import Footer from '@/components/organisms/Footer/Footer.astro'
+import { getSiteDataAll } from '@/constants/siteDatas'
 import { getPageDataByPermalink } from '@/constants/pageDatas'
-import { getSiteDatasAll } from '@/constants/siteDatas'
 
 const { permalink } = Astro.props
 const page = getPageDataByPermalink(permalink)
-const site = getSiteDatasAll()
+const site = getSiteDataAll()
 ---
 
 <!doctype html>
@@ -25,19 +25,11 @@ const site = getSiteDatasAll()
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   </head>
 
-  <body
-    class="flex min-h-screen flex-col overflow-y-scroll bg-white font-body text-black dark:bg-slate-900 dark:text-white"
-  >
+  <body class="flex min-h-screen flex-col overflow-y-scroll bg-white font-body text-black dark:bg-slate-900 dark:text-white">
     <Header />
     <main>
       <slot />

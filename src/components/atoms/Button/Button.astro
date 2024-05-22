@@ -1,19 +1,13 @@
 ---
-const { href, class: addClasses = '', center, ...rest } = Astro.props
-let baseClasses =
-  'shadow-l flex min-h-12 min-w-12 transition-all hover:text-primary'
-let optionClasses = ''
+const { href, class: addClasses = '', ...rest } = Astro.props
 
-if (center != false) {
-  optionClasses += ' items-center justify-center'
-}
-
-const classes = `${baseClasses} ${optionClasses} ${addClasses}`
+const baseClasses = 'shadow-l flex min-h-12 min-w-12 transition-all hover:text-primary where:items-center where:justify-center'
+const classes = `${baseClasses} ${addClasses}`.trim()
 ---
 
 {
   href ? (
-    <a {href} class={classes} {...rest}>
+    <a href={href} class={classes} {...rest}>
       <slot />
     </a>
   ) : (

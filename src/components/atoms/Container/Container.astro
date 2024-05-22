@@ -1,27 +1,7 @@
 ---
-const { width, maxWidth, class: addClasses = '', ...rest } = Astro.props
-const baseClasses = 'mx-auto'
-let optionClasses = ''
-
-switch (width) {
-  case 'full':
-    optionClasses += ' w-full'
-    break
-  default:
-    optionClasses += ' w-11/12'
-}
-
-switch (maxWidth) {
-  case 'artboard':
-    optionClasses += ' max-w-artboard'
-    break
-  default:
-    optionClasses += ' max-w-content'
-}
-
-const classes = `${baseClasses} ${optionClasses} ${addClasses}`
+const { maxWidth, class: addClasses = '', ...rest } = Astro.props
 ---
 
-<div class={classes} {...rest}>
+<div class=`where:max-w-content ${addClasses} mx-auto w-11/12` {...rest}>
   <slot />
 </div>

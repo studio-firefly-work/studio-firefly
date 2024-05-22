@@ -1,18 +1,16 @@
 ---
 import * as utils from '@/utils'
 import Container from '@/components/atoms/Container/Container.astro'
-import { getSiteDatasAll } from '@/constants/siteDatas'
+import { getSiteDataAll } from '@/constants/siteDatas'
 
-const site = getSiteDatasAll()
+const site = getSiteDataAll()
 const normalizeTelNumber = utils.normalizeTelNumber(site.tel)
 ---
 
 <footer class="mt-auto">
-  <Container class="py-4 md:py-8" maxWidth="artboard">
+  <Container class="max-w-artboard py-4 md:py-8">
     <address>
-      {site.postalCode}{site.address}<a href=`tel:${normalizeTelNumber}`
-        >{site.tel}</a
-      >
+      {site.postalCode}{site.address}<a href=`tel:${normalizeTelNumber}`>{site.tel}</a>
     </address>
     <small class="block text-center">{site.copy}</small>
   </Container>
