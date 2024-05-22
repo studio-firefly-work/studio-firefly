@@ -1,7 +1,7 @@
 ---
 const { href, class: addClasses = '', ...rest } = Astro.props
 
-const baseClasses = 'shadow-l flex min-h-12 min-w-12 transition-all hover:text-primary where:items-center where:justify-center'
+const baseClasses = 'flex min-h-12 min-w-12 transition-all where:items-center where:justify-center'
 const classes = `${baseClasses} ${addClasses}`.trim()
 ---
 

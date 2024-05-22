@@ -1,0 +1,9 @@
+---
+import Button from '@/components/atoms/Button/Button.astro'
+
+const { href, class: addClasses = '', ...rest } = Astro.props
+---
+
+<Button {href} class=`shadow-l bg-white hover:bg-white/60 dark:bg-slate-800 hover:dark:bg-slate-800/60 ${addClasses}` {...rest}>
+  <slot />
+</Button>
