@@ -15,6 +15,6 @@ export const siteDatas: SiteData = {
   copy: 'copy',
 }
 
-export function getSiteDatasAll() {
+export function getSiteDataAll() {
   return siteDatas
 }

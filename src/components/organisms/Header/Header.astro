@@ -1,11 +1,7 @@
 ---
 import Button from '@/components/atoms/Button/Button.astro'
 import Container from '@/components/atoms/Container/Container.astro'
-import {
-  getPageDatasAll,
-  exceptHome,
-  exceptNoindex,
-} from '@/constants/pageDatas'
+import { getPageDatasAll, exceptHome, exceptNoindex } from '@/constants/pageDatas'
 import type { PageData } from '@/constants/pageDatas'
 
 import { Image } from 'astro:assets'
@@ -19,7 +15,7 @@ const isHomePage = Astro.url.pathname === '/'
 ---
 
 <header class={isHomePage ? 'absolute top-0 w-full' : null}>
-  <Container maxWidth="artboard">
+  <Container class="max-w-artboard">
     <nav class="flex justify-between" aria-label="Main navigation">
       <Button href="/">
         <Image src={logo} alt="logo" />
