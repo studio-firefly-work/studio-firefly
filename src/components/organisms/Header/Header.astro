@@ -6,6 +6,7 @@ import type { PageData } from '@/constants/pageDatas'
 
 import { Image } from 'astro:assets'
 import logo from '@/assets/images/common/logo.svg'
+import ButtonText from '@/components/molecules/ButtonText/ButtonText.astro'
 
 const pages = getPageDatasAll()
 const pagesExceptNoindex = exceptNoindex(pages)
@@ -25,7 +26,7 @@ const isHomePage = Astro.url.pathname === '/'
         {
           pagesExceptNoindexAndHome.map((page: PageData) => (
             <li>
-              <Button href={page.permalink}>{page.title}</Button>
+              <ButtonText href={page.permalink}>{page.title}</ButtonText>
             </li>
           ))
         }
