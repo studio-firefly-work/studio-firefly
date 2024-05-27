@@ -46,6 +46,8 @@ import slide13 from '@/assets/images/test/ged050.jpg'
 
   <!-- If we need scrollbar -->
   <!-- <div class="swiper-scrollbar"></div> -->
+
+  <Button class="swiper-button-pause">pause</Button>
 </Container>
 
 <style>
@@ -79,12 +81,11 @@ import slide13 from '@/assets/images/test/ged050.jpg'
   import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.esm.browser.min.js'
 
   export const swiperConfig = {
-    centeredSlides: true,
-    speed: 500,
-    slidesPerView: 1.5,
-    spaceBetween: 40,
+    allowTouchMove: true,
     autoplay: {
       delay: 3000,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true,
     },
     breakpoints: {
       640: {
@@ -100,15 +101,30 @@ import slide13 from '@/assets/images/test/ged050.jpg'
         slidesPerView: 3.75,
       },
     },
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
+    centeredSlides: true,
+    keyboard: {
+      enabled: true,
+    },
+    mousewheel: {
+      forceToAxis: true,
     },
     navigation: {
       nextEl: '.swiper-button-next',
       prevEl: '.swiper-button-prev',
     },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    slideToClickedSlide: true,
+    slidesPerView: 1.5,
+    spaceBetween: 40,
+    speed: 500,
   }
 
   const swiper = new Swiper('.swiper', swiperConfig)
+
+  document.querySelector('.swiper-button-pause').addEventListener('click', function () {
+    swiper.autoplay.stop()
+  })
 </script>
