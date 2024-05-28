@@ -1,45 +1,50 @@
 export type PageData = {
   permalink: string
-  title: string
+  title: Title
   description: string
   keyword: string
   noindex?: boolean
 }
 
+export type Title = {
+  jp: string
+  en: string
+}
+
 export const pageDatas: PageData[] = [
   {
     permalink: '/',
-    title: 'Home',
+    title: { jp: 'ホーム', en: 'Home' },
     description: 'description test',
     keyword: 'keyword test',
   },
   {
-    permalink: '/about',
-    title: 'About',
+    permalink: '/profile',
+    title: { jp: '自己紹介', en: 'Profile' },
     description: 'description test',
     keyword: 'keyword test',
   },
   {
     permalink: '/skill',
-    title: 'Skill',
+    title: { jp: '技術', en: 'Skill' },
     description: 'description test',
     keyword: 'keyword test',
   },
   {
     permalink: '/works',
-    title: 'Works',
+    title: { jp: '制作実績', en: 'Works' },
     description: 'description test',
     keyword: 'keyword test',
   },
   {
     permalink: '/contact',
-    title: 'Contact',
+    title: { jp: 'お問い合わせ', en: 'Contact' },
     description: 'description test',
     keyword: 'keyword test',
   },
   {
     permalink: '/thanks',
-    title: 'Thanks',
+    title: { jp: '', en: 'Thanks' },
     description: 'description test',
     keyword: 'keyword test',
     noindex: true,
