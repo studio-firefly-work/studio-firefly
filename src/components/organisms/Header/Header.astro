@@ -1,12 +1,11 @@
 ---
 import Button from '@/components/atoms/Button/Button.astro'
+import ButtonText from '@/components/molecules/ButtonText/ButtonText.astro'
 import Container from '@/components/atoms/Container/Container.astro'
 import { getPageDatasAll, exceptHome, exceptNoindex } from '@/constants/pageDatas'
 import type { PageData } from '@/constants/pageDatas'
 
-import { Image } from 'astro:assets'
-import logo from '@/assets/images/common/logo.svg'
-import ButtonText from '@/components/molecules/ButtonText/ButtonText.astro'
+import Logo from '@/assets/images/common/logo.svg?raw'
 
 const pages = getPageDatasAll()
 const pagesExceptNoindex = exceptNoindex(pages)
@@ -19,7 +18,12 @@ const isHomePage = Astro.url.pathname === '/'
   <Container class="max-w-artboard">
     <nav class="flex justify-between" aria-label="Main navigation">
       <Button href="/">
-        <Image src={logo} alt="logo" />
+        <Fragment set:html={Logo} />
+        <svg width="200" height="35">
+          <use href="#logo-T" class="fill-[#F38300]"></use>
+          <use href="#logo-ECHNICAL." class="fill-[#111] dark:fill-[#fff]"></use>
+          <use href="#logo-I" class="fill-[#172A88]"></use>
+        </svg>
       </Button>
 
       <ul class="flex gap-4">
