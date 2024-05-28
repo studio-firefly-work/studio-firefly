@@ -1,25 +1,21 @@
-import { defineConfig } from 'astro/config';
-import node from '@astrojs/node';
-import tailwind from '@astrojs/tailwind';
-
-import icon from "astro-icon";
+import { defineConfig } from 'astro/config'
+import node from '@astrojs/node'
+import tailwind from '@astrojs/tailwind'
 
 // https://astro.build/config
 export default defineConfig({
   output: 'hybrid',
   adapter: node({
-    mode: 'standalone'
+    mode: 'standalone',
   }),
   vite: {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "@/styles/design.scss";`
-        }
-      }
-    }
+          additionalData: `@import "@/styles/design.scss";`,
+        },
+      },
+    },
   },
-  integrations: [
-    tailwind(),
-  ]
-});
+  integrations: [tailwind()],
+})

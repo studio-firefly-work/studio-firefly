@@ -30,7 +30,7 @@ const isHomePage = Astro.url.pathname === '/'
         {
           pagesExceptNoindexAndHome.map((page: PageData) => (
             <li>
-              <ButtonText href={page.permalink}>{page.title}</ButtonText>
+              <ButtonText href={page.permalink}>{page.title.jp}</ButtonText>
             </li>
           ))
         }
