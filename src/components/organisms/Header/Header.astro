@@ -16,13 +16,12 @@ const isHomePage = Astro.url.pathname === '/'
 
 <header class={isHomePage ? 'absolute top-0 w-full py-4' : 'py-4'}>
   <Container class="max-w-artboard">
-    <nav class="flex justify-between" aria-label="Main navigation">
+    <nav class="flex items-center justify-between" aria-label="Main navigation">
       <Button href="/">
         <Fragment set:html={Logo} />
-        <svg width="200" height="35">
-          <use href="#logo-T" class="fill-[#F38300]"></use>
-          <use href="#logo-ECHNICAL." class="fill-[#111] dark:fill-[#fff]"></use>
-          <use href="#logo-I" class="fill-[#172A88]"></use>
+        <svg width="140" height="60">
+          <use href="#logo-text" class="fill-black dark:fill-white"></use>
+          <use href="#logo-firefly"></use>
         </svg>
       </Button>
 
