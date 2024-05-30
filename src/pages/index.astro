@@ -1,36 +1,33 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import Container from '@/components/atoms/Container/Container.astro'
-import Swiper from '@/components/molecules/Swiper/Swiper.astro'
-import Splide from '@/components/molecules/Splide/Splide.astro'
-import { getPageDataByPermalink } from '@/constants/pageDatas'
+import ButtonText from '@/components/molecules/ButtonText/ButtonText.astro'
+import ToggleMode from '@/components/molecules/ToggleMode/ToggleMode.astro'
+import { getPageDatasAll, exceptHome, exceptNoindex, getPageDataByPermalink } from '@/constants/pageDatas'
+import type { PageData } from '@/constants/pageDatas'
 
 const permalink = '/'
 const pageData = getPageDataByPermalink(permalink)
+
+const pages = getPageDatasAll()
+const pagesExceptNoindex = exceptNoindex(pages)
+const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
 ---
 
 <BaseLayout {pageData}>
-  <section>
-    <div class="h-screen">
-      <div>fv</div>
-    </div>
-  </section>
-
-  <section class="bg-secondary">
-    <Container class="py-10">
-      <div>コンテンツ</div>
-    </Container>
-  </section>
-<!-- 
-  <section>
-    <div class="overflow-hidden py-10">
-      <Swiper />
-    </div>
-  </section> -->
-
-  <section>
-    <div class="overflow-hidden py-10">
-      <Splide />
-    </div>
-  </section>
+  <main>
+    <section>
+      <div class="h-screen">
+        <ToggleMode />
+        <ul class="flex gap-4">
+          {
+            pagesExceptNoindexAndHome.map((page: PageData) => (
+              <li>
+                <ButtonText href={page.permalink}>{page.title}</ButtonText>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+  </main>
 </BaseLayout>

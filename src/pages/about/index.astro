@@ -1,5 +1,6 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro'
+import Splide from '@/components/molecules/Splide/Splide.astro'
 import { getPageDataByPermalink } from '@/constants/pageDatas'
 
 const permalink = '/about'
@@ -7,5 +8,9 @@ const pageData = getPageDataByPermalink(permalink)
 ---
 
 <PageLayout {pageData}>
-  <p class="text-primary">test</p>
+  <section>
+    <div class="overflow-hidden py-10">
+      <Splide />
+    </div>
+  </section>
 </PageLayout>
