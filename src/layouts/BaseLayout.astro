@@ -1,6 +1,4 @@
 ---
-import Header from '@/components/organisms/Header/Header.astro'
-import Footer from '@/components/organisms/Footer/Footer.astro'
 import { getSiteDataAll } from '@/constants/siteDatas'
 
 const { pageData } = Astro.props
@@ -27,11 +25,7 @@ const siteData = getSiteDataAll()
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   </head>
 
-  <body class="flex min-h-screen flex-col overflow-y-scroll bg-white font-body text-black dark:bg-slate-900 dark:text-white transition duration-500">
-    <Header />
-    <main>
-      <slot />
-    </main>
-    <Footer />
+  <body class="flex min-h-screen flex-col bg-white font-body text-black dark:bg-slate-900 dark:text-white">
+    <slot />
   </body>
 </html>
