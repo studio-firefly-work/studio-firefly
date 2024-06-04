@@ -5,10 +5,42 @@ import { getPageDataByPermalink } from '@/constants/pageDatas'
 
 const permalink = '/skill'
 const pageData = getPageDataByPermalink(permalink)
-
-const res = await fetch('http://localhost:3001/api')
-const data = await res.json()
-console.log(data)
 ---
 
-<PageLayout {pageData} />
+<PageLayout {pageData}>
+  <button class="login">login</button>
+</PageLayout>
+
+<script>
+  const buttons = document.querySelectorAll('button.login')
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      login('user1', 'password')
+    })
+  })
+
+  async function login(username, password) {
+    const res = await fetch('http://localhost:3001/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    })
+
+    if (!res.ok) {
+      const errorData = await res.json()
+      throw new Error(errorData.message)
+    }
+
+    let data = getUsers()
+    return data
+  }
+
+  async function getUsers() {
+    const res = await fetch('http://localhost:3001/api')
+    const data = await res.json()
+    console.log(data)
+  }
+</script>
