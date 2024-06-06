@@ -22,7 +22,9 @@ const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
           {
             pagesExceptNoindexAndHome.map((page: PageData) => (
               <li>
-                <ButtonText href={page.permalink}>{page.title}</ButtonText>
+                <ButtonText href={page.permalink} class="flex flex-col text-sm before:text-2xl before:content-[attr(data-title-en)]" data-title-en={page.title.en}>
+                  {page.title.jp}
+                </ButtonText>
               </li>
             ))
           }
