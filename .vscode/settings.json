@@ -1,7 +1,5 @@
 {
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
-  "css.customData": [
-    ".vscode/tailwind.json"
-  ]
+  "css.customData": [".vscode/tailwind.json"]
 }
