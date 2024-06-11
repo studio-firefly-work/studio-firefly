@@ -9,16 +9,12 @@ const pageData = getPageDataByPermalink(permalink)
 
 <PageLayout {pageData}>
   <button class="login">login</button>
+  <button class="getUsers">getUsers</button>
 </PageLayout>
 
 <script>
-  const buttons = document.querySelectorAll('button.login')
-
-  buttons.forEach((button) => {
-    button.addEventListener('click', () => {
-      login('user1', 'password')
-    })
-  })
+  document.querySelector('button.login').onclick = () => login('user1', 'password')
+  document.querySelector('button.getUsers').onclick = () => getUsers()
 
   async function login(username, password) {
     const res = await fetch('http://localhost:3001/api/login', {
@@ -35,11 +31,21 @@ const pageData = getPageDataByPermalink(permalink)
       throw new Error(errorData.message)
     }
 
-    let data = getUsers()
-    return data
+    console.log('Login successful!')
+  }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`
+    const parts = value.split(`; ${name}=`)
+    if (parts.length === 2) return parts.pop().split(';').shift()
   }
 
   async function getUsers() {
+    const cookie = getCookie('auth_session')
+    if (!cookie) {
+      throw new Error('Unauthorized')
+    }
+
     const res = await fetch('http://localhost:3001/api/user')
     const data = await res.json()
     console.log(data)
