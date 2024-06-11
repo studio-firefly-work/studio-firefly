@@ -9,14 +9,55 @@ const pageData = getPageDataByPermalink(permalink)
 <PageLayout {pageData}>
   <form action="/contact/submit" method="POST">
     <label for="name">Name:</label>
-    <input type="text" id="name" name="name" required /><br />
+    <input type="text" class="name text-black" name="name" required /><br />
 
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required /><br />
+    <input type="email" class="email text-black" name="email" required /><br />
 
     <label for="message">Message:</label>
-    <textarea id="message" name="message" rows="4" required></textarea><br />
+    <textarea class="message text-black" name="message" rows="4" required></textarea><br />
 
-    <button type="submit">Submit</button>
+    <button type="submit" class="submit">Submit</button>
   </form>
 </PageLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const submitButton = document.querySelector('button.submit')
+
+    if (submitButton) {
+      submitButton.addEventListener('click', () => {
+        const nameInput = document.querySelector('.name') as HTMLInputElement
+        const emailInput = document.querySelector('.email') as HTMLInputElement
+        const messageInput = document.querySelector('.message') as HTMLInputElement
+
+        if (nameInput && emailInput && messageInput) {
+          const formData = {
+            name: nameInput.value,
+            email: emailInput.value,
+            message: messageInput.value,
+          }
+
+          createContact(formData)
+        }
+      })
+    }
+  })
+
+  async function createContact(formData) {
+    const res = await fetch('http://localhost:3001/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+
+    if (!res.ok) {
+      const errorData = await res.json()
+      throw new Error(errorData.message)
+    }
+
+    console.log(res)
+  }
+</script>
