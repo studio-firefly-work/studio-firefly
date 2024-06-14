@@ -16,13 +16,13 @@ const pageData = getPageDataByPermalink(permalink)
   document.querySelector('button.login').onclick = () => login('user1', 'password')
   document.querySelector('button.getUsers').onclick = () => getUsers()
 
-  async function login(username, password) {
-    const res = await fetch('http://localhost:3001/api/login', {
+  async function login(name, password) {
+    const res = await fetch('http://localhost:3001/api/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ name, password }),
       credentials: 'include',
     })
 
