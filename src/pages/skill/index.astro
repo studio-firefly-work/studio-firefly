@@ -41,12 +41,13 @@ const pageData = getPageDataByPermalink(permalink)
   }
 
   async function getUsers() {
-    const cookie = getCookie('auth_session')
-    if (!cookie) {
-      throw new Error('Unauthorized')
-    }
-
-    const res = await fetch('http://localhost:3001/api/user')
+    const res = await fetch('http://localhost:3001/api/user', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    })
     const data = await res.json()
     console.log(data)
   }
