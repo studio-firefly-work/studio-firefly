@@ -10,11 +10,24 @@ const pageData = getPageDataByPermalink(permalink)
 <PageLayout {pageData}>
   <button class="login">login</button>
   <button class="getUsers">getUsers</button>
+  <button class="logout">logout</button>
 </PageLayout>
 
 <script>
+  document.querySelector('button.logout').onclick = () => logout('1')
   document.querySelector('button.login').onclick = () => login('user1', 'password')
   document.querySelector('button.getUsers').onclick = () => getUsers()
+
+  async function logout(id) {
+    const res = await fetch(`http://localhost:3001/api/auth/logout/${id}`, {
+      method: 'DELETE',
+    })
+
+    if (!res.ok) {
+      const errorData = await res.json()
+      throw new Error(errorData.message)
+    }
+  }
 
   async function login(name, password) {
     const res = await fetch('http://localhost:3001/api/auth/login', {
