@@ -11,12 +11,15 @@ const pageData = getPageDataByPermalink(permalink)
   <button class="login">login</button>
   <button class="getUsers">getUsers</button>
   <button class="logout">logout</button>
+  <div id="user-data" class="user-data"></div>
 </PageLayout>
 
 <script>
   document.querySelector('button.logout').onclick = () => logout('1')
   document.querySelector('button.login').onclick = () => login('user1', 'password')
   document.querySelector('button.getUsers').onclick = () => getUsers()
+
+  window.addEventListener('load', getUsers)
 
   async function logout(id) {
     const res = await fetch(`http://localhost:3001/api/auth/logout/${id}`, {
@@ -65,6 +68,25 @@ const pageData = getPageDataByPermalink(permalink)
       credentials: 'include',
     })
     const data = await res.json()
+    displayUserData(data)
+
     console.log(data)
+  }
+
+  function displayUserData(users) {
+    const userDataDiv = document.getElementById('user-data')
+    userDataDiv.innerHTML = '' // 以前のデータをクリア
+
+    users.forEach((user) => {
+      const userDiv = document.createElement('div')
+      userDiv.className = 'user'
+
+      const userName = document.createElement('h2')
+      userName.textContent = user.name
+
+      userDiv.appendChild(userName)
+
+      userDataDiv.appendChild(userDiv)
+    })
   }
 </script>
