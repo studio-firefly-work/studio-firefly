@@ -21,12 +21,15 @@ const pageData = getPageDataByPermalink(permalink)
   async function logout(id) {
     const res = await fetch(`http://localhost:3001/api/auth/logout/${id}`, {
       method: 'DELETE',
+      credentials: 'include',
     })
 
     if (!res.ok) {
       const errorData = await res.json()
       throw new Error(errorData.message)
     }
+
+    console.log('Logout successful!')
   }
 
   async function login(name, password) {
