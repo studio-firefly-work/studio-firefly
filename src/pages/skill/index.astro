@@ -15,13 +15,13 @@ const pageData = getPageDataByPermalink(permalink)
 </PageLayout>
 
 <script>
-  document.querySelector('button.logout').onclick = () => logout('1')
+  document.querySelector('button.logout').onclick = () => logout(1)
   document.querySelector('button.login').onclick = () => login('user1', 'password')
   document.querySelector('button.getUsers').onclick = () => getUsers()
 
   window.addEventListener('load', getUsers)
 
-  async function logout(id) {
+  async function logout(id: number) {
     const res = await fetch(`http://localhost:3001/api/auth/logout/${id}`, {
       method: 'DELETE',
       credentials: 'include',
@@ -35,7 +35,7 @@ const pageData = getPageDataByPermalink(permalink)
     console.log('Logout successful!')
   }
 
-  async function login(name, password) {
+  async function login(name: string, password: string) {
     const res = await fetch('http://localhost:3001/api/auth/login', {
       method: 'POST',
       headers: {
@@ -53,12 +53,6 @@ const pageData = getPageDataByPermalink(permalink)
     console.log('Login successful!')
   }
 
-  function getCookie(name) {
-    const value = `; ${document.cookie}`
-    const parts = value.split(`; ${name}=`)
-    if (parts.length === 2) return parts.pop().split(';').shift()
-  }
-
   async function getUsers() {
     const res = await fetch('http://localhost:3001/api/user', {
       method: 'GET',
@@ -68,9 +62,9 @@ const pageData = getPageDataByPermalink(permalink)
       credentials: 'include',
     })
     const data = await res.json()
-    displayUserData(data)
-
     console.log(data)
+
+    displayUserData(data)
   }
 
   function displayUserData(users) {
