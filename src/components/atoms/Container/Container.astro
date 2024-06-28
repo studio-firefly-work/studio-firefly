@@ -2,6 +2,6 @@
 const { maxWidth, class: addClasses = '', ...rest } = Astro.props
 ---
 
-<div class=`where:max-w-content ${addClasses} mx-auto w-11/12` {...rest}>
+<div class=`where:max-w-screen-xl ${addClasses} mx-auto w-11/12` {...rest}>
   <slot />
 </div>
