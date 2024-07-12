@@ -4,3 +4,5 @@ install Astro DB
 sign up Astro Studio
 command "npm install lucia-adapter-astrodb"
 release by github pages
+
+npm run dev -- --host
