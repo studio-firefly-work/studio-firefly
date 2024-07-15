@@ -4,6 +4,7 @@ import ButtonText from '@/components/molecules/ButtonText/ButtonText.astro'
 import ToggleMode from '@/components/molecules/ToggleMode/ToggleMode.astro'
 import { getPageDatasAll, exceptHome, exceptNoindex, getPageDataByPermalink } from '@/constants/pageDatas'
 import type { PageData } from '@/constants/pageDatas'
+import Particle from '@/components/molecules/Particle/Particle.astro'
 
 const permalink = '/'
 const pageData = getPageDataByPermalink(permalink)
@@ -30,6 +31,7 @@ const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
           }
         </ul>
       </div>
+      <Particle />
     </section>
   </main>
 </BaseLayout>
