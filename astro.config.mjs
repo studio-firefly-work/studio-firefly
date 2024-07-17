@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config'
+import daisyui from "daisyui"
 import node from '@astrojs/node'
 import tailwind from '@astrojs/tailwind'
 
@@ -18,4 +19,7 @@ export default defineConfig({
     },
   },
   integrations: [tailwind()],
+  plugins: [
+    daisyui,
+  ],
 })

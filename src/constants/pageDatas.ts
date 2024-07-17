@@ -49,6 +49,12 @@ export const pageDatas: PageData[] = [
     keyword: 'keyword test',
     noindex: true,
   },
+  {
+    permalink: '/test',
+    title: { jp: 'テスト', en: 'Test' },
+    description: 'description test',
+    keyword: 'keyword test'
+  },
 ]
 
 export function getPageDatasAll() {
