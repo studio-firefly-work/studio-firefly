@@ -1,0 +1,83 @@
+---
+export const prerender = false
+import BaseLayout from '@/layouts/BaseLayout.astro'
+
+import { getPageDataByPermalink } from '@/constants/pageDatas'
+
+const permalink = '/test'
+const pageData = getPageDataByPermalink(permalink)
+---
+
+<BaseLayout {pageData}>
+  <article class="container mx-auto">
+    <h1 class="mb-8 text-4xl font-bold">Style Guide</h1>
+
+    <section class="mb-12">
+      <h2 class="mb-4 text-3xl font-semibold">フォントファミリー</h2>
+      <p class="text-lg">プライマリフォント: <span class="font-sans">Sans-Serif</span></p>
+      <p class="text-lg">セカンダリフォント: <span class="font-serif">Serif</span></p>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="mb-4 text-3xl font-semibold">見出しフォントサイズ</h2>
+      <h1 class="text-4xl font-bold">h1: 4xl</h1>
+      <h2 class="text-3xl font-semibold">h2: 3xl</h2>
+      <h3 class="text-2xl font-medium">h3: 2xl</h3>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="mb-4 text-3xl font-semibold">本文フォントサイズ</h2>
+      <p class="text-base">パラグラフ: base</p>
+      <p class="text-sm">キャプション: sm</p>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="mb-4 text-3xl font-semibold">行間と文字間</h2>
+      <p class="leading-relaxed">標準行間: relaxed</p>
+      <p class="tracking-wide">標準文字間: wide</p>
+    </section>
+    <section class="mb-12">
+      <h2 class="mb-4 text-3xl font-semibold">プライマリカラー</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-primary-light p-4 text-white">Primary Light</div>
+        <div class="bg-primary p-4 text-white">Primary</div>
+        <div class="bg-primary-dark p-4 text-white">Primary Dark</div>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="mb-4 text-3xl font-semibold">セカンダリカラー</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-secondary-light p-4 text-white">Secondary Light</div>
+        <div class="bg-secondary p-4 text-white">Secondary</div>
+        <div class="bg-secondary-dark p-4 text-white">Secondary Dark</div>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="mb-4 text-3xl font-semibold">テキストカラー</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-text-primary p-4 text-white">Primary Text</div>
+        <div class="bg-text-secondary p-4 text-white">Secondary Text</div>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="mb-4 text-3xl font-semibold">ステータスカラー</h2>
+      <div class="grid grid-cols-4 gap-4">
+        <div class="bg-success p-4 text-white">Success</div>
+        <div class="bg-error p-4 text-white">Error</div>
+        <div class="bg-warning p-4 text-white">Warning</div>
+        <div class="bg-info p-4 text-white">Info</div>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <h2 class="mb-4 text-3xl font-semibold">背景カラー</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="bg-surface p-4 text-black">Surface</div>
+        <div class="bg-background p-4 text-black">Background</div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
