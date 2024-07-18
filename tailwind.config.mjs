@@ -3,25 +3,8 @@ const plugin = require('tailwindcss/plugin')
 
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
-  darkMode: 'selector',
-  daisyui: {
-    themes: [{
-      light: {
-        ...require("daisyui/src/theming/themes")["light"],
-        primary: '#e0ca72',
-        secondary: '#d6caa5',
-      },
-    },],
-    darkTheme: "dark", // name of one of the included themes for dark mode
-    base: true, // applies background color and foreground color for root element by default
-    styled: true, // include daisyUI colors and design decisions for all components
-    utils: true, // adds responsive and modifier utility classes
-    prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
-    logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
-    themeRoot: ":root", // The element that receives theme color CSS variables
-  },
+  darkMode: false,
   plugins: [
-    require("@tailwindcss/typography"),
     require("daisyui"),
     plugin(({ addVariant }) => {
       addVariant('where', ':where(&)')
@@ -30,35 +13,108 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          light: '#8eacbb',
-          DEFAULT: '#607d8b',
-          dark: '#34515e',
-        },
-        secondary: {
-          light: '#4f83cc',
-          DEFAULT: '#1565c0',
-          dark: '#003c8f',
-        },
-        tertiary: {
-          light: '#fff59d',
-          DEFAULT: '#fdd835',
-          dark: '#f9a825',
-        },
-        success: '#66bb6a',
-        error: '#e53935',
-        warning: '#ffa726',
-        info: '#42a5f5',
-        surface: '#ffffff',
-        background: '#f5f5f5',
-        text: {
-          primary: '#212121',
-          secondary: '#757575',
-        },
-      }
+        "surface-container-lowest": "var(--surface-container-lowest)",
+        "surface-container-low": "var(--surface-container-low)",
+        "surface-container": "var(--surface-container)",
+        "surface-container-high": "var(--surface-container-high)",
+        "surface-container-highest": "var(--surface-container-highest)",
+      },
     },
     fontFamily: {
       body: ['"Noto Sans"', '"Noto Sans JP"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Hiragino Sans"', '"Noto Sans CJK JP"', '"Original Yu Gothic"', '"Yu Gothic"', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Sans Emoji"'],
     },
+  },
+  daisyui: {
+    themes: [{
+      light: {
+        ...require("daisyui/src/theming/themes")["light"],
+        primary: "#4F4200",
+        "primary-content": "#FFFFFF",
+        secondary: "#4A4327",
+        "secondary-content": "#FFFFFF",
+        error: "#8C0009",
+        "error-content": "#FFFFFF",
+        "base-100": "#FFF9EE",
+        "base-200": "#FFF9EE",
+        "base-300": "#E0D9CC",
+        "base-content": "#1E1B13",
+        "accent": "#284A34",
+        "accent-content": "#FFFFFF",
+
+        "--surface-container-lowest": "#FFFFFF",
+        "--surface-container-low": "#FAF3E5",
+        "--surface-container": "#F4EDDF",
+        "--surface-container-high": "#EEE8DA",
+        "--surface-container-highest": "#E8E2D4",
+
+        surfaceVariant: "#EAE2D0",
+        onSurfaceVariant: "#474335",
+        outline: "#645F50",
+        outlineVariant: "#807A6B",
+        shadow: "#000000",
+        scrim: "#000000",
+        inverseSurface: "#333027",
+        inverseOnSurface: "#F7F0E2",
+        inversePrimary: "#DBC66E",
+        "primary-container": "#857425",
+        "primary-container-content": "#FFFFFF",
+        "secondary-container": "#7D7455",
+        "secondary-container-content": "#FFFFFF",
+        "accent-container": "#597D64",
+        "accent-container-content": "#FFFFFF",
+        "error-container": "#DA342E",
+        "error-container-content": "#FFFFFF",
+        background: "#FFF9EE",
+        onBackground: "#1E1B13",
+      },
+      dark: {
+        ...require("daisyui/src/theming/themes")["dark"],
+        primary: "#E0CA72",
+        "primary-content": "#1C1600",
+        secondary: "#D6CAA5",
+        "secondary-content": "#1B1602",
+        error: "#FFBAB1",
+        "error-content": "#370001",
+        "base-100": "#3C3930",
+        "base-200": "#15130B",
+        "base-300": "#15130B",
+        "base-content": "#FFFAF5",
+        "accent": "#ADD4B7",
+        "accent-content": "#001B0C",
+        
+        "--surface-container-lowest": "#100E07",
+        "--surface-container-low": "#1E1B13",
+        "--surface-container": "#222017",
+        "--surface-container-high": "#2D2A21",
+        "--surface-container-highest": "#38352B",
+
+        surfaceVariant: "#4B4739",
+        onSurfaceVariant: "#D1CAB8",
+        outline: "#A9A292",
+        outlineVariant: "#888373",
+        shadow: "#000000",
+        scrim: "#000000",
+        inverseSurface: "#E8E2D4",
+        inverseOnSurface: "#2D2A21",
+        inversePrimary: "#554700",
+        "primary-container": "#A3903F",
+        "primary-container-content": "#000000",
+        "secondary-container": "#9A916F",
+        "secondary-container-content": "#000000",
+        "accent-container": "#75997F",
+        "accent-container-content": "#000000",
+        "error-container": "#FF5449",
+        "error-container-content": "#000000",
+        background: "#15130B",
+        onBackground: "#E8E2D4",
+      },
+    },],
+    darkTheme: "dark",
+    base: true,
+    styled: true,
+    utils: true,
+    prefix: "",
+    logs: true,
+    themeRoot: ":root",
   },
 }
