@@ -10,85 +10,161 @@ const pageData = getPageDataByPermalink(permalink)
 ---
 
 <BaseLayout {pageData}>
-  <ToggleMode />
-  <article class="container mx-auto">
-    <h1 class="mb-8 text-5xl font-bold md:text-6xl">Style Guide</h1>
-
-    <section class="mb-12">
-      <h2 class="mb-4 text-3xl font-semibold md:text-4xl">フォントファミリー</h2>
-      <p>プライマリフォント: Noto Sans</p>
-      <p>セカンダリフォント: Noto Sans Jp</p>
+  <main>
+    <section class="bg-secondary py-12">
+      <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
+        <h1 class="text-5xl font-bold text-secondary-content md:text-6xl">Style Guide</h1>
+      </div>
     </section>
 
-    <h2 class="mb-4 text-3xl font-semibold md:text-4xl">Fonts</h2>
-    <section class="mb-12">
-      <h3 class="text-3xl md:text-4xl">Size</h3>
-      <div class="flex flex-grow gap-2 md:gap-4">
-        <div class="flex flex-grow flex-col gap-2 md:gap-4">
-          <h4 class="text-lg md:text-xl">PC</h4>
-          <p class="text-6xl">①6xl(60px/1)</p>
-          <p class="text-4xl">②4xl(36px/40px)</p>
-          <p class="text-2xl">③2xl(20px/28px)</p>
-          <p class="text-xl">④xl(18px/26px)</p>
-          <p class="text-lg">⑤lg(16px/24px)</p>
-          <p class="text-base">base(14px/22px) ＞ default</p>
-          <p class="text-sm">⑥sm(12px/20px)</p>
-          <p class="text-xs">⑦xs(10px/18px)</p>
+    <section class="py-10">
+      <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
+        <h2 class="mb-8 text-3xl font-semibold md:text-4xl">Fonts</h2>
+
+        <div class="flex flex-col gap-4 md:gap-6">
+          <section>
+            <h3 class="mb-4 text-xl font-medium md:text-2xl">Family</h3>
+
+            <p>default: Noto Sans</p>
+            <p>default(日本語): Noto Sans Jp</p>
+          </section>
+
+          <section>
+            <h3 class="mb-4 text-xl font-medium md:text-2xl">Size</h3>
+
+            <div class="flex flex-col gap-6 md:flex-row">
+              <div class="flex flex-col gap-2 md:gap-4">
+                <h4 class="text-lg md:text-xl">PC</h4>
+                <p class="text-6xl">①6xl(60px/1)</p>
+                <p class="text-4xl">②4xl(36px/40px)</p>
+                <p class="text-2xl">③2xl(20px/28px)</p>
+                <p class="text-xl">④xl(18px/26px)</p>
+                <p class="text-lg">⑤lg(16px/24px)</p>
+                <p class="text-base">base(14px/22px) ＞ default</p>
+                <p class="text-sm">⑥sm(12px/20px)</p>
+              </div>
+
+              <div class="flex flex-col gap-2 md:gap-4">
+                <h4 class="text-lg md:text-xl">SP</h4>
+                <p class="text-5xl">①5xl(48px/1)</p>
+                <p class="text-3xl">②3xl(30px/36px)</p>
+                <p class="text-xl">③xl(18px/26px)</p>
+                <p class="text-lg">④lg(16px/24px)</p>
+                <p class="text-base">⑤base(14px/22px)</p>
+                <p class="text-sm">sm(12px/20px) ＞ default</p>
+                <p class="text-xs">⑥xs(10px/18px)</p>
+              </div>
+            </div>
+          </section>
         </div>
-        <div class="flex flex-grow flex-col gap-2 md:gap-4">
-          <h4 class="text-lg md:text-xl">SP</h4>
-          <p class="text-5xl">①5xl(48px/1)</p>
-          <p class="text-3xl">②3xl(30px/36px)</p>
-          <p class="text-xl">③xl(18px/26px)</p>
-          <p class="text-lg">④lg(16px/24px)</p>
-          <p class="text-base">⑤base(14px/22px)</p>
-          <p class="text-sm">sm(12px/20px) ＞ default</p>
-          <p class="text-xs">⑥xs(10px/18px)</p>
-          <p class="text-xs">⑦xs(10px/18px)</p>
+      </div>
+    </section>
+
+    <section class="py-10">
+      <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
+        <h2 class="mb-8 text-3xl font-semibold md:text-4xl">Colors</h2>
+
+        <div class="flex flex-col gap-4 md:gap-6">
+          <section>
+            <h3 class="mb-4 text-xl font-medium md:text-2xl">Theme</h3>
+
+            <div class="flex gap-2 md:gap-4">
+              <div class="flex flex-col gap-2 md:gap-4">
+                <h4 class="text-lg md:text-xl">Light</h4>
+                <div class="w-60 bg-primary p-4 text-primary-content" data-theme="light">Primary</div>
+                <div class="w-60 bg-secondary p-4 text-secondary-content" data-theme="light">Secondary</div>
+                <div class="w-60 bg-accent p-4 text-accent-content" data-theme="light">accent</div>
+              </div>
+
+              <div class="flex flex-col gap-2 md:gap-4">
+                <h4 class="text-lg md:text-xl">Dark</h4>
+                <div class="w-60 bg-primary p-4 text-primary-content" data-theme="dark">Primary</div>
+                <div class="w-60 bg-secondary p-4 text-secondary-content" data-theme="dark">Secondary</div>
+                <div class="w-60 bg-accent p-4 text-accent-content" data-theme="dark">accent</div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="mb-4 text-xl font-medium md:text-2xl">Base</h3>
+
+            <div class="flex gap-2 md:gap-4">
+              <div class="flex flex-col gap-2 md:gap-4">
+                <div class="text-base-200-content w-60 bg-base-200 p-4" data-theme="light">Base</div>
+                <div class="text-base-100-content w-60 bg-base-100 p-4" data-theme="light">Base Light</div>
+                <div class="text-base-300-content w-60 bg-base-300 p-4" data-theme="light">Base Dark</div>
+              </div>
+
+              <div class="flex flex-col gap-2 md:gap-4">
+                <div class="text-base-200-content w-60 bg-base-200 p-4" data-theme="dark">Base</div>
+                <div class="text-base-100-content w-60 bg-base-100 p-4" data-theme="dark">Base Light</div>
+                <div class="text-base-300-content w-60 bg-base-300 p-4" data-theme="dark">Base Dark</div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <h3 class="mb-4 text-xl font-medium md:text-2xl">Status</h3>
+
+            <div class="flex gap-2 md:gap-4">
+              <div class="flex flex-col gap-2 md:gap-4">
+                <div class="w-60 bg-success p-4 text-success-content" data-theme="light">Success</div>
+                <div class="w-60 bg-error p-4 text-error-content" data-theme="light">Error</div>
+                <div class="w-60 bg-warning p-4 text-warning-content" data-theme="light">Warning</div>
+                <div class="w-60 bg-info p-4 text-info-content" data-theme="light">Info</div>
+              </div>
+
+              <div class="flex flex-col gap-2 md:gap-4">
+                <div class="w-60 bg-success p-4 text-success-content" data-theme="dark">Success</div>
+                <div class="w-60 bg-error p-4 text-error-content" data-theme="dark">Error</div>
+                <div class="w-60 bg-warning p-4 text-warning-content" data-theme="dark">Warning</div>
+                <div class="w-60 bg-info p-4 text-info-content" data-theme="dark">Info</div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </section>
 
-    <section class="mb-12">
-      <h2 class="mb-4 text-3xl font-semibold md:text-4xl">プライマリカラー</h2>
-      <div class="grid grid-cols-3 gap-4">
-        <div class="bg-primary p-4 text-primary-content" data-theme="light">Primary</div>
-        <div class="bg-primary p-4 text-primary-content" data-theme="dark">Primary Dark</div>
+    <section class="py-10">
+      <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
+        <h2 class="mb-8 text-3xl font-semibold md:text-4xl">Spaces</h2>
       </div>
-    </section>
 
-    <section class="mb-12">
-      <h2 class="mb-4 text-3xl font-semibold md:text-4xl">セカンダリカラー</h2>
-      <div class="grid grid-cols-3 gap-4">
-        <div class="bg-secondary p-4 text-secondary-content" data-theme="light">Secondary</div>
-        <div class="bg-secondary p-4 text-secondary-content" data-theme="dark">Secondary Dark</div>
-      </div>
-    </section>
+      <div class="flex flex-col gap-4 md:gap-6">
+        <section>
+          <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
+            <h3 class="mb-4 text-xl font-medium md:text-2xl">Section</h3>
+          </div>
 
-    <section class="mb-12">
-      <h2 class="mb-4 text-3xl font-semibold md:text-4xl">アクセントカラー</h2>
-      <div class="grid grid-cols-3 gap-4">
-        <div class="bg-accent p-4 text-accent-content" data-theme="light">accent</div>
-        <div class="bg-accent p-4 text-accent-content" data-theme="dark">accent Dark</div>
-      </div>
-    </section>
+          <div class="h-8 bg-[#b8c480] md:h-10">pt-8 md:pt-10</div>
+          <div class="flex h-20">
+            <div class="w-full bg-[#88b2bd]">content</div>
+          </div>
+          <div class="h-8 bg-[#b8c480] md:h-10">pt-8 md:pb-10</div>
+        </section>
 
-    <section class="mb-12">
-      <h2 class="mb-4 text-3xl font-semibold md:text-4xl">ステータスカラー</h2>
-      <div class="grid grid-cols-4 gap-4">
-        <div class="bg-success p-4 text-white">Success</div>
-        <div class="bg-error p-4 text-white">Error</div>
-        <div class="bg-warning p-4 text-white">Warning</div>
-        <div class="bg-info p-4 text-white">Info</div>
-      </div>
-    </section>
+        <section>
+          <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
+            <h3 class="mb-4 text-xl font-medium md:text-2xl">Inner</h3>
+            <h4 class="text-lg md:text-xl">default</h4>
+          </div>
 
-    <section class="mb-12">
-      <h2 class="mb-4 text-3xl font-semibold md:text-4xl">背景カラー</h2>
-      <div class="grid grid-cols-3 gap-4">
-        <div class="bg-surface p-4 text-black">Surface</div>
-        <div class="bg-background p-4 text-black">Background</div>
+          <div class="flex h-20">
+            <div class="grow bg-[#b08354]"></div>
+            <div class="w-11/12 max-w-screen-2xl bg-[#88b2bd] md:w-10/12">max-w-screen-2xl w-11/12 md:w-10/12</div>
+            <div class="grow bg-[#b08354]"></div>
+          </div>
+
+          <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
+            <h4 class="text-lg md:text-xl">Full</h4>
+          </div>
+
+          <div class="flex h-20">
+            <div class="w-full bg-[#88b2bd]">w-full</div>
+          </div>
+        </section>
       </div>
     </section>
-  </article>
+  </main>
 </BaseLayout>
