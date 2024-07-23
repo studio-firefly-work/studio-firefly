@@ -1,7 +1,7 @@
 ---
-const { maxWidth, class: addClasses = '', ...rest } = Astro.props
+const { class: addClasses = '', ...rest } = Astro.props
 ---
 
-<div class=`where:max-w-screen-xl ${addClasses} mx-auto w-11/12` {...rest}>
+<div class=`where:py-16 md:where:py-20 ${addClasses}` {...rest}>
   <slot />
 </div>

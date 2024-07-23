@@ -5,6 +5,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro'
 import { getPageDataByPermalink } from '@/constants/pageDatas'
 import ToggleMode from '@/components/molecules/ToggleMode/ToggleMode.astro'
 
+import Inner from '@/components/atoms/Inner/Inner.astro'
+import Container from '@/components/atoms/Container/Container.astro'
+
 const permalink = '/test'
 const pageData = getPageDataByPermalink(permalink)
 ---
@@ -12,13 +15,13 @@ const pageData = getPageDataByPermalink(permalink)
 <BaseLayout {pageData}>
   <main>
     <section class="bg-secondary py-12">
-      <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
+      <Inner>
         <h1 class="text-5xl font-bold text-secondary-content md:text-6xl">Style Guide</h1>
-      </div>
+      </Inner>
     </section>
 
-    <section class="py-10">
-      <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
+    <Container>
+      <Inner>
         <h2 class="mb-8 text-3xl font-semibold md:text-4xl">Fonts</h2>
 
         <div class="flex flex-col gap-4 md:gap-6">
@@ -36,32 +39,32 @@ const pageData = getPageDataByPermalink(permalink)
               <div class="flex flex-col gap-2 md:gap-4">
                 <h4 class="text-lg md:text-xl">PC</h4>
                 <p class="text-6xl">①6xl(60px/1)</p>
-                <p class="text-4xl">②4xl(36px/40px)</p>
-                <p class="text-2xl">③2xl(20px/28px)</p>
-                <p class="text-xl">④xl(18px/26px)</p>
-                <p class="text-lg">⑤lg(16px/24px)</p>
-                <p class="text-base">base(14px/22px) ＞ default</p>
-                <p class="text-sm">⑥sm(12px/20px)</p>
+                <p class="text-5xl">②5xl(48px/1)</p>
+                <p class="text-3xl">③3xl(30px/36px)</p>
+                <p class="text-2xl">④2xl(24px/32px)</p>
+                <p class="text-xl">⑤xl(20px/28px)</p>
+                <p class="text-base">base(16px/24px) ＞ default</p>
+                <p class="text-sm">⑥sm(14px/20px)</p>
               </div>
 
               <div class="flex flex-col gap-2 md:gap-4">
                 <h4 class="text-lg md:text-xl">SP</h4>
-                <p class="text-5xl">①5xl(48px/1)</p>
+                <p class="text-4xl">①4xl(36px/40px)</p>
                 <p class="text-3xl">②3xl(30px/36px)</p>
-                <p class="text-xl">③xl(18px/26px)</p>
-                <p class="text-lg">④lg(16px/24px)</p>
-                <p class="text-base">⑤base(14px/22px)</p>
-                <p class="text-sm">sm(12px/20px) ＞ default</p>
-                <p class="text-xs">⑥xs(10px/18px)</p>
+                <p class="text-2xl">③2xl(24px/32px)</p>
+                <p class="text-xl">④xl(20px/28px)</p>
+                <p class="text-lg">⑤lg(18px/28px)</p>
+                <p class="text-base">base(16px/24px) ＞ default</p>
+                <p class="text-sm">⑥sm(14px/20px)</p>
               </div>
             </div>
           </section>
         </div>
-      </div>
-    </section>
+      </Inner>
+    </Container>
 
-    <section class="py-10">
-      <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
+    <Container>
+      <Inner>
         <h2 class="mb-8 text-3xl font-semibold md:text-4xl">Colors</h2>
 
         <div class="flex flex-col gap-4 md:gap-6">
@@ -123,80 +126,73 @@ const pageData = getPageDataByPermalink(permalink)
             </div>
           </section>
         </div>
-      </div>
-    </section>
+      </Inner>
+    </Container>
 
-    <section class="py-10">
-      <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
+    <Container>
+      <Inner>
         <h2 class="mb-8 text-3xl font-semibold md:text-4xl">Spaces</h2>
-      </div>
+        <h3 class="mb-4 text-xl font-medium md:text-2xl">Container</h3>
+      </Inner>
+      <Inner size="full">
+        <div class="h-16 bg-[#b8c480] md:h-20">PC: pt-20(80px), SP: pt-16(64px)</div>
+        <div class="h-20 bg-[#88b2bd]"></div>
+        <div class="h-16 bg-[#b8c480] md:h-20">PC: pb-20(80px), SP: pt-16(64px)</div>
+      </Inner>
 
-      <div class="flex flex-col gap-4 md:gap-6">
-        <div>
-          <div class="flex flex-col gap-4 md:gap-6">
-            <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
-              <h3 class="mb-4 text-xl font-medium md:text-2xl">Container</h3>
-              <h4 class="text-lg md:text-xl">default</h4>
-            </div>
-
-            <div>
-              <div class="h-8 bg-[#b8c480] md:h-10">PC: pt-10(40px), SP: pt-8(32px)</div>
-              <div class="flex h-20">
-                <div class="w-full bg-[#88b2bd]"></div>
-              </div>
-              <div class="h-8 bg-[#b8c480] md:h-10">PC: pb-10(40px), SP: pt-8(32px)</div>
-            </div>
-
-            <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
-              <h4 class="text-lg md:text-xl">Full</h4>
-            </div>
-
-            <div>
-              <div class="flex h-36 md:h-40">
-                <div class="w-full bg-[#88b2bd]"></div>
-              </div>
-            </div>
-          </div>
+      <Inner>
+        <h3 class="mb-4 text-xl font-medium md:text-2xl">Inner</h3>
+        <h4 class="text-lg md:text-xl">default</h4>
+      </Inner>
+      <Inner size="full">
+        <div class="flex h-20">
+          <div class="grow bg-[#b08354]"></div>
+          <div class="w-11/12 max-w-screen-xl bg-[#88b2bd] md:w-10/12">SP: w-11/12(91.66%), PC: w-10/12(83.33%) max-w-screen-xl(1280px)</div>
+          <div class="grow bg-[#b08354]"></div>
         </div>
+      </Inner>
 
-        <section>
-          <div class="flex flex-col gap-4 md:gap-6">
-            <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
-              <h3 class="mb-4 text-xl font-medium md:text-2xl">Inner</h3>
-              <h4 class="text-lg md:text-xl">default</h4>
-            </div>
+      <Inner>
+        <h4 class="text-lg md:text-xl">Full</h4>
+      </Inner>
+      <Inner size="full">
+        <div class="h-20 w-full bg-[#88b2bd]">w-full</div>
+      </Inner>
 
-            <div class="flex h-20">
-              <div class="grow bg-[#b08354]"></div>
-              <div class="w-11/12 max-w-screen-2xl bg-[#88b2bd] md:w-10/12">max-w-screen-2xl w-11/12 md:w-10/12</div>
-              <div class="grow bg-[#b08354]"></div>
-            </div>
+      <Inner>
+        <h4 class="text-lg md:text-xl">Wide</h4>
+      </Inner>
+      <Inner size="full">
+        <div class="flex h-20">
+          <div class="grow bg-[#b08354]"></div>
+          <div class="w-11/12 max-w-screen-2xl bg-[#88b2bd] md:w-11/12">SP: w-11/12(91.66%), PC: w-11/12(91.66%) max-w-screen-2xl(1536px)</div>
+          <div class="grow bg-[#b08354]"></div>
+        </div>
+      </Inner>
 
-            <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
-              <h4 class="text-lg md:text-xl">Full</h4>
-            </div>
+      <Inner>
+        <h4 class="text-lg md:text-xl">Narrow</h4>
+      </Inner>
+      <Inner size="full">
+        <div class="mx-auto w-11/12 max-w-screen-xl md:w-10/12"></div>
+        <div class="flex h-20">
+          <div class="grow bg-[#b08354]"></div>
+          <div class="w-10/12 max-w-screen-lg bg-[#88b2bd] md:w-9/12">SP: w-10/12(83.33%), PC: w-9/12(75%) max-w-screen-lg(1024px)</div>
+          <div class="grow bg-[#b08354]"></div>
+        </div>
+      </Inner>
 
-            <div class="flex h-20">
-              <div class="w-full bg-[#88b2bd]">w-full</div>
-            </div>
-
-            <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
-              <h4 class="text-lg md:text-xl">Wide</h4>
-            </div>
-
-            <div class="flex h-20">
-              <div class="w-full bg-[#88b2bd]">w-full</div>
-            </div>
-            <div class="mx-auto w-11/12 max-w-screen-2xl md:w-10/12">
-              <h4 class="text-lg md:text-xl">Small</h4>
-            </div>
-
-            <div class="flex h-20">
-              <div class="w-full bg-[#88b2bd]">w-full</div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </section>
+      <Inner>
+        <h3 class="mb-4 text-xl font-medium md:text-2xl">Content</h3>
+        <h4 class="text-lg md:text-xl">default</h4>
+      </Inner>
+      <Inner>
+        <div class="flex flex-col">
+          <div class="h-20 bg-[#88b2bd]"></div>
+          <div class="h-4 bg-[#b08354] md:h-6">PC: mb-6, SP: mb-4</div>
+          <div class="h-20 bg-[#88b2bd]"></div>
+        </div>
+      </Inner>
+    </Container>
   </main>
 </BaseLayout>
