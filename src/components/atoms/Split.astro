@@ -1,0 +1,12 @@
+---
+import { tv } from 'tailwind-variants'
+
+const { columns = 2, class: addClasses, ...rest } = Astro.props
+const style = tv({
+  base: `grid grid-cols-1 md:grid-cols-${columns} gap-6 md:gap-8 ${addClasses}`,
+})
+---
+
+<div class={style()} {...rest}>
+  <slot />
+</div>

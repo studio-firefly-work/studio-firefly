@@ -1,10 +1,10 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import ButtonText from '@/components/molecules/ButtonText/ButtonText.astro'
-import ToggleMode from '@/components/molecules/ToggleMode/ToggleMode.astro'
+import ButtonText from '@/components/molecules/ButtonText.astro'
+import ToggleMode from '@/components/molecules/ToggleMode.astro'
 import { getPageDatasAll, exceptHome, exceptNoindex, getPageDataByPermalink } from '@/constants/pageDatas'
 import type { PageData } from '@/constants/pageDatas'
-import Particle from '@/components/molecules/Particle/Particle.astro'
+import Particle from '@/components/molecules/Particle.astro'
 
 const permalink = '/'
 const pageData = getPageDataByPermalink(permalink)

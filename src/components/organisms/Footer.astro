@@ -1,8 +1,8 @@
 ---
 import * as utils from '@/utils'
-import Container from '@/components/atoms/Container/Container.astro'
+import Container from '@/components/atoms/Container.astro'
 import { getSiteDataAll } from '@/constants/siteDatas'
-import ButtonText from '@/components/molecules/ButtonText/ButtonText.astro'
+import ButtonText from '@/components/molecules/ButtonText.astro'
 
 const siteData = getSiteDataAll()
 const normalizeTelNumber = utils.normalizeTelNumber(siteData.tel)

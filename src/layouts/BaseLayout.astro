@@ -6,7 +6,7 @@ const siteData = getSiteDataAll()
 ---
 
 <!doctype html>
-<html lang="jp" class="scroll-smooth">
+<html lang="jp" class="h-full scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -22,10 +22,33 @@ const siteData = getSiteDataAll()
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   </head>
 
-  <body class="flex min-h-screen flex-col bg-base-200 font-body text-base tracking-normal">
+  <body class="manipulation min-h-full bg-base-200 font-body text-base tracking-normal antialiased">
     <slot />
   </body>
 </html>
+
+<style is:global>
+  .theme-text-3xl {
+    @apply text-4xl md:text-5xl;
+  }
+  .theme-text-2xl {
+    @apply text-3xl md:text-4xl;
+  }
+  .theme-text-xl {
+    @apply text-2xl md:text-3xl;
+  }
+  .theme-text-lg {
+    @apply text-xl md:text-2xl;
+  }
+  .theme-text-md {
+    @apply text-lg md:text-xl;
+  }
+  .theme-text-sm {
+    @apply text-sm md:text-sm;
+  }
+  .theme-text-xs {
+    @apply text-xs md:text-xs;
+  }
+</style>
