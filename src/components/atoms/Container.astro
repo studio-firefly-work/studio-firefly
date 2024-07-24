@@ -1,0 +1,12 @@
+---
+import { tv } from 'tailwind-variants'
+
+const { class: addClasses, ...rest } = Astro.props
+const style = tv({
+  base: `py-16 md:py-20 ${addClasses}`,
+})
+---
+
+<div class={style()} {...rest}>
+  <slot />
+</div>

@@ -3,10 +3,11 @@ export const prerender = false
 import BaseLayout from '@/layouts/BaseLayout.astro'
 
 import { getPageDataByPermalink } from '@/constants/pageDatas'
-import ToggleMode from '@/components/molecules/ToggleMode/ToggleMode.astro'
+import ToggleMode from '@/components/molecules/ToggleMode.astro'
 
-import Inner from '@/components/atoms/Inner/Inner.astro'
-import Container from '@/components/atoms/Container/Container.astro'
+import Inner from '@/components/atoms/Inner.astro'
+import Container from '@/components/atoms/Container.astro'
+import Split from '@/components/atoms/Split.astro'
 
 const permalink = '/test'
 const pageData = getPageDataByPermalink(permalink)
@@ -16,48 +17,46 @@ const pageData = getPageDataByPermalink(permalink)
   <main>
     <section class="bg-secondary py-12">
       <Inner>
-        <h1 class="text-5xl font-bold text-secondary-content md:text-6xl">Style Guide</h1>
+        <h1 class="theme-text-3xl font-bold text-secondary-content">Style Guide</h1>
       </Inner>
     </section>
 
     <Container>
       <Inner>
-        <h2 class="mb-8 text-3xl font-semibold md:text-4xl">Fonts</h2>
-
         <div class="flex flex-col gap-4 md:gap-6">
           <section>
-            <h3 class="mb-4 text-xl font-medium md:text-2xl">Family</h3>
+            <h3 class="theme-text-xl mb-4 font-medium">Family</h3>
 
             <p>default: Noto Sans</p>
             <p>default(日本語): Noto Sans Jp</p>
           </section>
 
           <section>
-            <h3 class="mb-4 text-xl font-medium md:text-2xl">Size</h3>
+            <h3 class="theme-text-xl mb-4 font-medium">Size</h3>
 
-            <div class="flex flex-col gap-6 md:flex-row">
+            <Split>
               <div class="flex flex-col gap-2 md:gap-4">
-                <h4 class="text-lg md:text-xl">PC</h4>
-                <p class="text-6xl">①6xl(60px/1)</p>
-                <p class="text-5xl">②5xl(48px/1)</p>
+                <h4 class="theme-text-lg">PC</h4>
+                <p class="text-5xl">①5xl(48px/1)</p>
+                <p class="text-4xl">②4xl(36px/40px)</p>
                 <p class="text-3xl">③3xl(30px/36px)</p>
                 <p class="text-2xl">④2xl(24px/32px)</p>
                 <p class="text-xl">⑤xl(20px/28px)</p>
-                <p class="text-base">base(16px/24px) ＞ default</p>
+                <p class="text-base">base(16px/24px) > default</p>
                 <p class="text-sm">⑥sm(14px/20px)</p>
               </div>
 
               <div class="flex flex-col gap-2 md:gap-4">
-                <h4 class="text-lg md:text-xl">SP</h4>
+                <h4 class="theme-text-lg">SP</h4>
                 <p class="text-4xl">①4xl(36px/40px)</p>
                 <p class="text-3xl">②3xl(30px/36px)</p>
                 <p class="text-2xl">③2xl(24px/32px)</p>
                 <p class="text-xl">④xl(20px/28px)</p>
                 <p class="text-lg">⑤lg(18px/28px)</p>
-                <p class="text-base">base(16px/24px) ＞ default</p>
+                <p class="text-base">base(16px/24px) > default</p>
                 <p class="text-sm">⑥sm(14px/20px)</p>
               </div>
-            </div>
+            </Split>
           </section>
         </div>
       </Inner>
@@ -65,65 +64,65 @@ const pageData = getPageDataByPermalink(permalink)
 
     <Container>
       <Inner>
-        <h2 class="mb-8 text-3xl font-semibold md:text-4xl">Colors</h2>
+        <h2 class="theme-text-2xl mb-8 font-semibold">Colors</h2>
 
         <div class="flex flex-col gap-4 md:gap-6">
           <section>
-            <h3 class="mb-4 text-xl font-medium md:text-2xl">Theme</h3>
+            <h3 class="theme-text-xl mb-4 font-medium">Theme</h3>
 
             <div class="flex gap-2 md:gap-4">
               <div class="flex flex-col gap-2 md:gap-4">
-                <h4 class="text-lg md:text-xl">Light</h4>
-                <div class="w-60 bg-primary p-4 text-primary-content" data-theme="light">Primary</div>
-                <div class="w-60 bg-secondary p-4 text-secondary-content" data-theme="light">Secondary</div>
-                <div class="w-60 bg-accent p-4 text-accent-content" data-theme="light">accent</div>
+                <h4 class="theme-text-lg">Light</h4>
+                <div class="bg-primary p-4 text-primary-content" data-theme="light">Primary</div>
+                <div class="bg-secondary p-4 text-secondary-content" data-theme="light">Secondary</div>
+                <div class="bg-accent p-4 text-accent-content" data-theme="light">accent</div>
               </div>
 
               <div class="flex flex-col gap-2 md:gap-4">
-                <h4 class="text-lg md:text-xl">Dark</h4>
-                <div class="w-60 bg-primary p-4 text-primary-content" data-theme="dark">Primary</div>
-                <div class="w-60 bg-secondary p-4 text-secondary-content" data-theme="dark">Secondary</div>
-                <div class="w-60 bg-accent p-4 text-accent-content" data-theme="dark">accent</div>
+                <h4 class="theme-text-lg">Dark</h4>
+                <div class="bg-primary p-4 text-primary-content" data-theme="dark">Primary</div>
+                <div class="bg-secondary p-4 text-secondary-content" data-theme="dark">Secondary</div>
+                <div class="bg-accent p-4 text-accent-content" data-theme="dark">accent</div>
               </div>
             </div>
           </section>
 
           <section>
-            <h3 class="mb-4 text-xl font-medium md:text-2xl">Base</h3>
+            <h3 class="theme-text-xl mb-4 font-medium">Base</h3>
 
-            <div class="flex gap-2 md:gap-4">
+            <Split columns={3}>
               <div class="flex flex-col gap-2 md:gap-4">
-                <div class="text-base-200-content w-60 bg-base-200 p-4" data-theme="light">Base</div>
-                <div class="text-base-100-content w-60 bg-base-100 p-4" data-theme="light">Base Light</div>
-                <div class="text-base-300-content w-60 bg-base-300 p-4" data-theme="light">Base Dark</div>
+                <div class="text-base-200-content bg-base-200 p-4" data-theme="light">Base</div>
+                <div class="text-base-100-content bg-base-100 p-4" data-theme="light">Base Light</div>
+                <div class="text-base-300-content bg-base-300 p-4" data-theme="light">Base Dark</div>
               </div>
 
               <div class="flex flex-col gap-2 md:gap-4">
-                <div class="text-base-200-content w-60 bg-base-200 p-4" data-theme="dark">Base</div>
-                <div class="text-base-100-content w-60 bg-base-100 p-4" data-theme="dark">Base Light</div>
-                <div class="text-base-300-content w-60 bg-base-300 p-4" data-theme="dark">Base Dark</div>
+                <div class="text-base-200-content bg-base-200 p-4" data-theme="dark">Base</div>
+                <div class="text-base-100-content bg-base-100 p-4" data-theme="dark">Base Light</div>
+                <div class="text-base-300-content bg-base-300 p-4" data-theme="dark">Base Dark</div>
               </div>
-            </div>
+            </Split>
           </section>
 
           <section>
-            <h3 class="mb-4 text-xl font-medium md:text-2xl">Status</h3>
+            <h3 class="theme-text-xl mb-4 font-medium">Status</h3>
 
-            <div class="flex gap-2 md:gap-4">
+            <Split class="md:grid-cols-[20%_1fr]">
               <div class="flex flex-col gap-2 md:gap-4">
-                <div class="w-60 bg-success p-4 text-success-content" data-theme="light">Success</div>
-                <div class="w-60 bg-error p-4 text-error-content" data-theme="light">Error</div>
-                <div class="w-60 bg-warning p-4 text-warning-content" data-theme="light">Warning</div>
-                <div class="w-60 bg-info p-4 text-info-content" data-theme="light">Info</div>
+                <div class="bg-success p-4 text-success-content" data-theme="light">Success</div>
+                <div class="bg-error p-4 text-error-content" data-theme="light">Error</div>
+                <div class="bg-warning p-4 text-warning-content" data-theme="light">Warning</div>
+                <div class="bg-info p-4 text-info-content" data-theme="light">Info</div>
               </div>
 
               <div class="flex flex-col gap-2 md:gap-4">
-                <div class="w-60 bg-success p-4 text-success-content" data-theme="dark">Success</div>
-                <div class="w-60 bg-error p-4 text-error-content" data-theme="dark">Error</div>
-                <div class="w-60 bg-warning p-4 text-warning-content" data-theme="dark">Warning</div>
-                <div class="w-60 bg-info p-4 text-info-content" data-theme="dark">Info</div>
+                <div class="bg-success p-4 text-success-content" data-theme="dark">Success</div>
+                <div class="bg-error p-4 text-error-content" data-theme="dark">Error</div>
+                <div class="bg-warning p-4 text-warning-content" data-theme="dark">Warning</div>
+                <div class="bg-info p-4 text-info-content" data-theme="dark">Info</div>
               </div>
-            </div>
+            </Split>
           </section>
         </div>
       </Inner>
@@ -131,8 +130,8 @@ const pageData = getPageDataByPermalink(permalink)
 
     <Container>
       <Inner>
-        <h2 class="mb-8 text-3xl font-semibold md:text-4xl">Spaces</h2>
-        <h3 class="mb-4 text-xl font-medium md:text-2xl">Container</h3>
+        <h2 class="theme-text-2xl mb-8 font-semibold">Spaces</h2>
+        <h3 class="theme-text-xl mb-4 font-medium">Container</h3>
       </Inner>
       <Inner size="full">
         <div class="h-16 bg-[#b8c480] md:h-20">PC: pt-20(80px), SP: pt-16(64px)</div>
@@ -141,8 +140,8 @@ const pageData = getPageDataByPermalink(permalink)
       </Inner>
 
       <Inner>
-        <h3 class="mb-4 text-xl font-medium md:text-2xl">Inner</h3>
-        <h4 class="text-lg md:text-xl">default</h4>
+        <h3 class="theme-text-xl mb-4 font-medium">Inner</h3>
+        <h4 class="theme-text-lg">default</h4>
       </Inner>
       <Inner size="full">
         <div class="flex h-20">
@@ -153,14 +152,14 @@ const pageData = getPageDataByPermalink(permalink)
       </Inner>
 
       <Inner>
-        <h4 class="text-lg md:text-xl">Full</h4>
+        <h4 class="theme-text-lg">Full</h4>
       </Inner>
       <Inner size="full">
         <div class="h-20 w-full bg-[#88b2bd]">w-full</div>
       </Inner>
 
       <Inner>
-        <h4 class="text-lg md:text-xl">Wide</h4>
+        <h4 class="theme-text-lg">Wide</h4>
       </Inner>
       <Inner size="full">
         <div class="flex h-20">
@@ -171,7 +170,7 @@ const pageData = getPageDataByPermalink(permalink)
       </Inner>
 
       <Inner>
-        <h4 class="text-lg md:text-xl">Narrow</h4>
+        <h4 class="theme-text-lg">Narrow</h4>
       </Inner>
       <Inner size="full">
         <div class="mx-auto w-11/12 max-w-screen-xl md:w-10/12"></div>
@@ -183,8 +182,8 @@ const pageData = getPageDataByPermalink(permalink)
       </Inner>
 
       <Inner>
-        <h3 class="mb-4 text-xl font-medium md:text-2xl">Content</h3>
-        <h4 class="text-lg md:text-xl">default</h4>
+        <h3 class="theme-text-xl mb-4 font-medium">Content</h3>
+        <h4 class="theme-text-lg">default</h4>
       </Inner>
       <Inner>
         <div class="flex flex-col">
