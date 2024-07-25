@@ -5,6 +5,8 @@ import Container from '@/components/atoms/Container.astro'
 import ToggleMode from '@/components/molecules/ToggleMode.astro'
 import { getPageDatasAll, exceptHome, exceptNoindex } from '@/constants/pageDatas'
 import type { PageData } from '@/constants/pageDatas'
+import Inner from '@/components/atoms/Inner.astro'
+import Split from '@/components/atoms/Split.astro'
 
 import Logo from '@/assets/images/common/logo.svg?raw'
 
@@ -14,29 +16,33 @@ const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
 ---
 
 <header>
-  <Container class="max-w-screen-2xl">
-    <nav class="flex items-center justify-between" aria-label="Main navigation">
-      <Button href="/">
-        <Fragment set:html={Logo} />
-        <svg width="140" height="60">
-          <use href="#logo-text" class="fill-black dark:fill-white"></use>
-          <use href="#logo-firefly"></use>
-        </svg>
-      </Button>
+  <Container>
+    <Inner size="wide">
+      <Split>
+        <nav class="flex items-center justify-between" aria-label="Main navigation">
+          <Button href="/">
+            <Fragment set:html={Logo} />
+            <svg width="140" height="60">
+              <use href="#logo-text" class="fill-black dark:fill-white"></use>
+              <use href="#logo-firefly"></use>
+            </svg>
+          </Button>
 
-      <ul class="flex gap-12">
-        {
-          pagesExceptNoindexAndHome.map((page: PageData) => (
-            <li>
-              <ButtonText href={page.permalink} class="flex flex-col text-sm before:text-2xl before:content-[attr(data-title-en)]" data-title-en={page.title.en}>
-                {page.title.jp}
-              </ButtonText>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
+          <ul class="flex gap-12">
+            {
+              pagesExceptNoindexAndHome.map((page: PageData) => (
+                <li>
+                  <ButtonText href={page.permalink} class="flex flex-col text-sm before:text-2xl before:content-[attr(data-title-en)]" data-title-en={page.title.en}>
+                    {page.title.jp}
+                  </ButtonText>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
 
-    <ToggleMode />
+        <ToggleMode />
+      </Split>
+    </Inner>
   </Container>
 </header>

@@ -3,18 +3,21 @@ import * as utils from '@/utils'
 import Container from '@/components/atoms/Container.astro'
 import { getSiteDataAll } from '@/constants/siteDatas'
 import ButtonText from '@/components/molecules/ButtonText.astro'
+import Inner from '@/components/atoms/Inner.astro'
 
 const siteData = getSiteDataAll()
 const normalizeTelNumber = utils.normalizeTelNumber(siteData.tel)
 ---
 
 <footer class="mt-auto">
-  <Container class="max-w-screen-2xl py-4 md:py-8">
-    <address>
-      <p>{siteData.postalCode}</p>
-      <p>{siteData.address}</p>
-      <ButtonText href=`tel:${normalizeTelNumber}` class="w-fit">{siteData.tel}</ButtonText>
-    </address>
-    <small class="block text-center">{siteData.copy}</small>
+  <Container>
+    <Inner size="wide">
+      <address>
+        <p>{siteData.postalCode}</p>
+        <p>{siteData.address}</p>
+        <ButtonText href=`tel:${normalizeTelNumber}` class="w-fit">{siteData.tel}</ButtonText>
+      </address>
+      <small class="block text-center">{siteData.copy}</small>
+    </Inner>
   </Container>
 </footer>
