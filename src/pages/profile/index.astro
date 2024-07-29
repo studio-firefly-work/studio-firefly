@@ -2,15 +2,21 @@
 import PageLayout from '@/layouts/PageLayout.astro'
 import Splide from '@/components/molecules/Splide.astro'
 import { getPageDataByPermalink } from '@/constants/pageDatas'
+import Container from '@/components/atoms/Container.astro'
+import Inner from '@/components/atoms/Inner.astro'
 
 const permalink = '/profile'
 const pageData = getPageDataByPermalink(permalink)
 ---
 
 <PageLayout {pageData}>
-  <section>
-    <div class="overflow-hidden py-10">
+  <Container>
+    <Inner size="full" class="overflow-hidden">
       <Splide />
-    </div>
-  </section>
+    </Inner>
+
+    <Inner>
+      <p>test</p>
+    </Inner>
+  </Container>
 </PageLayout>

@@ -2,7 +2,7 @@
 
 ---
 
-<div id="splash-screen" class="fixed h-screen w-full bg-red-300 opacity-0">splash test</div>
+<div id="splash-screen" class="fixed -z-10 h-screen w-full bg-red-300 opacity-0">splash test</div>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -20,9 +20,11 @@
 
   function showSplashScreen(splashScreen: HTMLElement) {
     splashScreen.classList.remove('opacity-0')
+    splashScreen.classList.remove('-z-10')
     splashScreen.classList.add('opacity-1')
     setTimeout(() => {
       splashScreen.classList.add('opacity-0')
+      splashScreen.classList.add('-z-10')
     }, 1000)
   }
 </script>

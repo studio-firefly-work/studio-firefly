@@ -13,7 +13,7 @@ const { pageData } = Astro.props
   <main>
     <Container>
       <Inner>
-        <h1 class="flex flex-col text-sm before:text-2xl before:content-[attr(data-title-en)]" data-title-en={pageData.title.en}>{pageData.title.jp}</h1>
+        <h1 class="theme-text-md flex flex-col gap-2 font-bold before:text-4xl before:content-[attr(data-title-en)] md:gap-4 before:md:text-5xl" data-title-en={pageData.title.en}>{pageData.title.jp}</h1>
       </Inner>
     </Container>
 

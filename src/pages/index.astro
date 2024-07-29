@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import ButtonText from '@/components/molecules/ButtonText.astro'
-import ToggleMode from '@/components/molecules/ToggleMode.astro'
+import ToggleMode from '@/components/molecules/ToggleTheme.astro'
 import { getPageDatasAll, exceptHome, exceptNoindex, getPageDataByPermalink } from '@/constants/pageDatas'
 import type { PageData } from '@/constants/pageDatas'
 import Particle from '@/components/molecules/Particle.astro'
@@ -16,22 +16,18 @@ const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
 
 <BaseLayout {pageData}>
   <main>
-    <section>
-      <div class="h-screen">
-        <ToggleMode />
-        <ul class="flex gap-4">
-          {
-            pagesExceptNoindexAndHome.map((page: PageData) => (
-              <li>
-                <ButtonText href={page.permalink} class="flex flex-col text-sm before:text-2xl before:content-[attr(data-title-en)]" data-title-en={page.title.en}>
-                  {page.title.jp}
-                </ButtonText>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-    </section>
+    <ToggleMode />
+    <ul class="flex flex-wrap gap-4">
+      {
+        pagesExceptNoindexAndHome.map((page: PageData) => (
+          <li>
+            <ButtonText href={page.permalink} class="flex flex-col text-sm before:text-2xl before:content-[attr(data-title-en)]" data-title-en={page.title.en}>
+              {page.title.jp}
+            </ButtonText>
+          </li>
+        ))
+      }
+    </ul>
 
     <Particle />
   </main>

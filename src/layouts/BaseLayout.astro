@@ -5,14 +5,14 @@ import '@fontsource-variable/noto-sans'
 import '@fontsource-variable/noto-sans-jp'
 import '@/styles/global.scss'
 import { getSiteDataAll } from '@/constants/siteDatas'
-import Splash from '@/components/molecules/SplashScreen.astro'
+import SplashScreen from '@/components/molecules/SplashScreen.astro'
 
 const { pageData } = Astro.props
 const siteData = getSiteDataAll()
 ---
 
 <!doctype html>
-<html lang="jp" class="h-full scroll-smooth">
+<html lang="jp" class="scroll-smooth">
   <head prefix="og: https://ogp.me/ns#">
     <SEO
       title={pageData.title.jp}
@@ -47,8 +47,8 @@ const siteData = getSiteDataAll()
     <ViewTransitions />
   </head>
 
-  <body class="manipulation min-h-full bg-base-200 font-body text-base tracking-normal antialiased">
-    <Splash />
+  <body class="manipulation grid min-h-dvh grid-cols-1 grid-rows-[auto,1fr,auto] bg-base-200 font-body text-base tracking-normal antialiased">
+    <SplashScreen />
     <slot />
   </body>
 </html>
