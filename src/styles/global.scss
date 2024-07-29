@@ -1,0 +1,21 @@
+.theme-text-3xl {
+  @apply text-4xl md:text-5xl;
+}
+.theme-text-2xl {
+  @apply text-3xl md:text-4xl;
+}
+.theme-text-xl {
+  @apply text-2xl md:text-3xl;
+}
+.theme-text-lg {
+  @apply text-xl md:text-2xl;
+}
+.theme-text-md {
+  @apply text-lg md:text-xl;
+}
+.theme-text-sm {
+  @apply text-sm md:text-sm;
+}
+.theme-text-xs {
+  @apply text-xs md:text-xs;
+}
