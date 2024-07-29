@@ -1,5 +1,6 @@
-/** @type {import('tailwindcss').Config} */
+import defaultTheme from 'tailwindcss/defaultTheme'
 
+/** @type {import('tailwindcss').Config} */
 export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: false,
@@ -20,7 +21,7 @@ export default {
       },
     },
     fontFamily: {
-      body: ['"Noto Sans"', '"Noto Sans JP"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Hiragino Sans"', '"Noto Sans CJK JP"', '"Original Yu Gothic"', '"Yu Gothic"', 'sans-serif', '"Apple Color Emoji"', '"Segoe UI Emoji"', '"Segoe UI Symbol"', '"Noto Sans Emoji"'],
+      body: ['"Noto Sans Variable"', '"Noto Sans JP Variable"', ...defaultTheme.fontFamily.sans],
     },
   },
   daisyui: {
