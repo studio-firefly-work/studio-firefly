@@ -18,7 +18,7 @@ import slide12 from '@/assets/images/test/ged049.jpg'
 import slide13 from '@/assets/images/test/ged050.jpg'
 ---
 
-<Container class="splide">
+<div class="splide">
   <div class="splide__track">
     <ul class="splide__list">
       <li class="splide__slide"><Image src={slide1} alt="" /></li>
@@ -42,7 +42,7 @@ import slide13 from '@/assets/images/test/ged050.jpg'
     <span class="splide__toggle__play">Play</span>
     <span class="splide__toggle__pause">Pause</span>
   </button>
-</Container>
+</div>
 
 <style>
   .splide__track {
@@ -55,27 +55,29 @@ import slide13 from '@/assets/images/test/ged050.jpg'
   import { Splide } from '@splidejs/splide'
   import { Intersection } from '@splidejs/splide-extension-intersection'
 
-  new Splide('.splide', {
-    autoplay: 'pause',
-    breakpoints: {
-      640: {
-        perPage: 2,
+  document.addEventListener('astro:page-load', function () {
+    new Splide('.splide', {
+      autoplay: 'pause',
+      breakpoints: {
+        640: {
+          perPage: 2,
+        },
       },
-    },
-    intersection: {
-      inView: {
-        autoplay: true,
+      intersection: {
+        inView: {
+          autoplay: true,
+        },
+        outView: {
+          autoplay: false,
+        },
       },
-      outView: {
-        autoplay: false,
-      },
-    },
-    focus: 'center',
-    gap: '1.5rem',
-    perPage: 3,
-    resetProgress: false,
-    type: 'loop',
-    waitForTransition: true,
-    wheel: true,
-  }).mount({ Intersection })
+      focus: 'center',
+      gap: '1.5rem',
+      perPage: 3,
+      resetProgress: false,
+      type: 'loop',
+      waitForTransition: true,
+      wheel: true,
+    }).mount({ Intersection })
+  })
 </script>
