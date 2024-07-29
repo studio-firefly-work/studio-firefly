@@ -5,6 +5,7 @@ import '@fontsource-variable/noto-sans'
 import '@fontsource-variable/noto-sans-jp'
 import '@/styles/global.scss'
 import { getSiteDataAll } from '@/constants/siteDatas'
+import Splash from '@/components/molecules/SplashScreen.astro'
 
 const { pageData } = Astro.props
 const siteData = getSiteDataAll()
@@ -47,6 +48,7 @@ const siteData = getSiteDataAll()
   </head>
 
   <body class="manipulation min-h-full bg-base-200 font-body text-base tracking-normal antialiased">
+    <Splash />
     <slot />
   </body>
 </html>

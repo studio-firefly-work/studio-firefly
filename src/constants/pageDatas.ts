@@ -50,8 +50,8 @@ export const pageDatas: PageData[] = [
     noindex: true,
   },
   {
-    permalink: '/test',
-    title: { jp: 'テスト', en: 'Test' },
+    permalink: '/styleguide',
+    title: { jp: 'スタイルガイド', en: 'Style Guide' },
     type: "article",
     description: 'description test',
   },

@@ -1,0 +1,28 @@
+---
+
+---
+
+<div id="splash-screen" class="fixed h-screen w-full bg-red-300 opacity-0">splash test</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const splashScreen = document.getElementById('splash-screen')
+
+    if (splashScreen && isFirstVisit()) {
+      showSplashScreen(splashScreen)
+      sessionStorage.setItem('visited', 'true')
+    }
+  })
+
+  function isFirstVisit() {
+    return !sessionStorage.getItem('visited')
+  }
+
+  function showSplashScreen(splashScreen: HTMLElement) {
+    splashScreen.classList.remove('opacity-0')
+    splashScreen.classList.add('opacity-1')
+    setTimeout(() => {
+      splashScreen.classList.add('opacity-0')
+    }, 1000)
+  }
+</script>
