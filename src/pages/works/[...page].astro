@@ -6,6 +6,7 @@ import { getPageDataByPermalink } from '@/constants/pageDatas'
 import type { GetStaticPathsOptions } from 'astro'
 import ButtonElement from '@/components/molecules/ButtonElement.astro'
 import ButtonText from '@/components/molecules/ButtonText.astro'
+import Inner from '@/components/atoms/Inner.astro'
 
 const permalink = '/works'
 const pageData = getPageDataByPermalink(permalink)
@@ -35,8 +36,8 @@ const totalPages = Math.ceil(page.total / page.size)
 ---
 
 <PageLayout {pageData}>
-  <section>
-    <Container>
+  <Container>
+    <Inner>
       <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {
           page.data.map((site) => (
@@ -69,6 +70,6 @@ const totalPages = Math.ceil(page.total / page.size)
 
         {page.url.next ? <ButtonText href={page.url.next}>Next</ButtonText> : null}
       </nav>
-    </Container>
-  </section>
+    </Inner>
+  </Container>
 </PageLayout>
