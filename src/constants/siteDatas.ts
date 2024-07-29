@@ -8,7 +8,7 @@ export type SiteData = {
 }
 
 export const siteDatas: SiteData = {
-  name: 'Site Name',
+  name: 'スタジオfirefly',
   postalCode: '000-0000',
   address: '住所',
   tel: '090-0000-0000',

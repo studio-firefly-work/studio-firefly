@@ -22,7 +22,7 @@ const pageData = getPageDataByPermalink(permalink)
   window.addEventListener('load', getUsers)
 
   async function logout(id: number) {
-    const res = await fetch(`http://localhost:3001/api/auth/logout/${id}`, {
+    const res = await fetch(`${import.meta.env.PUBLIC_API}/auth/logout/${id}`, {
       method: 'DELETE',
       credentials: 'include',
     })
@@ -36,7 +36,7 @@ const pageData = getPageDataByPermalink(permalink)
   }
 
   async function login(name: string, password: string) {
-    const res = await fetch('http://localhost:3001/api/auth/login', {
+    const res = await fetch(`${import.meta.env.PUBLIC_API}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const pageData = getPageDataByPermalink(permalink)
   }
 
   async function getUsers() {
-    const res = await fetch('http://localhost:3001/api/user', {
+    const res = await fetch(`${import.meta.env.PUBLIC_API}/user`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

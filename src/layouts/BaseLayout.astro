@@ -12,18 +12,38 @@ const siteData = getSiteDataAll()
 
 <!doctype html>
 <html lang="jp" class="h-full scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-
-    <title>{siteData.name}{pageData.title != 'Home' && ' - ' + pageData.title}</title>
+  <head prefix="og: https://ogp.me/ns#">
+    <SEO
+      title={pageData.title.jp}
+      titleTemplate={'%s - ' + siteData.name}
+      titleDefault={siteData.name}
+      description={pageData.description}
+      noindex={pageData.noindex ?? false}
+      nofollow={pageData.noindex ?? false}
+      charset="UTF-8"
+      openGraph={{
+        basic: {
+          title: pageData.title.jp,
+          type: pageData.type,
+          image: import.meta.env.SITE + '/og_image.png',
+        },
+        optional: {
+          description: pageData.description,
+          locale: 'ja_JP',
+          siteName: siteData.name,
+        },
+      }}
+      extend={{
+        link: [
+          { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+          { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+          { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+          { rel: 'manifest', href: '/manifest.json' },
+        ],
+        meta: [{ name: 'viewport', content: 'width=device-width' }],
+      }}
+    />
     <ViewTransitions />
-    <meta name="description" content={pageData.description} />
-    <meta name="keyword" content={pageData.keyword} />
-
-    {pageData.noindex && <meta name="robots" content="noindex" />}
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
   </head>
 
   <body class="manipulation min-h-full bg-base-200 font-body text-base tracking-normal antialiased">

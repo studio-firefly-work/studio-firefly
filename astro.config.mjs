@@ -1,12 +1,14 @@
 import { defineConfig } from 'astro/config'
+import { loadEnv } from "vite";
 import daisyui from 'daisyui'
 import node from '@astrojs/node'
 import tailwind from '@astrojs/tailwind'
 
-// https://astro.build/config
+const { SITE, BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+
 export default defineConfig({
-  site: 'https://studio-firefly.co.jp',
-  base: '/',
+  site: SITE,
+  base: BASE,
   output: 'hybrid',
   adapter: node({
     mode: 'standalone',
