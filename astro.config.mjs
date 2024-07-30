@@ -15,4 +15,7 @@ export default defineConfig({
   }),
   integrations: [tailwind()],
   plugins: [daisyui],
+  server: {
+    host: true,
+  },
 })

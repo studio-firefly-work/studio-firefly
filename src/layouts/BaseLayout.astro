@@ -6,8 +6,13 @@ import '@fontsource-variable/noto-sans-jp'
 import '@/styles/global.scss'
 import { getSiteDataAll } from '@/constants/siteDatas'
 import SplashScreen from '@/components/molecules/SplashScreen.astro'
+import type { PageType, StructuredDataType } from '@/types/PageType'
 
-const { pageData } = Astro.props
+interface Props {
+  p: PageType
+}
+
+const { p } = Astro.props
 const siteData = getSiteDataAll()
 ---
 
@@ -15,21 +20,21 @@ const siteData = getSiteDataAll()
 <html lang="jp" class="scroll-smooth">
   <head prefix="og: https://ogp.me/ns#">
     <SEO
-      title={pageData.title.jp}
-      titleTemplate={'%s - ' + siteData.name}
+      title={p.title}
+      titleTemplate={'%s | ' + siteData.name}
       titleDefault={siteData.name}
-      description={pageData.description}
-      noindex={pageData.noindex ?? false}
-      nofollow={pageData.noindex ?? false}
+      description={p.description}
+      noindex={p.noindex ?? false}
+      nofollow={p.noindex ?? false}
       charset="UTF-8"
       openGraph={{
         basic: {
-          title: pageData.title.jp,
-          type: pageData.type,
-          image: import.meta.env.SITE + '/og_image.png',
+          title: p.title,
+          type: p.type,
+          image: Astro.site + 'og_image.png',
         },
         optional: {
-          description: pageData.description,
+          description: p.description,
           locale: 'ja_JP',
           siteName: siteData.name,
         },
@@ -44,6 +49,7 @@ const siteData = getSiteDataAll()
         meta: [{ name: 'viewport', content: 'width=device-width' }],
       }}
     />
+    {p.structuredDatas && p.structuredDatas.map((structuredData: StructuredDataType) => <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />)}
     <ViewTransitions />
   </head>
 
