@@ -33,9 +33,15 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 }
 const { page } = Astro.props
 const totalPages = Math.ceil(page.total / page.size)
+
+const p = {
+  title: '',
+  type: 'website',
+  description: 'トップページのdescriptionです',
+}
 ---
 
-<PageLayout {pageData}>
+<PageLayout {p}>
   <Container>
     <Inner>
       <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

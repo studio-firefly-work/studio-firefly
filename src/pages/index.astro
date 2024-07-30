@@ -2,19 +2,40 @@
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import ButtonText from '@/components/molecules/ButtonText.astro'
 import ToggleMode from '@/components/molecules/ToggleTheme.astro'
-import { getPageDatasAll, exceptHome, exceptNoindex, getPageDataByPermalink } from '@/constants/pageDatas'
+import { getPageDatasAll, exceptHome, exceptNoindex } from '@/constants/pageDatas'
 import type { PageData } from '@/constants/pageDatas'
 import Particle from '@/components/molecules/Particle.astro'
-
-const permalink = '/'
-const pageData = getPageDataByPermalink(permalink)
+import type { PageType } from '@/types/PageType'
 
 const pages = getPageDatasAll()
 const pagesExceptNoindex = exceptNoindex(pages)
 const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
+
+const p: PageType = {
+  title: '',
+  type: 'website',
+  description: 'ホームページのdescriptionです',
+  structuredDatas: [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'Example',
+      url: Astro.site,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      url: Astro.site,
+      name: 'Example Corporation',
+      description: 'The example corporation is well-known for producing high-quality widgets',
+      email: '',
+      telephone: '',
+    },
+  ],
+}
 ---
 
-<BaseLayout {pageData}>
+<BaseLayout {p}>
   <main>
     <ToggleMode />
     <ul class="flex flex-wrap gap-4">

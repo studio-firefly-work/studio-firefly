@@ -1,23 +1,42 @@
 ---
-export const prerender = false
 import BaseLayout from '@/layouts/BaseLayout.astro'
-
-import { getPageDataByPermalink } from '@/constants/pageDatas'
-import ToggleMode from '@/components/molecules/ToggleTheme.astro'
-
-import Inner from '@/components/atoms/Inner.astro'
 import Container from '@/components/atoms/Container.astro'
+import Inner from '@/components/atoms/Inner.astro'
 import Split from '@/components/atoms/Split.astro'
+import type { PageType } from '@/types/PageType'
 
-const permalink = '/styleguide'
-const pageData = getPageDataByPermalink(permalink)
+const p: PageType = {
+  title: 'スタイルガイド',
+  description: 'スタイルガイドページのdescriptionです',
+  type: 'article',
+  noindex: true,
+  structuredDatas: [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'ホーム',
+          item: Astro.site,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'スタイルガイド',
+        },
+      ],
+    },
+  ],
+}
 ---
 
-<BaseLayout {pageData}>
+<BaseLayout {p}>
   <main>
     <section class="bg-secondary py-12">
       <Inner>
-        <h1 class="theme-text-3xl font-bold text-secondary-content">Style Guide</h1>
+        <h1 class="theme-text-3xl font-bold text-secondary-content">{p.title}</h1>
       </Inner>
     </section>
 

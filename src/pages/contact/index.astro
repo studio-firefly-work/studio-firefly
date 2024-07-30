@@ -1,14 +1,36 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro'
-import { getPageDataByPermalink } from '@/constants/pageDatas'
 import Container from '@/components/atoms/Container.astro'
 import Inner from '@/components/atoms/Inner.astro'
+import type { PageType } from '@/types/PageType'
 
-const permalink = '/contact'
-const pageData = getPageDataByPermalink(permalink)
+const p: PageType = {
+  title: 'お問い合わせ',
+  type: 'article',
+  description: 'お問い合わせページのdescriptionです',
+  structuredDatas: [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'ホーム',
+          item: Astro.site,
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'お問い合わせ',
+        },
+      ],
+    },
+  ],
+}
 ---
 
-<PageLayout {pageData}>
+<PageLayout {p}>
   <Container>
     <Inner>
       <form action="/contact/submit" method="POST">

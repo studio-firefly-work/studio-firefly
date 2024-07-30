@@ -4,16 +4,23 @@ import Container from '@/components/atoms/Container.astro'
 import Footer from '@/components/organisms/Footer.astro'
 import Inner from '@/components/atoms/Inner.astro'
 import Header from '@/components/organisms/Header.astro'
+import type { PageType } from '@/types/PageType'
 
-const { pageData } = Astro.props
+interface Props {
+  p: PageType
+}
+
+const { p } = Astro.props
 ---
 
-<BaseLayout {pageData}>
+<BaseLayout {p}>
   <Header />
   <main>
     <Container>
       <Inner>
-        <h1 class="theme-text-md flex flex-col gap-2 font-bold before:text-4xl before:content-[attr(data-title-en)] md:gap-4 before:md:text-5xl" data-title-en={pageData.title.en}>{pageData.title.jp}</h1>
+        <hgroup>
+          <h1 class="theme-text-md font-bold">{p.title}</h1>
+        </hgroup>
       </Inner>
     </Container>
 
