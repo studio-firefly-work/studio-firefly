@@ -5,7 +5,7 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   darkMode: ['class', '[data-theme="dark"]'],
   future: {
-    hoverOnlyWhenSupported: true,
+    hoverOnlyWhenSupported: true
   },
   plugins: [require('daisyui')],
   theme: {
@@ -15,12 +15,12 @@ export default {
         'surface-container-low': 'var(--surface-container-low)',
         'surface-container': 'var(--surface-container)',
         'surface-container-high': 'var(--surface-container-high)',
-        'surface-container-highest': 'var(--surface-container-highest)',
-      },
+        'surface-container-highest': 'var(--surface-container-highest)'
+      }
     },
     fontFamily: {
-      body: ['"Noto Sans Variable"', '"Noto Sans JP Variable"', ...defaultTheme.fontFamily.sans],
-    },
+      body: ['"Noto Sans Variable"', '"Noto Sans JP Variable"', ...defaultTheme.fontFamily.sans]
+    }
   },
   daisyui: {
     themes: [
@@ -53,7 +53,7 @@ export default {
           '--accent-container': '#597D64',
           '--accent-container-content': '#FFFFFF',
           '--error-container': '#DA342E',
-          '--error-container-content': '#FFFFFF',
+          '--error-container-content': '#FFFFFF'
         },
         dark: {
           ...require('daisyui/src/theming/themes')['dark'],
@@ -83,9 +83,9 @@ export default {
           '--accent-container': '#75997F',
           '--accent-container-content': '#000000',
           '--error-container': '#FF5449',
-          '--error-container-content': '#000000',
-        },
-      },
+          '--error-container-content': '#000000'
+        }
+      }
     ],
     base: true,
     styled: true,
@@ -93,5 +93,5 @@ export default {
     prefix: '',
     logs: true,
     themeRoot: ':root',
-  },
+  }
 }
