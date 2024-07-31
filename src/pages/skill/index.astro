@@ -5,8 +5,9 @@ import type { PageType } from '@/types/PageType'
 
 const p: PageType = {
   title: 'スキルセット',
-  type: 'article',
   description: 'スキルセットページのdescriptionです',
+  canonical: `${Astro.site}skill/`,
+  type: 'article',
   structuredDatas: [
     {
       '@context': 'https://schema.org',

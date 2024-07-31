@@ -24,6 +24,7 @@ const siteData = getSiteDataAll()
       titleTemplate={'%s | ' + siteData.name}
       titleDefault={siteData.name}
       description={p.description}
+      canonical={p.canonical}
       noindex={p.noindex ?? false}
       nofollow={p.noindex ?? false}
       charset="UTF-8"
@@ -46,7 +47,7 @@ const siteData = getSiteDataAll()
           { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
           { rel: 'manifest', href: '/manifest.json' },
         ],
-        meta: [{ name: 'viewport', content: 'width=device-width' }],
+        meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
       }}
     />
     {p.structuredDatas && p.structuredDatas.map((structuredData: StructuredDataType) => <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />)}

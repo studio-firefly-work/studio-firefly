@@ -1,6 +1,7 @@
 export type PageType = {
   title: string
   description: string
+  canonical: string
   type: string
   noindex?: boolean
   structuredDatas?: StructuredDataType[]

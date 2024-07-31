@@ -13,8 +13,9 @@ const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
 
 const p: PageType = {
   title: '',
-  type: 'website',
   description: 'ホームページのdescriptionです',
+  canonical: `${Astro.url}`,
+  type: 'website',
   structuredDatas: [
     {
       '@context': 'https://schema.org',

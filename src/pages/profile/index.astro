@@ -7,8 +7,9 @@ import type { PageType } from '@/types/PageType'
 
 const p: PageType = {
   title: 'プロフィール',
-  type: 'article',
   description: 'プロフィールページのdescriptionです',
+  canonical: `${Astro.site}profile/`,
+  type: 'article',
   structuredDatas: [
     {
       '@context': 'https://schema.org',
