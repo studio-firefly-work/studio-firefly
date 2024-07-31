@@ -33,8 +33,9 @@ const totalPages = Math.ceil(page.total / page.size)
 
 const p = {
   title: '',
-  type: 'website',
   description: 'トップページのdescriptionです',
+  canonical: page.currentPage == 1 ? `${Astro.site}works/` : `${Astro.site}works/${page.currentPage}/`,
+  type: 'article',
 }
 ---
 

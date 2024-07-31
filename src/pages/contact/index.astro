@@ -6,8 +6,9 @@ import type { PageType } from '@/types/PageType'
 
 const p: PageType = {
   title: 'お問い合わせ',
-  type: 'article',
   description: 'お問い合わせページのdescriptionです',
+  canonical: `${Astro.site}contact/`,
+  type: 'article',
   structuredDatas: [
     {
       '@context': 'https://schema.org',
