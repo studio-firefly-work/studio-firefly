@@ -1,15 +1,12 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro'
-import Button from '@/components/atoms/Button.astro'
 import Container from '@/components/atoms/Container.astro'
-import { getPageDataByPermalink } from '@/constants/pageDatas'
 import type { GetStaticPathsOptions } from 'astro'
 import ButtonElement from '@/components/molecules/ButtonElement.astro'
 import ButtonText from '@/components/molecules/ButtonText.astro'
 import Inner from '@/components/atoms/Inner.astro'
 
 const permalink = '/works'
-const pageData = getPageDataByPermalink(permalink)
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
   const sites = [
