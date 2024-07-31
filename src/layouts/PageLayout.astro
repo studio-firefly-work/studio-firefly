@@ -2,8 +2,8 @@
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import Container from '@/components/atoms/Container.astro'
 import Footer from '@/components/organisms/Footer.astro'
-import Inner from '@/components/atoms/Inner.astro'
 import Header from '@/components/organisms/Header.astro'
+import Inner from '@/components/atoms/Inner.astro'
 import type { PageType } from '@/types/PageType'
 
 interface Props {
@@ -17,12 +17,9 @@ const { p } = Astro.props
   <main>
     <Container>
       <Inner>
-        <hgroup>
-          <h1 class="theme-text-md font-bold">{p.title}</h1>
-        </hgroup>
+        <h1 class="theme-text-md font-bold">{p.title}</h1>
       </Inner>
     </Container>
-
     <slot />
   </main>
   <Footer />
