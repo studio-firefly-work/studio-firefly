@@ -31,11 +31,10 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page } = Astro.props
 const totalPages = Math.ceil(page.total / page.size)
 
-const p = {
-  title: '',
-  description: 'トップページのdescriptionです',
-  canonical: page.currentPage == 1 ? `${Astro.site}works/` : `${Astro.site}works/${page.currentPage}/`,
-  type: 'article',
+const p: Theme.Page.Config = {
+  title: '制作事例',
+  description: '制作事例ページのdescriptionです',
+  permalink: page.currentPage == 1 ? 'works/' : `works/${page.currentPage}/`,
 }
 ---
 

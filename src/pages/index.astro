@@ -5,18 +5,17 @@ import ToggleMode from '@/components/molecules/ToggleTheme.astro'
 import { getPageDatasAll, exceptHome, exceptNoindex } from '@/constants/pageDatas'
 import type { PageData } from '@/constants/pageDatas'
 import Particle from '@/components/molecules/Particle.astro'
-import type { PageType } from '@/types/PageType'
 
 const pages = getPageDatasAll()
 const pagesExceptNoindex = exceptNoindex(pages)
 const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
 
-const p: PageType = {
+const p: Theme.Page.Config = {
   title: '',
   description: 'ホームページのdescriptionです',
-  canonical: `${Astro.url}`,
+  permalink: '',
   type: 'website',
-  structuredDatas: [
+  schemaOrg: [
     {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
