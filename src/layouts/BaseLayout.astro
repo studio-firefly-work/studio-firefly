@@ -6,10 +6,9 @@ import '@fontsource-variable/noto-sans-jp'
 import '@/styles/global.scss'
 import { getSiteDataAll } from '@/constants/siteDatas'
 import SplashScreen from '@/components/molecules/SplashScreen.astro'
-import type { PageType, StructuredDataType } from '@/types/PageType'
 
 interface Props {
-  p: PageType
+  p: Theme.Page.Config
 }
 const { p } = Astro.props
 
@@ -24,20 +23,27 @@ const siteData = getSiteDataAll()
       titleTemplate={'%s | ' + siteData.name}
       titleDefault={siteData.name}
       description={p.description}
-      canonical={p.canonical}
+      canonical={Astro.site + p.permalink}
       noindex={p.noindex ?? false}
-      nofollow={p.noindex ?? false}
+      nofollow={p.nofollow ?? false}
       charset="UTF-8"
       openGraph={{
         basic: {
-          title: p.title,
-          type: p.type,
-          image: Astro.site + 'og_image.png',
+          title: p.title === '' ? siteData.name : p.title,
+          type: p.type ?? 'article',
+          image: p.image ?? Astro.site + 'og_image.png',
+          url: Astro.site + p.permalink,
         },
         optional: {
           description: p.description,
           locale: 'ja_JP',
           siteName: siteData.name,
+        },
+        image: {
+          type: 'image/png',
+          width: 1200,
+          height: 630,
+          alt: p.alt ?? 'デフォルトで設定したaltです',
         },
       }}
       extend={{
@@ -50,7 +56,7 @@ const siteData = getSiteDataAll()
         meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
       }}
     />
-    {p.structuredDatas && p.structuredDatas.map((structuredData: StructuredDataType) => <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />)}
+    {p.schemaOrg && p.schemaOrg.map((structuredData: []) => <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />)}
     <ViewTransitions />
   </head>
   <body class="manipulation grid min-h-dvh grid-cols-1 grid-rows-[auto,1fr,auto] break-words bg-base-200 font-body text-base tracking-normal antialiased">

@@ -3,33 +3,12 @@ import BaseLayout from '@/layouts/BaseLayout.astro'
 import Container from '@/components/atoms/Container.astro'
 import Inner from '@/components/atoms/Inner.astro'
 import Split from '@/components/atoms/Split.astro'
-import type { PageType } from '@/types/PageType'
 
-const p: PageType = {
+const p: Theme.Page.Config = {
   title: 'スタイルガイド',
   description: 'スタイルガイドページのdescriptionです',
-  canonical: `${Astro.site}styleguide/`,
-  type: 'article',
+  permalink: 'styleguide/',
   noindex: true,
-  structuredDatas: [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'ホーム',
-          item: Astro.site,
-        },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'スタイルガイド',
-        },
-      ],
-    },
-  ],
 }
 ---
 
