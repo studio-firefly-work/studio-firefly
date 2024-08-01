@@ -4,12 +4,12 @@ import Container from '@/components/atoms/Container.astro'
 import Inner from '@/components/atoms/Inner.astro'
 import Splide from '@/components/molecules/Splide.astro'
 
-const p: Theme.Page = {
+const p: Theme.Page.Config = {
   title: 'プロフィール',
   description: 'プロフィールページのdescriptionです',
-  canonical: `${Astro.site}profile/`,
+  permalink: 'profile/',
   type: 'article',
-  structuredDatas: [
+  schemaOrg: [
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
