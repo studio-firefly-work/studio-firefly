@@ -2,12 +2,12 @@
 export const prerender = false
 import PageLayout from '@/layouts/PageLayout.astro'
 
-const p: Theme.Page = {
+const p: Theme.Page.Config = {
   title: 'スキルセット',
   description: 'スキルセットページのdescriptionです',
-  canonical: `${Astro.site}skill/`,
+  permalink: 'skill/',
   type: 'article',
-  structuredDatas: [
+  schemaOrg: [
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
