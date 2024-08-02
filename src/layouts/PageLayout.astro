@@ -6,17 +6,17 @@ import Header from '@/components/organisms/Header.astro'
 import Inner from '@/components/atoms/Inner.astro'
 
 interface Props {
-  p: Theme.Page.Config
+  seo: Theme.SEO
 }
-const { p } = Astro.props
+const { seo } = Astro.props
 ---
 
-<BaseLayout {p}>
+<BaseLayout {seo}>
   <Header />
   <main>
     <Container>
       <Inner>
-        <h1 class="theme-text-md font-bold">{p.title}</h1>
+        <h1 class="theme-text-md font-bold">{seo.title}</h1>
       </Inner>
     </Container>
     <slot />

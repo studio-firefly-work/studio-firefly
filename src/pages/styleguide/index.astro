@@ -4,19 +4,20 @@ import Container from '@/components/atoms/Container.astro'
 import Inner from '@/components/atoms/Inner.astro'
 import Split from '@/components/atoms/Split.astro'
 
-const p: Theme.Page.Config = {
+const seo: Theme.SEO = {
   title: 'スタイルガイド',
   description: 'スタイルガイドページのdescriptionです',
   permalink: 'styleguide/',
   noindex: true,
+  nofollow: true,
 }
 ---
 
-<BaseLayout {p}>
+<BaseLayout {seo}>
   <main>
     <section class="bg-secondary py-12">
       <Inner>
-        <h1 class="theme-text-3xl font-bold text-secondary-content">{p.title}</h1>
+        <h1 class="theme-text-3xl font-bold text-secondary-content">{seo.title}</h1>
       </Inner>
     </section>
 

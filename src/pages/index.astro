@@ -10,7 +10,7 @@ const pages = getPageDatasAll()
 const pagesExceptNoindex = exceptNoindex(pages)
 const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
 
-const p: Theme.Page.Config = {
+const seo: Theme.SEO = {
   title: '',
   description: 'ホームページのdescriptionです',
   permalink: '',
@@ -35,7 +35,7 @@ const p: Theme.Page.Config = {
 }
 ---
 
-<BaseLayout {p}>
+<BaseLayout {seo}>
   <main>
     <ToggleMode />
     <ul class="flex flex-wrap gap-4">

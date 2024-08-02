@@ -4,11 +4,10 @@ import Container from '@/components/atoms/Container.astro'
 import Inner from '@/components/atoms/Inner.astro'
 import Splide from '@/components/molecules/Splide.astro'
 
-const p: Theme.Page.Config = {
+const seo: Theme.SEO = {
   title: 'プロフィール',
   description: 'プロフィールページのdescriptionです',
   permalink: 'profile/',
-  type: 'article',
   schemaOrg: [
     {
       '@context': 'https://schema.org',
@@ -31,7 +30,7 @@ const p: Theme.Page.Config = {
 }
 ---
 
-<PageLayout {p}>
+<PageLayout {seo}>
   <Container>
     <Inner size="full" class="overflow-hidden">
       <Splide />
