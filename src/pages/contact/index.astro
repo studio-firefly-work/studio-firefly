@@ -3,11 +3,10 @@ import PageLayout from '@/layouts/PageLayout.astro'
 import Container from '@/components/atoms/Container.astro'
 import Inner from '@/components/atoms/Inner.astro'
 
-const p: Theme.Page.Config = {
+const seo: Theme.SEO = {
   title: 'お問い合わせ',
   description: 'お問い合わせページのdescriptionです',
   permalink: 'contact/',
-  type: 'article',
   schemaOrg: [
     {
       '@context': 'https://schema.org',
@@ -30,7 +29,7 @@ const p: Theme.Page.Config = {
 }
 ---
 
-<PageLayout {p}>
+<PageLayout {seo}>
   <Container>
     <Inner>
       <form action="/contact/submit" method="POST">

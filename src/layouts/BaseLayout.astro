@@ -1,62 +1,21 @@
 ---
 import { ViewTransitions } from 'astro:transitions'
-import { SEO } from 'astro-seo'
 import '@fontsource-variable/noto-sans'
 import '@fontsource-variable/noto-sans-jp'
 import '@/styles/global.scss'
-import { getSiteDataAll } from '@/constants/siteDatas'
 import SplashScreen from '@/components/molecules/SplashScreen.astro'
+import SEOMetaTags from '@/components/molecules/SEOMetaTags.astro'
 
 interface Props {
-  p: Theme.Page.Config
+  seo: Theme.SEO
 }
-const { p } = Astro.props
-
-const siteData = getSiteDataAll()
+const { seo } = Astro.props
 ---
 
 <!doctype html>
 <html lang="jp" class="scroll-smooth">
   <head prefix="og: https://ogp.me/ns#">
-    <SEO
-      title={p.title}
-      titleTemplate={'%s | ' + siteData.name}
-      titleDefault={siteData.name}
-      description={p.description}
-      canonical={Astro.site + p.permalink}
-      noindex={p.noindex ?? false}
-      nofollow={p.nofollow ?? false}
-      charset="UTF-8"
-      openGraph={{
-        basic: {
-          title: p.title === '' ? siteData.name : p.title,
-          type: p.type ?? 'article',
-          image: p.image ?? Astro.site + 'og_image.png',
-          url: Astro.site + p.permalink,
-        },
-        optional: {
-          description: p.description,
-          locale: 'ja_JP',
-          siteName: siteData.name,
-        },
-        image: {
-          type: 'image/png',
-          width: 1200,
-          height: 630,
-          alt: p.alt ?? 'デフォルトで設定したaltです',
-        },
-      }}
-      extend={{
-        link: [
-          { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-          { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
-          { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
-          { rel: 'manifest', href: '/manifest.json' },
-        ],
-        meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
-      }}
-    />
-    {p.schemaOrg && p.schemaOrg.map((structuredData: []) => <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />)}
+    <SEOMetaTags {seo} />
     <ViewTransitions />
   </head>
   <body class="manipulation grid min-h-dvh grid-cols-1 grid-rows-[auto,1fr,auto] break-words bg-base-200 font-body text-base tracking-normal antialiased">

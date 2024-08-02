@@ -31,14 +31,14 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page } = Astro.props
 const totalPages = Math.ceil(page.total / page.size)
 
-const p: Theme.Page.Config = {
+const seo: Theme.SEO = {
   title: '制作事例',
   description: '制作事例ページのdescriptionです',
   permalink: page.currentPage == 1 ? 'works/' : `works/${page.currentPage}/`,
 }
 ---
 
-<PageLayout {p}>
+<PageLayout {seo}>
   <Container>
     <Inner>
       <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

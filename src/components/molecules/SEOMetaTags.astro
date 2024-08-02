@@ -1,0 +1,51 @@
+---
+import { SEO } from 'astro-seo'
+import { getSiteDataAll } from '@/constants/siteDatas'
+
+interface Props {
+  seo: Theme.SEO
+}
+const { seo } = Astro.props
+
+const siteData = getSiteDataAll()
+---
+
+<SEO
+  title={seo.title}
+  titleTemplate={'%s | ' + siteData.name}
+  titleDefault={siteData.name}
+  description={seo.description}
+  canonical={Astro.site + seo.permalink}
+  noindex={seo.noindex ?? false}
+  nofollow={seo.nofollow ?? false}
+  charset="UTF-8"
+  openGraph={{
+    basic: {
+      title: seo.title === '' ? siteData.name : seo.title,
+      type: seo.type ?? 'article',
+      image: seo.image ?? Astro.site + 'og_image.png',
+      url: Astro.site + seo.permalink,
+    },
+    optional: {
+      description: seo.description,
+      locale: 'ja_JP',
+      siteName: siteData.name,
+    },
+    image: {
+      type: 'image/png',
+      width: 1200,
+      height: 630,
+      alt: seo.alt ?? 'デフォルトで設定したaltです',
+    },
+  }}
+  extend={{
+    link: [
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
+      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+      { rel: 'manifest', href: '/manifest.json' },
+    ],
+    meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
+  }}
+/>
+{seo.schemaOrg && seo.schemaOrg.map((structuredData: []) => <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />)}
