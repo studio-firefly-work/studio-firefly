@@ -11,27 +11,7 @@ const pagesExceptNoindex = exceptNoindex(pages)
 const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
 
 const seo: Theme.SEO = {
-  title: '',
   description: 'ホームページのdescriptionです',
-  permalink: [],
-  type: 'website',
-  schemaOrg: [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      name: 'Example',
-      url: Astro.site,
-    },
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Organization',
-      url: Astro.site,
-      name: 'Example Corporation',
-      description: 'The example corporation is well-known for producing high-quality widgets',
-      email: '',
-      telephone: '',
-    },
-  ],
 }
 ---
 

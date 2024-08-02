@@ -1,8 +1,9 @@
 declare namespace Theme {
   type SEO = {
-    title: string
+    title?: string
     description: string
-    permalink: (string | number)[]
+    permalink?: (string | number)[]
+    breadcrumb?: Breadcrumb
     noindex?: boolean
     nofollow?: boolean
     type?: string
@@ -26,6 +27,10 @@ declare namespace Theme {
       meta?: Partial<Meta>[]
     }
     schemaOrg?: Array[]
+  }
+
+  type Breadcrumb = {
+    [key: string]: string;
   }
 
   interface Link extends Omit<HTMLLinkElement, 'sizes'> {

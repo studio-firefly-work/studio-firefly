@@ -1,12 +1,18 @@
 ---
 import { tv } from 'tailwind-variants'
 
-const { class: addClasses, ...rest } = Astro.props
+const { size, class: addClasses, ...rest } = Astro.props
 const style = tv({
   base: `py-16 md:py-20 ${addClasses}`,
+  variants: {
+    size: {
+      tall: 'py-20 md:py-24',
+      short: 'py-12 md:py-16',
+    },
+  },
 })
 ---
 
-<div class={style()} {...rest}>
+<div class={style({ size: size })} {...rest}>
   <slot />
 </div>
