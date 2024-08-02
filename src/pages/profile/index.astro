@@ -8,25 +8,8 @@ const seo: Theme.SEO = {
   title: 'プロフィール',
   description: 'プロフィールページのdescriptionです',
   permalink: ['profile'],
-  schemaOrg: [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'ホーム',
-          item: Astro.site,
-        },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'プロフィール',
-        },
-      ],
-    },
-  ],
+  breadcrumb: { profile: 'プロフィール' },
+  type: 'profile',
 }
 ---
 

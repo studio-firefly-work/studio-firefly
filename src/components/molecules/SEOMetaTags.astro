@@ -8,6 +8,56 @@ interface Props {
 const { seo } = Astro.props
 
 const siteData = getSiteDataAll()
+
+if (!seo.permalink) {
+  // ホームの場合
+  seo.schemaOrg = (seo.schemaOrg || []).concat(
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: siteData.name,
+      url: Astro.site,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      url: Astro.site,
+      name: 'Example Corporation',
+      description: 'The example corporation is well-known for producing high-quality widgets',
+      email: '',
+      telephone: '',
+    }
+  )
+}
+
+if (seo.breadcrumb) {
+  // パンくずリストが有るページの場合
+  const itemListElement: any[] = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'ホーム',
+      item: Astro.site,
+    },
+  ]
+  let path = ''
+
+  Object.keys(seo.breadcrumb).forEach((key, index) => {
+    path += `${key}/`
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: index + 2,
+      name: seo.breadcrumb![key],
+      item: new URL(path, Astro.site),
+    })
+  })
+
+  seo.schemaOrg = (seo.schemaOrg || []).concat({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: itemListElement,
+  })
+}
 ---
 
 <SEO
@@ -15,16 +65,16 @@ const siteData = getSiteDataAll()
   titleTemplate={'%s | ' + siteData.name}
   titleDefault={siteData.name}
   description={seo.description}
-  canonical={new URL(seo.permalink.join('/') + '/', Astro.site)}
+  canonical={seo.permalink ? new URL(`${seo.permalink.join('/')}/`, Astro.site) : Astro.site}
   noindex={seo.noindex ?? false}
   nofollow={seo.nofollow ?? false}
   charset="UTF-8"
   openGraph={{
     basic: {
-      title: seo.title === '' ? siteData.name : seo.title,
-      type: seo.type ?? 'article',
+      title: seo.title ?? siteData.name,
+      type: seo.type ?? 'website',
       image: seo.image ?? Astro.url.origin + '/og_image.png',
-      url: new URL(seo.permalink.join('/') + '/', Astro.site),
+      url: seo.permalink ? new URL(`${seo.permalink.join('/')}/`, Astro.site) : Astro.site,
     },
     optional: {
       description: seo.description,

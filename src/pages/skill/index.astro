@@ -6,25 +6,7 @@ const seo: Theme.SEO = {
   title: 'スキルセット',
   description: 'スキルセットページのdescriptionです',
   permalink: ['skill'],
-  schemaOrg: [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        {
-          '@type': 'ListItem',
-          position: 1,
-          name: 'ホーム',
-          item: Astro.site,
-        },
-        {
-          '@type': 'ListItem',
-          position: 2,
-          name: 'スキルセット',
-        },
-      ],
-    },
-  ],
+  breadcrumb: { skill: 'スキルセット' },
 }
 ---
 
@@ -36,9 +18,13 @@ const seo: Theme.SEO = {
 </PageLayout>
 
 <script>
-  document.querySelector('button.logout').onclick = () => logout(1)
-  document.querySelector('button.login').onclick = () => login('user1', 'password')
-  document.querySelector('button.getUsers').onclick = () => getUsers()
+  const logoutButton = document.querySelector('button.logout') as HTMLButtonElement
+  const loginButton = document.querySelector('button.login') as HTMLButtonElement
+  const getUsersButton = document.querySelector('button.getUsers') as HTMLButtonElement
+
+  logoutButton.onclick = () => logout(1)
+  loginButton.onclick = () => login('user1', 'password')
+  getUsersButton.onclick = () => getUsers()
 
   window.addEventListener('load', getUsers)
 
@@ -88,20 +74,22 @@ const seo: Theme.SEO = {
     displayUserData(data)
   }
 
-  function displayUserData(users) {
+  function displayUserData(users: any) {
     const userDataDiv = document.getElementById('user-data')
-    userDataDiv.innerHTML = '' // 以前のデータをクリア
+    if (userDataDiv) {
+      userDataDiv.innerHTML = '' // 以前のデータをクリア
 
-    users.forEach((user) => {
-      const userDiv = document.createElement('div')
-      userDiv.className = 'user'
+      users.forEach((user: any) => {
+        const userDiv = document.createElement('div')
+        userDiv.className = 'user'
 
-      const userName = document.createElement('h2')
-      userName.textContent = user.name
+        const userName = document.createElement('h2')
+        userName.textContent = user.name
 
-      userDiv.appendChild(userName)
+        userDiv.appendChild(userName)
 
-      userDataDiv.appendChild(userDiv)
-    })
+        userDataDiv.appendChild(userDiv)
+      })
+    }
   }
 </script>
