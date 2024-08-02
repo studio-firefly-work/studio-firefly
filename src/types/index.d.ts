@@ -2,7 +2,7 @@ declare namespace Theme {
   type SEO = {
     title: string
     description: string
-    permalink: string
+    permalink: (string | number)[]
     noindex?: boolean
     nofollow?: boolean
     type?: string

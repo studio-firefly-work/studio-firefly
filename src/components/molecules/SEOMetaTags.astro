@@ -15,7 +15,7 @@ const siteData = getSiteDataAll()
   titleTemplate={'%s | ' + siteData.name}
   titleDefault={siteData.name}
   description={seo.description}
-  canonical={Astro.site + seo.permalink}
+  canonical={new URL(seo.permalink.join('/') + '/', Astro.site)}
   noindex={seo.noindex ?? false}
   nofollow={seo.nofollow ?? false}
   charset="UTF-8"
@@ -23,8 +23,8 @@ const siteData = getSiteDataAll()
     basic: {
       title: seo.title === '' ? siteData.name : seo.title,
       type: seo.type ?? 'article',
-      image: seo.image ?? Astro.site + 'og_image.png',
-      url: Astro.site + seo.permalink,
+      image: seo.image ?? Astro.url.origin + '/og_image.png',
+      url: new URL(seo.permalink.join('/') + '/', Astro.site),
     },
     optional: {
       description: seo.description,
