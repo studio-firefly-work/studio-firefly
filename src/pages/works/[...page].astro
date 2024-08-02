@@ -34,7 +34,7 @@ const totalPages = Math.ceil(page.total / page.size)
 const seo: Theme.SEO = {
   title: '制作事例',
   description: '制作事例ページのdescriptionです',
-  permalink: page.currentPage == 1 ? 'works/' : `works/${page.currentPage}/`,
+  permalink: page.currentPage == 1 ? ['works'] : ['works', page.currentPage],
 }
 ---
 
