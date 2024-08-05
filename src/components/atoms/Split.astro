@@ -3,10 +3,17 @@ import { tv } from 'tailwind-variants'
 
 const { columns = 2, class: addClasses, ...rest } = Astro.props
 const style = tv({
-  base: `grid grid-cols-1 md:grid-cols-${columns} gap-6 md:gap-8 ${addClasses}`,
+  base: `grid grid-cols-1 gap-6 md:gap-8 ${addClasses}`,
+  variants: {
+    columns: {
+      2: 'md:grid-cols-2',
+      3: 'md:grid-cols-3',
+      4: 'md:grid-cols-4',
+    },
+  },
 })
 ---
 
-<div class={style()} {...rest}>
+<div class={style({ columns: columns })} {...rest}>
   <slot />
 </div>
