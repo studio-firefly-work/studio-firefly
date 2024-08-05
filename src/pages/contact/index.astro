@@ -2,7 +2,7 @@
 import PageLayout from '@/layouts/PageLayout.astro'
 import Container from '@/components/atoms/Container.astro'
 import Inner from '@/components/atoms/Inner.astro'
-import Split from '@/components/atoms/Split.astro'
+import ContactForm from '@/components/organisms/ContactForm.tsx'
 
 const seo: Theme.SEO = {
   title: 'お問い合わせ',
@@ -15,85 +15,10 @@ const seo: Theme.SEO = {
 <PageLayout {seo}>
   <Container>
     <Inner size="slim">
-      <form id="contact-form" action="/submit" method="post">
-        <div class="form-control mb-4">
-          <label class="label justify-start gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"></path>
-            </svg>
-            <span class="label-text">お名前</span>
-          </label>
-          <Split>
-            <div>
-              <input type="text" placeholder="姓" class="input input-bordered w-full" name="family-name" autocomplete="family-name" required />
-              <span></span>
-            </div>
-            <div>
-              <input type="text" placeholder="名" class="input input-bordered w-full" name="given-name" autocomplete="given-name" required />
-              <span></span>
-            </div>
-          </Split>
-        </div>
-
-        <div class="form-control mb-4">
-          <label class="label justify-start gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"></path>
-            </svg>
-            <span class="label-text">カナ</span>
-          </label>
-          <Split>
-            <div>
-              <input type="text" placeholder="セイ" class="input input-bordered w-full" name="family-name-kana" pattern="^[ァ-ンヴー]+$" required />
-              <span></span>
-            </div>
-            <div>
-              <input type="text" placeholder="メイ" class="input input-bordered w-full" name="given-name-kana" pattern="^[ァ-ンヴー]+$" required />
-              <span></span>
-            </div>
-          </Split>
-        </div>
-
-        <div class="form-control mb-4">
-          <label class="label justify-start gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"></path>
-            </svg>
-
-            <span class="label-text">Email</span>
-          </label>
-          <div>
-            <input type="email" placeholder="Your Email" class="input input-bordered" name="email" autocomplete="email" required />
-            <span></span>
-          </div>
-        </div>
-
-        <div class="form-control mb-4">
-          <label class="label">
-            <span class="label-text">Message</span>
-          </label>
-          <textarea name="message" placeholder="Your Message" class="textarea textarea-bordered" rows="4" required></textarea>
-        </div>
-        <div class="form-control">
-          <button type="submit" class="btn btn-primary" disabled>送信</button>
-        </div>
-      </form>
+      <ContactForm client:only="react" />
     </Inner>
   </Container>
 </PageLayout>
-
-<style lang="scss">
-  input,
-  textarea {
-    &:user-valid {
-      border-color: green;
-    }
-
-    &:user-invalid {
-      border-color: red;
-    }
-  }
-</style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
@@ -105,17 +30,12 @@ const seo: Theme.SEO = {
       formFields.forEach((field) => {
         field.addEventListener('input', validateForm)
       })
-
       // フォームの送信イベントリスナーを追加
       formElement.addEventListener('submit', (event) => {
         event.preventDefault // デフォルトの送信動作を防ぐ
-        handleFormSubmit(formElement) // フォーム送信処理を実行
       })
-
-      validateForm // 初期状態でバリデーションを実行して送信ボタンの状態を設定
     }
   })
-
   // フォームのバリデーションを行う関数
   const validateForm = () => {
     const validForm = document.querySelector('form:valid') // 有効なフォームを選択
@@ -124,21 +44,6 @@ const seo: Theme.SEO = {
     if (submitButton) {
       // フォームが有効でない場合は送信ボタンを無効化
       submitButton.disabled = !validForm
-    }
-  }
-
-  // フォームの送信処理を行う関数
-  const handleFormSubmit = async (formElement: HTMLFormElement) => {
-    const formData = new FormData(formElement) // フォームデータを取得
-    const data = Object.fromEntries(formData.entries()) // フォームデータをオブジェクトに変換
-
-    try {
-      console.log(data)
-      // await sendEmail(data)
-      console.log('Mail sent successfully')
-    } catch (error: any) {
-      console.error('Error sending email:', error)
-      alert('Failed to send email: ' + error.message) // エラーメッセージを表示
     }
   }
 
