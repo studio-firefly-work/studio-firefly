@@ -1,3 +1,5 @@
+import React, { ChangeEvent, useEffect, useRef } from "react"
+import * as AutoKana from 'vanilla-autokana'
 import { useForm } from 'react-hook-form'
 import { z } from "zod"
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -57,36 +59,55 @@ const InputWithIcon = ({ name, errors, watch, children }: any) => {
   )
 }
 
+const onSubmit = async (data: FormContactDataType) => {
+  const formData = new FormData()
+  formData.append('familyName', data.familyName)
+  formData.append('givenName', data.givenName)
+  formData.append('email', data.email)
+  formData.append('message', data.message)
+  const formDataObj = Object.fromEntries(formData.entries())
+  console.log(formDataObj)
+
+  //   try {
+  //     const res = await fetch(`${import.meta.env.PUBLIC_API}/mail/send`, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(formDataObj),
+  //     })
+
+  //     if (!res.ok) {
+  //       console.error('サーバーエラー')
+  //     }
+  //     console.log('登録が正常に完了しました')
+  //   }
+  //   catch (error) {
+  //     console.error('通信に失敗しました', error)
+  //   }
+}
+
 export default function ContactForm() {
   const { register, handleSubmit, watch, formState: { errors, isSubmitting, isValid } } = useForm<FormContactDataType>({ mode: "onChange", resolver: zodResolver(schema) })
+  const familyNameRef = useRef<HTMLInputElement>(null)
+  const familyNameKanaRef = useRef<HTMLInputElement>(null)
+  let autokana: any
+  let name: any
+  let kana: any
 
-  const onSubmit = async (data: FormContactDataType) => {
-    const formData = new FormData()
-    formData.append('familyName', data.familyName)
-    formData.append('givenName', data.givenName)
-    formData.append('email', data.email)
-    formData.append('message', data.message)
-    const formDataObj = Object.fromEntries(formData.entries())
+  useEffect(() => {
+    autokana = AutoKana.bind('#family-name', '#family-name-kana', { katakana: true })
+  }, [])
 
-    try {
-      await fetch(`${import.meta.env.PUBLIC_API}/mail/send`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formDataObj),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            console.error('サーバーエラー')
-          }
-          console.log('登録が正常に完了しました')
-        })
+  const onChangeEvent = (e: ChangeEvent<HTMLInputElement>) => {
+    name = familyNameRef.current
+    kana = familyNameKanaRef.current
 
-    }
-    catch (error) {
-      console.error('通信に失敗しました', error)
-    }
+    if (!name) return
+    name.value = e.target.value
+
+    if (!kana) return
+    kana.value = autokana.getFurigana()
   }
 
   return (
@@ -97,7 +118,7 @@ export default function ContactForm() {
             <label htmlFor="family-name" className="label-text">お名前</label>
             <div className="flex gap-4 flex-col md:flex-row">
               <InputWithIcon name="familyName" watch={watch} errors={errors} >
-                <input {...register('familyName')} id="family-name" className="input input-bordered w-full" autoComplete="family-name" placeholder="姓" />
+                <input {...register('familyName')} onChange={onChangeEvent} value={name} ref={familyNameRef} id="family-name" className="input input-bordered w-full" autoComplete="family-name" placeholder="姓" />
               </InputWithIcon>
               <InputWithIcon name="givenName" watch={watch} errors={errors} >
                 <input {...register('givenName')} id="given-name" className="input input-bordered w-full" autoComplete="given-name" placeholder="名" />
@@ -110,7 +131,7 @@ export default function ContactForm() {
             <label htmlFor="family-name-kana" className="label-text">カナ</label>
             <div className="flex gap-4 flex-col md:flex-row">
               <InputWithIcon name="familyNameKana" watch={watch} errors={errors} >
-                <input {...register('familyNameKana')} id="family-name-kana" className="input input-bordered w-full" placeholder="セイ" />
+                <input {...register('familyNameKana')} ref={familyNameKanaRef} id="family-name-kana" className="input input-bordered w-full" placeholder="セイ" />
               </InputWithIcon>
               <InputWithIcon name="givenNameKana" watch={watch} errors={errors} >
                 <input {...register('givenNameKana')} id="given-name-kana" className="input input-bordered w-full" placeholder="メイ" />
