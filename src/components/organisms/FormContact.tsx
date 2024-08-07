@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
-import { z } from "zod"
+import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import FormContactInput from "@/components/organisms/FormContactInput"
-import FormContactConfirm from "@/components/organisms/FormContactConfirm"
+import FormContactInput from '@/components/organisms/FormContactInput'
+import FormContactConfirm from '@/components/organisms/FormContactConfirm'
 
 const kana = /^[\u30A0-\u30FF\uFF66-\uFF9F]+$/
 const schema = z.object({
@@ -33,7 +33,7 @@ const schema = z.object({
 type FormContactDataType = z.infer<typeof schema>
 
 export default function FormContact() {
-  const methods = useForm<FormContactDataType>({ mode: "onChange", resolver: zodResolver(schema) })
+  const methods = useForm<FormContactDataType>({ mode: 'onChange', resolver: zodResolver(schema) })
   const [isConfirming, setIsConfirming] = useState(false)
 
   const onSubmit = (data: FormContactDataType) => {
