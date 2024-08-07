@@ -30,16 +30,16 @@ declare namespace Theme {
   }
 
   type Breadcrumb = {
-    [key: string]: string;
+    [key: string]: string
   }
 
   interface Link extends Omit<HTMLLinkElement, 'sizes'> {
-    prefetch: boolean;
-    crossorigin: string;
-    sizes: string;
+    prefetch: boolean
+    crossorigin: string
+    sizes: string
   }
 
   interface Meta extends HTMLMetaElement {
-    property: string;
+    property: string
   }
 }
