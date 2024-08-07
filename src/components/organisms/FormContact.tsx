@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import * as AutoKana from 'vanilla-autokana';
-import { useForm } from 'react-hook-form'
+import { useEffect } from 'react'
+import * as AutoKana from 'vanilla-autokana'
+import { useForm, useFormContext, FormProvider } from 'react-hook-form'
 import { z } from "zod"
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -38,18 +38,22 @@ const schema = z.object({
     .min(1, { message: '入力してください。' })
 })
 
-const InputWithIcon = ({ name, errors, watch, children }: any) => {
+const InputWithIcon = ({ name, children }: any) => {
+  const { watch, formState: { errors } } = useFormContext()
   const text = watch(name)
+
   return (
     <div className="relative flex-1">
       {children}
       {(() => {
         if (errors[name]?.message) {
+          // ×マーク
           return <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 text-error absolute right-4 top-2/4 transform -translate-y-1/2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
           </svg>
 
         } else if (text) {
+          // ✓マーク
           return <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 text-success absolute right-4 top-2/4 transform -translate-y-1/2">
             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
           </svg>
@@ -61,12 +65,9 @@ const InputWithIcon = ({ name, errors, watch, children }: any) => {
 
 const onSubmit = async (data: FormContactDataType) => {
   const formData = new FormData()
-  formData.append('familyName', data.familyName)
-  formData.append('givenName', data.givenName)
-  formData.append('familyNameKana', data.familyNameKana)
-  formData.append('givenNameKana', data.givenNameKana)
-  formData.append('email', data.email)
-  formData.append('message', data.message)
+  Object.entries(data).forEach(([key, value]) => {
+    formData.append(key, value)
+  })
   const formDataObj = Object.fromEntries(formData.entries())
   console.log(formDataObj)
 
@@ -89,38 +90,36 @@ const onSubmit = async (data: FormContactDataType) => {
   //   }
 }
 
-let autokanaFamilyName: any
-let autokanaGivenName: any
+let autokanaFamilyName: AutoKana.AutoKana
+let autokanaGivenName: AutoKana.AutoKana
 
 export default function ContactForm() {
-  const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting, isValid } } = useForm<FormContactDataType>({ mode: "all", resolver: zodResolver(schema) })
+  const methods = useForm<FormContactDataType>({ mode: "onChange", resolver: zodResolver(schema) })
+  const { register, handleSubmit, setValue, formState: { errors, isSubmitting, isValid } } = methods
 
   useEffect(() => {
-    autokanaFamilyName = AutoKana.bind('#family-name', '#family-name-kana', { katakana: true });
-    autokanaGivenName = AutoKana.bind('#given-name', '#given-name-kana', { katakana: true });
-  }, []);
+    autokanaFamilyName = AutoKana.bind('#family-name', '#family-name-kana', { katakana: true })
+    autokanaGivenName = AutoKana.bind('#given-name', '#given-name-kana', { katakana: true })
+  }, [])
 
-  const handleFamilyNameInput = (event: React.FormEvent<HTMLInputElement>) => {
-    setValue('familyName', event.currentTarget.value);
-    setValue('familyNameKana', autokanaFamilyName.getFurigana());
-  };
-
-  const handleGivenNameInput = (event: React.FormEvent<HTMLInputElement>) => {
-    setValue('givenName', event.currentTarget.value);
-    setValue('givenNameKana', autokanaGivenName.getFurigana());
-  };
+  const handleFamilyNameInput = () => {
+    setValue('familyNameKana', autokanaFamilyName.getFurigana())
+  }
+  const handleGivenNameInput = () => {
+    setValue('givenNameKana', autokanaGivenName.getFurigana())
+  }
 
   return (
-    <div className="Form">
+    <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-4">
           <div>
             <label htmlFor="family-name" className="label-text">お名前</label>
             <div className="flex gap-4 flex-col md:flex-row">
-              <InputWithIcon name="familyName" watch={watch} errors={errors} >
+              <InputWithIcon name="familyName" >
                 <input {...register('familyName')} onInput={handleFamilyNameInput} id="family-name" className="input input-bordered w-full" autoComplete="family-name" placeholder="姓" />
               </InputWithIcon>
-              <InputWithIcon name="givenName" watch={watch} errors={errors} >
+              <InputWithIcon name="givenName" >
                 <input {...register('givenName')} onInput={handleGivenNameInput} id="given-name" className="input input-bordered w-full" autoComplete="given-name" placeholder="名" />
               </InputWithIcon>
             </div>
@@ -130,10 +129,10 @@ export default function ContactForm() {
           <div>
             <label htmlFor="family-name-kana" className="label-text">カナ</label>
             <div className="flex gap-4 flex-col md:flex-row">
-              <InputWithIcon name="familyNameKana" watch={watch} errors={errors} >
+              <InputWithIcon name="familyNameKana" >
                 <input {...register('familyNameKana')} id="family-name-kana" className="input input-bordered w-full" placeholder="セイ" />
               </InputWithIcon>
-              <InputWithIcon name="givenNameKana" watch={watch} errors={errors} >
+              <InputWithIcon name="givenNameKana" >
                 <input {...register('givenNameKana')} id="given-name-kana" className="input input-bordered w-full" placeholder="メイ" />
               </InputWithIcon>
             </div>
@@ -142,7 +141,7 @@ export default function ContactForm() {
 
           <div>
             <label htmlFor="email" className="label-text">メールアドレス</label>
-            <InputWithIcon name="email" watch={watch} errors={errors} >
+            <InputWithIcon name="email" >
               <input {...register('email')} id="email" className="input input-bordered w-full pr-14" autoComplete="email" type='email' placeholder="example@studio-firefly.co.jp" />
             </InputWithIcon>
             <p className='text-error'>{errors.email?.message}</p>
@@ -150,15 +149,15 @@ export default function ContactForm() {
 
           <div>
             <label htmlFor="message" className="label-text">お問い合わせ内容</label>
-            <InputWithIcon name="message" watch={watch} errors={errors} >
+            <InputWithIcon name="message" >
               <textarea {...register('message')} id="message" className="textarea textarea-bordered w-full" rows={4} placeholder="お問い合わせ内容を入力してください" ></textarea>
             </InputWithIcon>
             <p className='text-error'>{errors.message?.message}</p>
           </div>
 
-          <button type="submit" className="btn btn-primary" disabled={!isValid || isSubmitting}>送信</button>
+          <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>送信</button>
         </div>
       </form>
-    </div>
+    </FormProvider>
   )
 }
