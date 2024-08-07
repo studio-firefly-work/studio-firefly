@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants'
 
 const { size, class: addClasses, ...rest } = Astro.props
 const style = tv({
-  base: `mx-auto w-11/12 md:w-10/12 max-w-screen-xl ${addClasses}`,
+  base: `mx-auto w-11/12 md:w-10/12 max-w-screen-xl ${addClasses || ''}`,
   variants: {
     size: {
       full: 'w-full md:w-full max-w-full',

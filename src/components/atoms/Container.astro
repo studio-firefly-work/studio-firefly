@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants'
 
 const { size, class: addClasses, ...rest } = Astro.props
 const style = tv({
-  base: `py-16 md:py-20 ${addClasses}`,
+  base: `py-16 md:py-20 ${addClasses || ''}`,
   variants: {
     size: {
       tall: 'py-20 md:py-24',
