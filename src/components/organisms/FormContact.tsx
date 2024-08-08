@@ -37,7 +37,7 @@ export default function FormContact() {
   const methods = useForm<FormContactDataType>({ mode: 'onChange', resolver: zodResolver(schema) })
   const [isConfirming, setIsConfirming] = useState(false)
 
-  const onSubmit = (data: FormContactDataType) => {
+  const onSubmit = async (data: FormContactDataType) => {
     if (!isConfirming) {
       // 入力画面から確認画面へ
       setIsConfirming(true)
@@ -49,25 +49,25 @@ export default function FormContact() {
         formData.append(key, value)
       })
       const formDataObj = Object.fromEntries(formData.entries())
-      console.log(formDataObj)
 
-      //   try {
-      //     const res = await fetch(`${import.meta.env.PUBLIC_API}/mail/send`, {
-      //       method: 'POST',
-      //       headers: {
-      //         'Content-Type': 'application/json',
-      //       },
-      //       body: JSON.stringify(formDataObj),
-      //     })
+      try {
+        const res = await fetch(`${import.meta.env.PUBLIC_API}/mail/send/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formDataObj),
+        })
 
-      //     if (!res.ok) {
-      //       console.error('サーバーエラー')
-      //     }
-      //     console.log('登録が正常に完了しました')
-      //   }
-      //   catch (error) {
-      //     console.error('通信に失敗しました', error)
-      //   }
+        if (!res.ok) {
+          console.error('サーバーエラー')
+        } else {
+          console.log('送信が正常に完了しました')
+        }
+      }
+      catch (error) {
+        console.error('通信に失敗しました', error)
+      }
     }
   }
 
@@ -104,12 +104,12 @@ const FormContactInput = () => {
       <div>
         <label htmlFor='family-name' className='label-text'>お名前</label>
         <div className='flex gap-4 flex-col md:flex-row'>
-          <IconField name='familyName' >
+          <FieldHasIcon name='familyName' >
             <input {...register('familyName')} onInput={handleFamilyNameInput} id='family-name' className='input input-bordered w-full' autoComplete='family-name' placeholder='姓' />
-          </IconField>
-          <IconField name='givenName' >
+          </FieldHasIcon>
+          <FieldHasIcon name='givenName' >
             <input {...register('givenName')} onInput={handleGivenNameInput} id='given-name' className='input input-bordered w-full' autoComplete='given-name' placeholder='名' />
-          </IconField>
+          </FieldHasIcon>
         </div>
         {(errors.familyName || errors.givenName) && <p className='text-error'>{(errors.familyName as any).message ?? (errors.givenName as any).message}</p>}
       </div>
@@ -117,29 +117,29 @@ const FormContactInput = () => {
       <div>
         <label htmlFor='family-name-kana' className='label-text'>フリガナ</label>
         <div className='flex gap-4 flex-col md:flex-row'>
-          <IconField name='familyNameKana' >
+          <FieldHasIcon name='familyNameKana' >
             <input {...register('familyNameKana')} id='family-name-kana' className='input input-bordered w-full' placeholder='セイ' />
-          </IconField>
-          <IconField name='givenNameKana' >
+          </FieldHasIcon>
+          <FieldHasIcon name='givenNameKana' >
             <input {...register('givenNameKana')} id='given-name-kana' className='input input-bordered w-full' placeholder='メイ' />
-          </IconField>
+          </FieldHasIcon>
         </div>
         {(errors.familyNameKana || errors.givenNameKana) && <p className='text-error'>{(errors.familyNameKana as any).message ?? (errors.givenNameKana as any).message}</p>}
       </div>
 
       <div>
         <label htmlFor='email' className='label-text'>メールアドレス</label>
-        <IconField name='email' >
+        <FieldHasIcon name='email' >
           <input {...register('email')} id='email' className='input input-bordered w-full pr-14' autoComplete='email' type='email' placeholder='example@studio-firefly.co.jp' />
-        </IconField>
+        </FieldHasIcon>
         {errors.email && <p className='text-error'>{(errors.email as any).message}</p>}
       </div>
 
       <div>
         <label htmlFor='message' className='label-text'>お問い合わせ内容</label>
-        <IconField name='message' >
+        <FieldHasIcon name='message' >
           <textarea {...register('message')} id='message' className='textarea textarea-bordered w-full' rows={4} placeholder='お問い合わせ内容を入力してください' ></textarea>
-        </IconField>
+        </FieldHasIcon>
         {errors.message && <p className='text-error'>{(errors.message as any).message}</p>}
       </div>
 
@@ -175,7 +175,7 @@ const FormContactConfirm = ({ setIsConfirming }) => {
   )
 }
 
-const IconField = ({ name, children }: any) => {
+const FieldHasIcon = ({ name, children }: any) => {
   const { watch, formState: { errors } } = useFormContext()
   const text = watch(name)
 

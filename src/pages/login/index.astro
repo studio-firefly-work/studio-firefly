@@ -1,0 +1,31 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import Container from '@/components/atoms/Container.astro'
+import Inner from '@/components/atoms/Inner.astro'
+import FormLogin from '@/components/organisms/FormLogin'
+import FormSignUp from '@/components/organisms/FormSignUp'
+
+const seo: Theme.SEO = {
+  title: 'ログイン',
+  description: 'ログインページのdescriptionです',
+  permalink: ['login'],
+}
+---
+
+<PageLayout {seo}>
+  <Container>
+    <Inner size="slim">
+      <div role="tablist" class="tabs tabs-bordered tabs-lg grid-cols-2">
+        <input type="radio" name="toggle-login-signup" role="tab" class="theme-text-md tab" aria-label="ログイン" checked="checked" />
+        <div role="tabpanel" class="tab-content p-10">
+          <FormLogin client:only="react" />
+        </div>
+
+        <input type="radio" name="toggle-login-signup" role="tab" class="theme-text-md tab" aria-label="新規登録" />
+        <div role="tabpanel" class="tab-content p-10">
+          <FormSignUp client:only="react" />
+        </div>
+      </div>
+    </Inner>
+  </Container>
+</PageLayout>
