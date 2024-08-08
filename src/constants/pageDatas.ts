@@ -55,6 +55,12 @@ export const pageDatas: PageData[] = [
     type: 'article',
     description: 'description test',
   },
+  {
+    permalink: '/login/',
+    title: { jp: 'ログイン', en: 'Login' },
+    type: 'article',
+    description: 'description test',
+  },
 ]
 
 export function getPageDatasAll() {
