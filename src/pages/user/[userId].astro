@@ -1,0 +1,73 @@
+---
+export const prerender = false
+
+import PageLayout from '@/layouts/PageLayout.astro'
+import Container from '@/components/atoms/Container.astro'
+import Inner from '@/components/atoms/Inner.astro'
+
+const seo: Theme.SEO = {
+  title: 'ユーザー',
+  description: 'ユーザーページのdescriptionです',
+  permalink: ['login'],
+  noindex: true,
+  nofollow: true,
+}
+---
+
+<PageLayout {seo}>
+  <Container>
+    <Inner>
+      <button type="button" class="btn btn-neutral">ログアウト</button>
+      <p id="user-id"></p>
+      <p id="user-email"></p>
+    </Inner>
+  </Container>
+</PageLayout>
+
+<script>
+  const logoutButton = document.querySelector('button.btn') as HTMLButtonElement
+  logoutButton.onclick = () => logout()
+
+  const path = window.location.pathname
+  const userId = path.split('/').filter(Boolean).pop()
+
+  window.addEventListener('load', getUser)
+
+  // ユーザー情報 取得
+  async function getUser() {
+    try {
+      const res = await fetch(`${import.meta.env.PUBLIC_API}/user/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      })
+      const data = await res.json()
+      document.getElementById('user-id')!.textContent = `ID: ${data.id}`
+      document.getElementById('user-email')!.textContent = `Email: ${data.email}`
+    } catch (error) {
+      console.error('通信に失敗しました', error)
+    }
+  }
+
+  // ログアウト
+  async function logout() {
+    try {
+      const res = await fetch(`${import.meta.env.PUBLIC_API}/auth/logout/${userId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+
+      const data = await res.json()
+      if (!res.ok) {
+        console.error('ログアウトに失敗しました：' + data.message)
+      } else {
+        console.log('ログアウトに成功しました：' + data.message)
+        window.location.href = '/login/'
+      }
+    } catch (error) {
+      console.error('通信に失敗しました', error)
+    }
+  }
+</script>
