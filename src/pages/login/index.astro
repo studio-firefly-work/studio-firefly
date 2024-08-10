@@ -29,3 +29,26 @@ const seo: Theme.SEO = {
     </Inner>
   </Container>
 </PageLayout>
+
+<script>
+  document.addEventListener('astro:page-load', getUser)
+
+  // ユーザー情報 取得
+  async function getUser() {
+    try {
+      const res = await fetch(`${import.meta.env.PUBLIC_API}/users/me/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      })
+
+      if (res.ok) {
+        window.location.href = '/user/'
+      }
+    } catch (error) {
+      console.error('通信に失敗しました', error)
+    }
+  }
+</script>

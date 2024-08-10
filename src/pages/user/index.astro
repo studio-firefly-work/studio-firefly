@@ -25,36 +25,38 @@ const seo: Theme.SEO = {
 </PageLayout>
 
 <script>
+  document.addEventListener('astro:page-load', getUser)
   const logoutButton = document.querySelector('button.btn') as HTMLButtonElement
   logoutButton.onclick = () => logout()
-
-  const path = window.location.pathname
-  const userId = path.split('/').filter(Boolean).pop()
-
-  window.addEventListener('load', getUser)
 
   // ユーザー情報 取得
   async function getUser() {
     try {
-      const res = await fetch(`${import.meta.env.PUBLIC_API}/user/${userId}`, {
+      const res = await fetch(`${import.meta.env.PUBLIC_API}/users/me/`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
       })
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
+      }
+
       const data = await res.json()
       document.getElementById('user-id')!.textContent = `ID: ${data.id}`
       document.getElementById('user-email')!.textContent = `Email: ${data.email}`
     } catch (error) {
       console.error('通信に失敗しました', error)
+      window.location.href = '/login/'
     }
   }
 
   // ログアウト
   async function logout() {
     try {
-      const res = await fetch(`${import.meta.env.PUBLIC_API}/auth/logout/${userId}`, {
+      const res = await fetch(`${import.meta.env.PUBLIC_API}/auth/logout/`, {
         method: 'DELETE',
         credentials: 'include',
       })

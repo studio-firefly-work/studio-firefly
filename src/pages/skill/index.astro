@@ -25,7 +25,7 @@ const seo: Theme.SEO = {
   window.addEventListener('load', getUsers)
 
   async function getUsers() {
-    const res = await fetch(`${import.meta.env.PUBLIC_API}/user/`, {
+    const res = await fetch(`${import.meta.env.PUBLIC_API}/users/me/`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
