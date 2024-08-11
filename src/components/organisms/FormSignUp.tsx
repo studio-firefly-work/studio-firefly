@@ -26,7 +26,7 @@ export default function FormSignUp() {
       const formDataObj = Object.fromEntries(formData.entries())
 
       try {
-        const res = await fetch(`${import.meta.env.PUBLIC_API}/users/me/`, {
+        const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ const FormSignUpInput = () => {
           パスワード
         </label>
         <FieldHasIcon name="password-sign-up">
-          <input {...register('password')} id="password-sign-up" className="input input-bordered w-full pr-14" autoComplete="password" type="password" />
+          <input {...register('password')} id="password-sign-up" className="input input-bordered w-full pr-14" autoComplete="current-password" type="password" />
         </FieldHasIcon>
         {errors.password && <p className="text-error">{(errors.password as any).message}</p>}
       </div>

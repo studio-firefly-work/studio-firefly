@@ -22,7 +22,7 @@ export default function FormLogin() {
     const password = data.password
 
     try {
-      const res = await fetch(`${import.meta.env.PUBLIC_API}/auth/login/`, {
+      const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/auth/login/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export default function FormLogin() {
           <label htmlFor="password-login" className="label-text">
             パスワード
           </label>
-          <input {...register('password')} id="password-login" className="input input-bordered w-full pr-14" autoComplete="password" type="password" />
+          <input {...register('password')} id="password-login" className="input input-bordered w-full pr-14" autoComplete="new-password" type="password" />
           {errors.password && <p className="text-error">{errors.password.message}</p>}
         </div>
 
