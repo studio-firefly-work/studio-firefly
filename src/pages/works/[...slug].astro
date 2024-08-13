@@ -1,0 +1,51 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import Container from '@/components/atoms/Container.astro'
+import Inner from '@/components/atoms/Inner.astro'
+
+export async function getStaticPaths() {
+  const pages = [
+    {
+      slug: 'store',
+      title: 'Astroストア',
+      text: 'Astroにようこそ！',
+    },
+    {
+      slug: 'products',
+      title: 'Astroグッズ',
+      text: 'たくさんの商品があります',
+    },
+    {
+      slug: 'join',
+      title: '究極のAstroハンドブック',
+      text: 'Astroについて学びたければ、この本を読む必要があります',
+    },
+  ]
+  return pages.map(({ slug, title, text }) => {
+    return {
+      params: { slug },
+      props: { title, text, slug },
+    }
+  })
+}
+
+const { title, text, slug } = Astro.props
+
+const seo: Theme.SEO = {
+  title: title,
+  description: `${title}ページのdescriptionです`,
+  permalink: ['works', slug],
+  breadcrumb: { works: '制作事例', [slug!]: title },
+}
+---
+
+<PageLayout {seo}>
+  <Container>
+    <Inner>
+      <figure>
+        <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" transition:name={`image-${slug}`} />
+      </figure>
+      <p>{text}</p>
+    </Inner>
+  </Container>
+</PageLayout>

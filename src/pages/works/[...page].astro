@@ -2,7 +2,6 @@
 import PageLayout from '@/layouts/PageLayout.astro'
 import Container from '@/components/atoms/Container.astro'
 import type { GetStaticPathsOptions } from 'astro'
-import ButtonElement from '@/components/molecules/ButtonElement.astro'
 import ButtonText from '@/components/molecules/ButtonText.astro'
 import Inner from '@/components/atoms/Inner.astro'
 
@@ -10,21 +9,9 @@ const permalink = '/works'
 
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const sites = [
-    { name: 'サイト1', category: 'web', url: '#' },
-    { name: 'サイト2サイト2サイト2サイト2サイト2サイト2サイト2', category: 'web', url: '#' },
-    { name: 'サイト3', category: 'web', url: '#' },
-    { name: 'サイト4', category: 'web', url: '#' },
-    { name: 'サイト5', category: 'web', url: '#' },
-    { name: 'サイト6', category: 'web', url: '#' },
-    { name: 'サイト7', category: 'web', url: '#' },
-    { name: 'サイト8', category: 'web', url: '#' },
-    { name: 'サイト9', category: 'web', url: '#' },
-    { name: 'サイト10', category: 'web', url: '#' },
-    { name: 'サイト11', category: 'web', url: '#' },
-    { name: 'サイト12', category: 'web', url: '#' },
-    { name: 'サイト13', category: 'web', url: '#' },
-    { name: 'サイト14', category: 'web', url: '#' },
-    { name: 'サイト15', category: 'web', url: '#' },
+    { name: 'Astroストア', category: 'web', url: 'store' },
+    { name: 'Astroグッズ', category: 'fashion', url: 'products' },
+    { name: '究極のAstroハンドブック', category: 'products', url: 'join' },
   ]
   return paginate(sites, { pageSize: 12 })
 }
@@ -46,10 +33,20 @@ const seo: Theme.SEO = {
         {
           page.data.map((site) => (
             <li>
-              <ButtonElement href={site.url} class="h-full flex-col items-start gap-2  p-4 ">
-                <h2 class="grow">{site.name}</h2>
-                <p>{site.category}</p>
-              </ButtonElement>
+              <a href={`/works/${site.url}/`} class="card rounded-none bg-base-100 shadow-xl">
+                <figure>
+                  <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" transition:name={`image-${site.url}`} />
+                </figure>
+                <div class="card-body">
+                  <h2 class="card-title" transition:name={`title-${site.url}`}>
+                    {site.name}
+                  </h2>
+                  <div class="card-actions">
+                    <div class="badge badge-outline">{site.category}</div>
+                  </div>
+                  <p>If a dog chews shoes whose shoes does he choose?</p>
+                </div>
+              </a>
             </li>
           ))
         }
