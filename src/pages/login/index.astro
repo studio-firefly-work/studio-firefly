@@ -10,7 +10,6 @@ const seo: Theme.SEO = {
   description: 'ログインページのdescriptionです',
   permalink: ['login'],
 }
-const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
 ---
 
 <PageLayout {seo}>
@@ -30,61 +29,3 @@ const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
     </Inner>
   </Container>
 </PageLayout>
-
-<script define:vars={{ apiBaseUrl }}>
-  document.addEventListener('astro:page-load', () => {
-    const accessToken = getCookie('access_token')
-    const refreshToken = getCookie('refresh_token')
-
-    if (accessToken && refreshToken) {
-      getUser()
-    }
-  })
-
-  // ユーザー情報 取得
-  async function getUser() {
-    try {
-      const res = await fetch(`${apiBaseUrl}/users/me/`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      })
-
-      if (!res.ok) {
-        switch (res.status) {
-          case 400:
-            console.warn('リクエストが不正です。詳細:', await res.text())
-            break
-          case 401:
-            console.warn('認証に失敗しました。ログイン情報を確認してください。')
-            break
-          case 404:
-            console.warn('ユーザー情報が見つかりません。')
-            break
-          case 500:
-            console.error('サーバー内部エラーが発生しました。後ほど再試行してください。')
-            break
-          default:
-            console.warn('予期しないステータスコード:', res.status)
-            break
-        }
-        return
-      }
-
-      // 認証成功
-      console.info('認証に成功しました。ユーザーページにリダイレクトします。')
-      window.location.href = '/user/'
-    } catch (error) {
-      console.error('予期しないエラーが発生しました:', error)
-    }
-  }
-
-  // Cookieから指定された名前の値を取得
-  function getCookie(name) {
-    const value = `; ${document.cookie}`
-    const parts = value.split(`; ${name}=`)
-    if (parts.length === 2) return parts.pop().split(';').shift()
-  }
-</script>

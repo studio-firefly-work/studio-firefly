@@ -8,7 +8,7 @@ import Inner from '@/components/atoms/Inner.astro'
 
 const permalink = '/works'
 
-export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const sites = [
     { name: 'サイト1', category: 'web', url: '#' },
     { name: 'サイト2サイト2サイト2サイト2サイト2サイト2サイト2', category: 'web', url: '#' },

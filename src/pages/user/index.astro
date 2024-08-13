@@ -8,7 +8,7 @@ import Inner from '@/components/atoms/Inner.astro'
 const seo: Theme.SEO = {
   title: 'ユーザー',
   description: 'ユーザーページのdescriptionです',
-  permalink: ['login'],
+  permalink: ['user'],
   noindex: true,
   nofollow: true,
 }
@@ -25,13 +25,9 @@ const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
   </Container>
 </PageLayout>
 
-<script define:vars={{ apiBaseUrl }}>
-  document.addEventListener('astro:page-load', getUser())
-  const logoutButton = document.querySelector('button.btn')
-  logoutButton.onclick = () => logout()
-
+<script is:inline data-astro-rerun define:vars={{ apiBaseUrl }}>
   // ユーザー情報 取得
-  async function getUser() {
+  const getUser = async () => {
     try {
       const res = await fetch(`${apiBaseUrl}/users/me/`, {
         method: 'GET',
@@ -42,47 +38,20 @@ const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
       })
 
       if (!res.ok) {
-        switch (res.status) {
-          case 400:
-            console.warn('リクエストが不正です。詳細:', await res.text())
-            break
-          case 401:
-            console.warn('認証に失敗しました。ログイン情報を確認してください。')
-            break
-          case 404:
-            console.warn('ユーザー情報が見つかりません。')
-            break
-          case 500:
-            console.error('サーバー内部エラーが発生しました。後ほど再試行してください。')
-            break
-          default:
-            console.warn('予期しないステータスコード:', res.status)
-            break
-        }
+        window.location.href = '/login/'
         return
       }
-      console.info('認証に成功しました。')
-      const data = await res.json()
+
+      data = await res.json()
       document.getElementById('user-id').textContent = `ID: ${data.id}`
       document.getElementById('user-email').textContent = `Email: ${data.email}`
     } catch (error) {
-      switch (error.name) {
-        case 'TypeError':
-          console.error('ネットワーク接続に問題があります:', error.message)
-          break
-        case 'SyntaxError':
-          console.error('サーバーからの応答が不正です:', error.message)
-          break
-        default:
-          console.error('予期しないエラーが発生しました:', error.message)
-          break
-      }
       window.location.href = '/login/'
     }
   }
 
   // ログアウト
-  async function logout() {
+  const logout = async () => {
     try {
       const res = await fetch(`${apiBaseUrl}/auth/logout/`, {
         method: 'DELETE',
@@ -100,4 +69,9 @@ const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
       console.error('通信に失敗しました', error)
     }
   }
+
+  const logoutButton = document.querySelector('button.btn')
+
+  getUser()
+  logoutButton.onclick = () => logout()
 </script>
