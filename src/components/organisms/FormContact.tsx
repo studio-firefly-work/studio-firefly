@@ -139,7 +139,7 @@ const FormContactInput = () => {
   )
 }
 
-const FormContactConfirm = ({ setIsConfirming }) => {
+const FormContactConfirm = ({ setIsConfirming }: any) => {
   const { getValues } = useFormContext()
   const values = getValues()
 

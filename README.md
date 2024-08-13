@@ -1,8 +1,11 @@
-create new github account "studio-firefly"
-create new repository "studio-firefly"
-install Astro DB
-sign up Astro Studio
-command "npm install lucia-adapter-astrodb"
-release by github pages
+##macOS
+システム設定 > アクセシビリティ > 表示 > 動きの抑制
 
-npm run dev -- --host
+##iOS
+設定 > アクセシビリティ > 動作 > 視差効果を減らす をオン
+
+##Windows 10
+設定 > 簡単操作 > ディスプレイ > アニメーションを表示する
+
+##Android
+設定 > ユーザー補助 > アニメーションの削除 をオン
