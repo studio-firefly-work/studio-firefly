@@ -87,7 +87,7 @@ const FormSignUpInput = () => {
   )
 }
 
-const FormSignUpConfirm = ({ setIsConfirming }) => {
+const FormSignUpConfirm = ({ setIsConfirming }: any) => {
   const { getValues } = useFormContext()
   const values = getValues()
 
