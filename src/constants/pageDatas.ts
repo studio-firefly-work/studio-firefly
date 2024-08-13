@@ -56,8 +56,8 @@ export const pageDatas: PageData[] = [
     description: 'description test',
   },
   {
-    permalink: '/login/',
-    title: { jp: 'ログイン', en: 'Login' },
+    permalink: '/user/',
+    title: { jp: 'ユーザー', en: 'user' },
     type: 'article',
     description: 'description test',
   },
