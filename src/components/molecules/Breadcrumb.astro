@@ -1,0 +1,39 @@
+---
+interface Props {
+  seo: Theme.SEO
+}
+const { seo } = Astro.props
+
+let itemListElement: any
+if (seo.breadcrumb) {
+  itemListElement = [
+    {
+      name: 'ホーム',
+      item: Astro.site,
+    },
+  ]
+  let path = ''
+
+  Object.keys(seo.breadcrumb).forEach((key) => {
+    path += `${key}/`
+    itemListElement.push({
+      name: seo.breadcrumb![key],
+      item: new URL(path, Astro.site),
+    })
+  })
+}
+---
+
+<div class="theme-text-sm breadcrumbs max-w-full">
+  <ul>
+    {itemListElement.map((link: any, index: number) => (
+      <li>
+        {index !== itemListElement.length - 1 ? (
+            <a href={link.item}>{link.name}</a>
+          ) : (
+            <p>{link.name}</p>
+        )}
+      </li>
+    ))}
+  </ul>
+</div>

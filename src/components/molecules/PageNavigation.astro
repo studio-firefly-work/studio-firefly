@@ -1,0 +1,22 @@
+---
+const { page, permalink } = Astro.props
+const totalPages = Math.ceil(page.total / page.size)
+---
+
+<nav class="join" aria-label="Page navigation">
+  <a href={page.url.prev} class={`btn join-item ${page.url.prev ? null : 'pointer-events-none'}`}> ＜ </a>
+  {
+    [...Array(totalPages)].map((_, index) => {
+      const pageNum = index + 1
+      const isCurrent = pageNum === page.currentPage
+      const pageLink = pageNum === 1 ? permalink : `${permalink}/${pageNum}`
+
+      return (
+        <a href={pageLink} class={`btn join-item ${isCurrent ? 'btn-active pointer-events-none' : null}`}>
+          {pageNum}
+        </a>
+      )
+    })
+  }
+  <a href={page.url.next} class={`btn join-item ${page.url.next ? null : 'pointer-events-none'}`}> ＞ </a>
+</nav>

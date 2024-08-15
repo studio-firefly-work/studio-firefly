@@ -2,8 +2,8 @@
 import PageLayout from '@/layouts/PageLayout.astro'
 import Container from '@/components/atoms/Container.astro'
 import type { GetStaticPathsOptions } from 'astro'
-import ButtonText from '@/components/molecules/ButtonText.astro'
 import Inner from '@/components/atoms/Inner.astro'
+import PageNavigation from '@/components/molecules/PageNavigation.astro'
 
 const permalink = '/works'
 
@@ -12,11 +12,18 @@ export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
     { name: 'Astroストア', category: 'web', url: 'store' },
     { name: 'Astroグッズ', category: 'fashion', url: 'products' },
     { name: '究極のAstroハンドブック', category: 'products', url: 'join' },
+    { name: 'Test1', category: 'test', url: 'test1' },
+    { name: 'Test2', category: 'test', url: 'test2' },
+    { name: 'Test3', category: 'test', url: 'test3' },
+    { name: 'Test4', category: 'test', url: 'test4' },
+    { name: 'Test5', category: 'test', url: 'test5' },
+    { name: 'Test6', category: 'test', url: 'test6' },
+    { name: 'Test7', category: 'test', url: 'test7' },
+    { name: 'Test8', category: 'test', url: 'test8' },
   ]
-  return paginate(sites, { pageSize: 12 })
+  return paginate(sites, { pageSize: 8 })
 }
 const { page } = Astro.props
-const totalPages = Math.ceil(page.total / page.size)
 
 const seo: Theme.SEO = {
   title: '制作事例',
@@ -51,26 +58,10 @@ const seo: Theme.SEO = {
           ))
         }
       </ul>
-
-      <nav class="flex justify-center gap-4" aria-label="Page navigation">
-        {page.url.prev ? <ButtonText href={page.url.prev}>Previous</ButtonText> : null}
-
-        {
-          [...Array(totalPages)].map((_, index) => {
-            const pageNum = index + 1
-            const isCurrent = pageNum === page.currentPage
-            const pageLink = pageNum === 1 ? permalink : `${permalink}/${pageNum}`
-
-            return (
-              <ButtonText href={pageLink} class={isCurrent ? 'pointer-events-none font-bold' : null}>
-                {pageNum}
-              </ButtonText>
-            )
-          })
-        }
-
-        {page.url.next ? <ButtonText href={page.url.next}>Next</ButtonText> : null}
-      </nav>
     </Inner>
   </Container>
+
+  <Inner class="text-center">
+    <PageNavigation {page} {permalink} />
+  </Inner>
 </PageLayout>
