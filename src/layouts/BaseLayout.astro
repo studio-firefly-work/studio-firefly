@@ -5,6 +5,7 @@ import '@fontsource-variable/noto-sans-jp'
 import '@/styles/global.scss'
 import SplashScreen from '@/components/molecules/SplashScreen.astro'
 import SEOMetaTags from '@/components/molecules/SEOMetaTags.astro'
+import Icons from '@/assets/images/common/icons.svg?raw'
 
 interface Props {
   seo: Theme.SEO
@@ -18,8 +19,9 @@ const { seo } = Astro.props
     <SEOMetaTags {seo} />
     <ViewTransitions />
   </head>
-  <body class="manipulation grid min-h-dvh grid-cols-1 grid-rows-[auto,1fr,auto] break-words bg-base-200 font-body text-base tracking-normal antialiased overflow-y-scroll">
+  <body class="manipulation grid min-h-dvh grid-cols-1 grid-rows-[auto,1fr,auto] overflow-y-scroll break-words bg-base-200 font-body text-base tracking-normal antialiased">
     <SplashScreen />
+    <Fragment set:html={Icons} />
     <slot />
   </body>
 </html>
