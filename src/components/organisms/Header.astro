@@ -11,7 +11,7 @@ type Menue = {
   permalink: string
 }
 
-const menues: Menue[] = [
+const menues: any = [
   {
     title: 'プロフィール',
     icon: 'icon-identification',
@@ -19,12 +19,12 @@ const menues: Menue[] = [
   },
   {
     title: 'スキルセット',
-    icon: 'icon-wrench-screwdriver',
+    icon: 'icon-code-bracket',
     permalink: '/skill/',
   },
   {
     title: '制作事例',
-    icon: 'icon-code-bracket',
+    icon: 'icon-window',
     permalink: '/works/',
   },
   {
@@ -32,18 +32,20 @@ const menues: Menue[] = [
     icon: 'icon-envelope',
     permalink: '/contact/',
   },
-  {
-    title: 'ユーザー',
-    icon: 'icon-user',
-    permalink: '/user/',
-  },
+  [
+    {
+      title: 'ユーザー',
+      icon: 'icon-user',
+      permalink: '/user/',
+    },
+  ],
 ]
 ---
 
 <header>
   <Container class="py-4 md:py-4">
     <Inner size="wide">
-      <nav class="navbar bg-base-100">
+      <nav class="navbar">
         <div class="flex-1">
           <a href="/">
             <Fragment set:html={Logo} />
@@ -57,7 +59,7 @@ const menues: Menue[] = [
         <div class="hidden flex-none md:inline-flex">
           <ul class="menu menu-horizontal">
             {
-              menues.map((menu: Menue) => (
+              menues.map((menu: any) => (
                 <li>
                   <a href={menu.permalink} class="btn btn-ghost">
                     <Icon name={menu.icon} class="hidden lg:block" />
