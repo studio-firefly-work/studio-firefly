@@ -2,7 +2,7 @@
 
 ---
 
-<label class="swap swap-rotate">
+<label class="btn btn-ghost swap swap-rotate">
   <!-- this hidden checkbox controls the state -->
   <input type="checkbox" id="theme-controller" class="theme-controller" value="synthwave" />
 
@@ -44,7 +44,7 @@
   }
 
   // 初期化関数
-  const init = () => {
+  const initThemeController = () => {
     const themeController = document.getElementById('theme-controller')
     setTheme(themeController)
 
@@ -54,6 +54,6 @@
   }
 
   // ページ読み込み時とページ遷移時に初期化
-  init()
-  document.addEventListener('astro:after-swap', init)
+  initThemeController()
+  document.addEventListener('astro:after-swap', initThemeController)
 </script>

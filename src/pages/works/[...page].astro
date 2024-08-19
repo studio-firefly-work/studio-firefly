@@ -9,17 +9,17 @@ const permalink = '/works'
 
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const sites = [
-    { name: 'Astroストア', category: 'web', url: 'store' },
-    { name: 'Astroグッズ', category: 'fashion', url: 'products' },
-    { name: '究極のAstroハンドブック', category: 'products', url: 'join' },
-    { name: 'Test1', category: 'test', url: 'test1' },
-    { name: 'Test2', category: 'test', url: 'test2' },
-    { name: 'Test3', category: 'test', url: 'test3' },
-    { name: 'Test4', category: 'test', url: 'test4' },
-    { name: 'Test5', category: 'test', url: 'test5' },
-    { name: 'Test6', category: 'test', url: 'test6' },
-    { name: 'Test7', category: 'test', url: 'test7' },
-    { name: 'Test8', category: 'test', url: 'test8' },
+    { name: 'Astroストア', text: 'text', category: 'web', url: 'store' },
+    { name: 'Astroグッズ', text: 'text long test text long test text long test text long test', category: 'fashion', url: 'products' },
+    { name: '究極のAstroハンドブック', text: 'text', category: 'products', url: 'join' },
+    { name: 'Test1', text: 'text', category: 'test', url: 'test1' },
+    { name: 'Test2', text: 'text', category: 'test', url: 'test2' },
+    { name: 'Test3', text: 'text', category: 'test', url: 'test3' },
+    { name: 'Test4', text: 'text', category: 'test', url: 'test4' },
+    { name: 'Test5', text: 'text', category: 'test', url: 'test5' },
+    { name: 'Test6', text: 'text', category: 'test', url: 'test6' },
+    { name: 'Test7', text: 'text', category: 'test', url: 'test7' },
+    { name: 'Test8', text: 'text', category: 'test', url: 'test8' },
   ]
   return paginate(sites, { pageSize: 8 })
 }
@@ -39,19 +39,17 @@ const seo: Theme.SEO = {
       <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {
           page.data.map((site) => (
-            <li>
+            <li class="flex">
               <a href={`/works/${site.url}/`} class="card rounded-none bg-base-100 shadow-xl">
                 <figure>
                   <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" transition:name={`image-${site.url}`} />
                 </figure>
                 <div class="card-body">
-                  <h2 class="card-title" transition:name={`title-${site.url}`}>
-                    {site.name}
-                  </h2>
                   <div class="card-actions">
                     <div class="badge badge-outline">{site.category}</div>
                   </div>
-                  <p>If a dog chews shoes whose shoes does he choose?</p>
+                  <h2 class="card-title" transition:name={`title-${site.url}`}>{site.name}</h2>
+                  <p>{site.text}</p>
                 </div>
               </a>
             </li>

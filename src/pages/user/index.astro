@@ -18,7 +18,7 @@ const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
 <PageLayout {seo}>
   <Container>
     <Inner>
-      <button type="button" class="btn btn-neutral">ログアウト</button>
+      <button id="btn-logout" type="button" class="btn btn-neutral">ログアウト</button>
       <p id="user-id"></p>
       <p id="user-email"></p>
     </Inner>
@@ -70,8 +70,13 @@ const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
     }
   }
 
-  const logoutButton = document.querySelector('button.btn')
+  // 初期化関数
+  const initUserPage = () => {
+    const ButtonLogout = document.getElementById('btn-logout')
+    ButtonLogout.onclick = () => logout()
+    getUser()
+  }
 
-  getUser()
-  logoutButton.onclick = () => logout()
+  // ページ読み込み時に初期化
+  initUserPage()
 </script>
