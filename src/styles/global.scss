@@ -19,3 +19,6 @@
 .theme-text-xs {
   @apply text-xs md:text-xs;
 }
+script {
+  display: none !important;
+}

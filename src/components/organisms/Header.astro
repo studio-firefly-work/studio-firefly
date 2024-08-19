@@ -12,7 +12,7 @@ type Menue = {
   permalink: string
 }
 
-const menues: any = [
+const menues: Menue[] = [
   {
     title: '自己紹介',
     icon: 'icon-identification',
@@ -53,7 +53,7 @@ const menues: any = [
         <div class="hidden flex-none md:inline-flex">
           <ul class="menu menu-horizontal">
             {
-              menues.map((menu: any) => (
+              menues.map((menu: Menue) => (
                 <li>
                   <a href={menu.permalink} class="btn btn-ghost">
                     <Icon name={menu.icon} class="hidden lg:block" />
@@ -62,9 +62,9 @@ const menues: any = [
                 </li>
               ))
             }
+            <li><ButtonLoginOrProfile /></li>
+            <li><ThemeController /></li>
           </ul>
-          <ButtonLoginOrProfile />
-          <ThemeController />
         </div>
 
         <div class="flex-none md:hidden">
