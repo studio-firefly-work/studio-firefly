@@ -1,0 +1,44 @@
+---
+import Icon from '@/components/atoms/Icon.astro'
+
+const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
+---
+
+<a id="auth-button" class="btn btn-ghost">
+  <Icon name="icon-user" />
+</a>
+
+<script is:inline define:vars={{ apiBaseUrl }}>
+  // ログイン中かを判定する関数
+  const isLogin = async () => {
+    try {
+      const res = await fetch(`${apiBaseUrl}/auth/login/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      })
+
+      if (res.ok) {
+        // ユーザーがログインしている場合
+        document.getElementById('auth-button').href = '/user/'
+      } else {
+        // ユーザーがログインしていない場合
+        document.getElementById('auth-button').href = '/login/'
+      }
+    } catch (error) {
+      // エラーが発生した場合もログインページに遷移
+      document.getElementById('auth-button').href = '/login/'
+    }
+  }
+
+  // 初期化関数
+  const init = () => {
+    isLogin()
+  }
+
+  // ページ読み込み時とページ遷移時に初期化
+  init()
+  document.addEventListener('astro:after-swap', init)
+</script>

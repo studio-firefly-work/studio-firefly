@@ -1,9 +1,10 @@
 ---
+import ButtonLoginOrProfile from '@/components/molecules/ButtonLoginOrProfile.astro'
 import Container from '@/components/atoms/Container.astro'
-import ThemeController from '@/components/molecules/ThemeController.astro'
+import Icon from '@/components/atoms/Icon.astro'
 import Inner from '@/components/atoms/Inner.astro'
 import Logo from '@/assets/images/common/logo.svg?raw'
-import Icon from '@/components/atoms/Icon.astro'
+import ThemeController from '@/components/molecules/ThemeController.astro'
 
 type Menue = {
   title: string
@@ -13,7 +14,7 @@ type Menue = {
 
 const menues: any = [
   {
-    title: 'プロフィール',
+    title: '自己紹介',
     icon: 'icon-identification',
     permalink: '/profile/',
   },
@@ -32,13 +33,6 @@ const menues: any = [
     icon: 'icon-envelope',
     permalink: '/contact/',
   },
-  [
-    {
-      title: 'ユーザー',
-      icon: 'icon-user',
-      permalink: '/user/',
-    },
-  ],
 ]
 ---
 
@@ -69,7 +63,7 @@ const menues: any = [
               ))
             }
           </ul>
-
+          <ButtonLoginOrProfile />
           <ThemeController />
         </div>
 
