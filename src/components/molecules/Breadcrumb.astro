@@ -24,16 +24,21 @@ if (seo.breadcrumb) {
 }
 ---
 
-<div class="theme-text-sm breadcrumbs max-w-full">
-  <ul>
-    {itemListElement.map((link: any, index: number) => (
-      <li>
-        {index !== itemListElement.length - 1 ? (
-            <a href={link.item}>{link.name}</a>
-          ) : (
-            <p>{link.name}</p>
-        )}
-      </li>
-    ))}
-  </ul>
+<div class="theme-text-sm breadcrumbs max-w-full px-[calc((100%-(11/12*100%))/2)] md:px-[calc((100%-(10/12*100%))/2)]">
+  <ol>
+    {
+      itemListElement.map((link: any, index: number) => {
+        const isLastItem = index === itemListElement.length - 1
+        if (isLastItem) {
+          return <li area-current="page">{link.name}</li>
+        } else {
+          return (
+            <li>
+              <a href={link.item}>{link.name}</a>
+            </li>
+          )
+        }
+      })
+    }
+  </ol>
 </div>

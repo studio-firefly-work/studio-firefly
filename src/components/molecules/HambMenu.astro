@@ -7,11 +7,13 @@ interface Props {
   menues: Theme.Menu[]
 }
 const { menues } = Astro.props
+
+const currentPath = Astro.url.pathname
 ---
 
 <div class="drawer">
   <input id="js-hamb-checkbox" type="checkbox" class="drawer-toggle hidden" />
-  <button id="js-hamb-button" class="btn btn-ghost drawer-button" aria-controls="js-hamb-nav" aria-expanded="false" aria-label="メニューを開く">
+  <button id="js-hamb-button" class="btn btn-ghost drawer-button px-0" aria-controls="js-hamb-nav" aria-expanded="false" aria-label="メニューを開く">
     <Icon name="icon-bars-3" class="h-10 w-10" />
   </button>
   <nav id="js-hamb-nav" class="drawer-side z-50" area-hidden="true">
@@ -20,14 +22,14 @@ const { menues } = Astro.props
       {
         menues.map((menu: Theme.Menu) => (
           <li class="js-hamb-menu hidden">
-            <a href={menu.permalink} class="btn btn-ghost justify-start">
+            <a href={menu.permalink} class={`btn btn-ghost justify-start ${currentPath.startsWith(menu.permalink) ? 'theme-current-page w-fit' : undefined}`}>
               <Icon name={menu.icon} />
               {menu.title}
             </a>
           </li>
         ))
       }
-      <li class="js-hamb-menu hidden"><ButtonLoginOrProfile /></li>
+      <li class="js-hamb-menu hidden"><ButtonLoginOrProfile class={currentPath.startsWith('/user/') || currentPath.startsWith('/login/') ? 'theme-current-page' : null} /></li>
       <li class="js-hamb-menu hidden"><ButtonThemeToggle /></li>
     </ul>
   </nav>

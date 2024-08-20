@@ -7,6 +7,7 @@ import Inner from '@/components/atoms/Inner.astro'
 import HambMenu from '@/components/molecules/HambMenu.astro'
 import Logo from '@/assets/images/common/logo.svg?raw'
 
+const currentPath = Astro.url.pathname
 const menues: Theme.Menu[] = [
   {
     title: '自己紹介',
@@ -34,9 +35,9 @@ const menues: Theme.Menu[] = [
 <header>
   <Container class="py-4 md:py-4">
     <Inner size="wide">
-      <nav class="navbar">
+      <nav class="flex">
         <div class="flex-1">
-          <a href="/">
+          <a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>
             <!-- <Fragment set:html={Logo} />
             <svg width="140" height="60">
               <use href="#logo-text" class="fill-black dark:fill-white"></use>
@@ -50,18 +51,17 @@ const menues: Theme.Menu[] = [
             {
               menues.map((menu: Theme.Menu) => (
                 <li>
-                  <a href={menu.permalink} class="btn btn-ghost">
+                  <a href={menu.permalink} class={`btn btn-ghost ${currentPath.startsWith(menu.permalink) ? 'theme-current-page' : undefined}`}>
                     <Icon name={menu.icon} class="hidden lg:block" />
                     {menu.title}
                   </a>
                 </li>
               ))
             }
-            <li><ButtonLoginOrProfile /></li>
+            <li><ButtonLoginOrProfile class={currentPath.startsWith('/user/') || currentPath.startsWith('/login/') ? 'theme-current-page' : null} /></li>
             <li><ButtonThemeToggle /></li>
           </ul>
         </div>
-
         <div class="flex-none md:hidden">
           <HambMenu {menues} />
         </div>
