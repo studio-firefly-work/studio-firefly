@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import ButtonText from '@/components/molecules/ButtonText.astro'
-import ToggleMode from '@/components/molecules/ThemeController.astro'
+import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle.astro'
 import { getPageDatasAll, exceptHome, exceptNoindex } from '@/constants/pageDatas'
 import type { PageData } from '@/constants/pageDatas'
 import Particle from '@/components/molecules/Particle.astro'
@@ -17,7 +17,7 @@ const seo: Theme.SEO = {
 
 <BaseLayout {seo}>
   <main>
-    <ToggleMode />
+    <ButtonThemeToggle />
     <ul class="flex flex-wrap gap-4">
       {
         pagesExceptNoindexAndHome.map((page: PageData) => (

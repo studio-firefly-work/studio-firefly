@@ -1,18 +1,13 @@
 ---
 import ButtonLoginOrProfile from '@/components/molecules/ButtonLoginOrProfile.astro'
+import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle.astro'
 import Container from '@/components/atoms/Container.astro'
 import Icon from '@/components/atoms/Icon.astro'
 import Inner from '@/components/atoms/Inner.astro'
+import HambMenu from '@/components/molecules/HambMenu.astro'
 import Logo from '@/assets/images/common/logo.svg?raw'
-import ThemeController from '@/components/molecules/ThemeController.astro'
 
-type Menue = {
-  title: string
-  icon: string
-  permalink: string
-}
-
-const menues: Menue[] = [
+const menues: Theme.Menu[] = [
   {
     title: '自己紹介',
     icon: 'icon-identification',
@@ -42,18 +37,18 @@ const menues: Menue[] = [
       <nav class="navbar">
         <div class="flex-1">
           <a href="/">
-            <Fragment set:html={Logo} />
+            <!-- <Fragment set:html={Logo} />
             <svg width="140" height="60">
               <use href="#logo-text" class="fill-black dark:fill-white"></use>
               <use href="#logo-firefly"></use>
-            </svg>
+            </svg> -->
           </a>
         </div>
 
         <div class="hidden flex-none md:inline-flex">
           <ul class="menu menu-horizontal">
             {
-              menues.map((menu: Menue) => (
+              menues.map((menu: Theme.Menu) => (
                 <li>
                   <a href={menu.permalink} class="btn btn-ghost">
                     <Icon name={menu.icon} class="hidden lg:block" />
@@ -63,16 +58,12 @@ const menues: Menue[] = [
               ))
             }
             <li><ButtonLoginOrProfile /></li>
-            <li><ThemeController /></li>
+            <li><ButtonThemeToggle /></li>
           </ul>
         </div>
 
         <div class="flex-none md:hidden">
-          <button class="btn btn-square btn-ghost">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-5 w-5 stroke-current">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-          </button>
+          <HambMenu {menues} />
         </div>
       </nav>
     </Inner>
