@@ -4,41 +4,39 @@ import Icon from '@/components/atoms/Icon.astro'
 const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
 ---
 
-<a id="auth-button" class="btn btn-ghost">
+<a class="js-auth-button btn btn-ghost">
   <Icon name="icon-user" />
 </a>
 
 <script is:inline define:vars={{ apiBaseUrl }}>
-  // ログイン中かを判定する関数
-  const isLogin = async () => {
+  // APIエンドポイントにリクエストを送信してログイン状態を確認する関数
+  const checkLoginStatus = async () => {
     try {
-      const res = await fetch(`${apiBaseUrl}/auth/login/`, {
+      const response = await fetch(`${apiBaseUrl}/auth/login/`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
       })
 
-      if (res.ok) {
-        // ユーザーがログインしている場合
-        document.getElementById('auth-button').href = '/user/'
-      } else {
-        // ユーザーがログインしていない場合
-        document.getElementById('auth-button').href = '/login/'
-      }
+      return response.ok
     } catch (error) {
-      // エラーが発生した場合もログインページに遷移
-      document.getElementById('auth-button').href = '/login/'
+      console.error('Error checking login status:', error)
+      return false
     }
   }
 
   // 初期化関数
-  const init = () => {
-    isLogin()
+  const init = async () => {
+    const authButtons = document.querySelectorAll('.js-auth-button')
+    if (authButtons.length > 0) {
+      const isLoggedIn = await checkLoginStatus()
+      const href = isLoggedIn ? '/user/' : '/login/'
+      authButtons.forEach((button) => {
+        button.href = href
+      })
+    }
   }
 
-  // ページ読み込み時とページ遷移時に初期化
+  // ページ読み込み時に初期化
   init()
-  document.addEventListener('astro:after-swap', init)
 </script>

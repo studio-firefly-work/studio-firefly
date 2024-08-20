@@ -1,0 +1,56 @@
+---
+import Icon from '@/components/atoms/Icon.astro'
+---
+
+<button class="js-button-theme-toggle btn btn-ghost swap swap-rotate">
+  <Icon name="icon-sun" class="swap-off" />
+  <Icon name="icon-moon" class="swap-on" />
+</button>
+
+<script>
+  // 現在のテーマを取得する関数
+  const getTheme = () => {
+    // ローカルストレージのテーマを取得
+    const savedTheme = localStorage.getItem('theme')
+    if (savedTheme) {
+      return savedTheme
+    }
+
+    // システムのテーマを取得
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    return systemPrefersDark ? 'dark' : 'light'
+  }
+
+  // テーマを設定する関数
+  const setTheme = (theme: string, themeToggleButtons: NodeListOf<HTMLButtonElement>) => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
+
+    themeToggleButtons.forEach((button: HTMLButtonElement) => {
+      if (theme === 'dark') {
+        button.classList.add('swap-active')
+      } else {
+        button.classList.remove('swap-active')
+      }
+    })
+  }
+
+  // 初期化関数
+  const init = () => {
+    const themeToggleButtons = document.querySelectorAll('.js-button-theme-toggle') as NodeListOf<HTMLButtonElement>
+
+    themeToggleButtons.forEach((button: HTMLButtonElement) => {
+      setTheme(getTheme(), themeToggleButtons)
+
+      button.addEventListener('click', () => {
+        const currentTheme = getTheme()
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light'
+        setTheme(newTheme, themeToggleButtons)
+      })
+    })
+  }
+
+  // ページ読み込み時とページ遷移時に初期化
+  init()
+  document.addEventListener('astro:after-swap', init)
+</script>

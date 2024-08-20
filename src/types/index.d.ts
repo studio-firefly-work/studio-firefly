@@ -42,4 +42,10 @@ declare namespace Theme {
   interface Meta extends HTMLMetaElement {
     property: string
   }
+
+  type Menu = {
+    title: string
+    icon: string
+    permalink: string
+  }
 }
