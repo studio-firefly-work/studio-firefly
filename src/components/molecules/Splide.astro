@@ -44,34 +44,37 @@ import slide10 from '@/assets/images/test/ged047.jpg'
   }
 </style>
 
-<script is:inline>
-  import '@splidejs/splide/css'
+<script>
   import { Splide } from '@splidejs/splide'
   import { Intersection } from '@splidejs/splide-extension-intersection'
+  import '@splidejs/splide/css'
 
-  document.addEventListener('astro:page-load', function () {
-    new Splide('.splide', {
-      autoplay: 'pause',
-      breakpoints: {
-        640: {
-          perPage: 2,
+  document.addEventListener('astro:page-load', () => {
+    const splide = document.querySelector('.splide')
+    if (splide) {
+      new Splide('.splide', {
+        autoplay: 'pause',
+        breakpoints: {
+          640: {
+            perPage: 2,
+          },
         },
-      },
-      intersection: {
-        inView: {
-          autoplay: true,
+        intersection: {
+          inView: {
+            autoplay: true,
+          },
+          outView: {
+            autoplay: false,
+          },
         },
-        outView: {
-          autoplay: false,
-        },
-      },
-      focus: 'center',
-      gap: '1.5rem',
-      perPage: 3,
-      resetProgress: false,
-      type: 'loop',
-      waitForTransition: true,
-      wheel: true,
-    }).mount({ Intersection })
+        focus: 'center',
+        gap: '1.5rem',
+        perPage: 3,
+        resetProgress: false,
+        type: 'loop',
+        waitForTransition: true,
+        wheel: true,
+      }).mount({ Intersection })
+    }
   })
 </script>

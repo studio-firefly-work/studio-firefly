@@ -1,14 +1,10 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import ButtonText from '@/components/molecules/ButtonText.astro'
-import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle.astro'
-import { getPageDatasAll, exceptHome, exceptNoindex } from '@/constants/pageDatas'
-import type { PageData } from '@/constants/pageDatas'
+import Container from '@/components/atoms/Container.astro'
+import Footer from '@/components/organisms/Footer.astro'
+import Header from '@/components/organisms/Header.astro'
+import Inner from '@/components/atoms/Inner.astro'
 import Particle from '@/components/molecules/Particle.astro'
-
-const pages = getPageDatasAll()
-const pagesExceptNoindex = exceptNoindex(pages)
-const pagesExceptNoindexAndHome = exceptHome(pagesExceptNoindex)
 
 const seo: Theme.SEO = {
   description: 'ホームページのdescriptionです',
@@ -16,20 +12,14 @@ const seo: Theme.SEO = {
 ---
 
 <BaseLayout {seo}>
+  <Header />
   <main>
-    <ButtonThemeToggle />
-    <ul class="flex flex-wrap gap-4">
-      {
-        pagesExceptNoindexAndHome.map((page: PageData) => (
-          <li>
-            <ButtonText href={page.permalink} class="flex flex-col text-sm before:text-2xl before:content-[attr(data-title-en)]" data-title-en={page.title.en}>
-              {page.title.jp}
-            </ButtonText>
-          </li>
-        ))
-      }
-    </ul>
-
-    <Particle />
+    <Container size="tall">
+      <Inner>
+        <h1 class="theme-text-xl font-bold">{seo.title}</h1>
+      </Inner>
+    </Container>
   </main>
+  <Footer />
+  <Particle />
 </BaseLayout>
