@@ -4,10 +4,11 @@ export const prerender = false
 import PageLayout from '@/layouts/PageLayout.astro'
 import Container from '@/components/atoms/Container.astro'
 import Inner from '@/components/atoms/Inner.astro'
+import FormUserEdit from '@/components/organisms/FormUserEdit'
 
 const seo: Theme.SEO = {
-  title: 'ユーザー',
-  description: 'ユーザーページのdescriptionです',
+  title: 'お客様情報',
+  description: 'お客様情報ページのdescriptionです',
   permalink: ['user'],
   noindex: true,
   nofollow: true,
@@ -18,38 +19,14 @@ const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
 <PageLayout {seo}>
   <Container>
     <Inner>
+      <FormUserEdit client:only="react" />
+
       <button id="btn-logout" type="button" class="btn btn-neutral">ログアウト</button>
-      <p id="user-id"></p>
-      <p id="user-email"></p>
     </Inner>
   </Container>
 </PageLayout>
 
 <script is:inline data-astro-rerun define:vars={{ apiBaseUrl }}>
-  // ユーザー情報 取得
-  const getUser = async () => {
-    try {
-      const res = await fetch(`${apiBaseUrl}/users/me/`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      })
-
-      if (!res.ok) {
-        window.location.href = '/login/'
-        return
-      }
-
-      data = await res.json()
-      document.getElementById('user-id').textContent = `ID: ${data.id}`
-      document.getElementById('user-email').textContent = `Email: ${data.email}`
-    } catch (error) {
-      window.location.href = '/login/'
-    }
-  }
-
   // ログアウト
   const logout = async () => {
     try {
