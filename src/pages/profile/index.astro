@@ -2,7 +2,6 @@
 import PageLayout from '@/layouts/PageLayout.astro'
 import Container from '@/components/atoms/Container.astro'
 import Inner from '@/components/atoms/Inner.astro'
-import Splide from '@/components/molecules/Splide.astro'
 
 const seo: Theme.SEO = {
   title: '自己紹介',
@@ -16,6 +15,10 @@ const seo: Theme.SEO = {
 <PageLayout {seo}>
   <Container>
     <Inner>
+      <div class="scroll-area">1</div>
+      <div class="scroll-area">2</div>
+      <div class="scroll-area">3</div>
+      <div class="scroll-area">4</div>
     </Inner>
   </Container>
 </PageLayout>

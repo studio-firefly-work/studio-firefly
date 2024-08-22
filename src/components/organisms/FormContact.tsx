@@ -94,7 +94,7 @@ const FormContactInput = () => {
             <input {...register('givenName')} onInput={handleGivenNameInput} id="given-name" className="input input-bordered w-full" autoComplete="given-name" placeholder="名" />
           </FieldHasIcon>
         </div>
-        {(errors.familyName || errors.givenName) && <p className="text-error">{(errors.familyName as any).message ?? (errors.givenName as any).message}</p>}
+        {(errors.familyName || errors.givenName) && <p className="text-error">{(errors.familyName as any)?.message ?? (errors.givenName as any)?.message}</p>}
       </div>
 
       <div>
@@ -109,7 +109,7 @@ const FormContactInput = () => {
             <input {...register('givenNameKana')} id="given-name-kana" className="input input-bordered w-full" placeholder="メイ" />
           </FieldHasIcon>
         </div>
-        {(errors.familyNameKana || errors.givenNameKana) && <p className="text-error">{(errors.familyNameKana as any).message ?? (errors.givenNameKana as any).message}</p>}
+        {(errors.familyNameKana || errors.givenNameKana) && <p className="text-error">{(errors.familyNameKana as any)?.message ?? (errors.givenNameKana as any)?.message}</p>}
       </div>
 
       <div>

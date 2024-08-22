@@ -14,15 +14,14 @@ const schema = z.object({
   familyNameKana: z.string().min(1, { message: 'フリガナを入力してください。' }).regex(kana, { message: 'カタカナで入力してください。' }),
   givenNameKana: z.string().min(1, { message: 'フリガナを入力してください。' }).regex(kana, { message: 'カタカナで入力してください。' }),
   email: z.string().min(1, { message: 'メールアドレスを入力してください。' }).email({ message: 'メールアドレスの形式で入力してください。' }),
-  password: z.string().min(1, { message: 'パスワードを入力してください。' }),
 })
-type FormSignUpDataType = z.infer<typeof schema>
+type FormUserEditDataType = z.infer<typeof schema>
 
-export default function FormSignUp() {
-  const methods = useForm<FormSignUpDataType>({ mode: 'onChange', resolver: zodResolver(schema) })
+export default function FormUserEdit() {
+  const methods = useForm<FormUserEditDataType>({ mode: 'onChange', resolver: zodResolver(schema) })
   const [isConfirming, setIsConfirming] = useState(false)
 
-  const onSubmit = async (data: FormSignUpDataType) => {
+  const onSubmit = async (data: FormUserEditDataType) => {
     if (!isConfirming) {
       // 入力画面から確認画面へ
       setIsConfirming(true)
@@ -36,17 +35,18 @@ export default function FormSignUp() {
 
       try {
         const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/`, {
-          method: 'POST',
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
+          credentials: 'include',
           body: JSON.stringify(formDataObj),
         })
 
         if (!res.ok) {
           console.error('サーバーエラー')
         } else {
-          console.log('新規登録が正常に完了しました')
+          console.log('お客様情報の更新が正常に完了しました')
         }
       } catch (error) {
         console.error('通信に失敗しました', error)
@@ -56,22 +56,47 @@ export default function FormSignUp() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{!isConfirming ? <FormSignUpInput /> : <FormSignUpConfirm setIsConfirming={setIsConfirming} />}</form>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        {!isConfirming ? <FormUserEditInput /> : <FormUserEditConfirm setIsConfirming={setIsConfirming} />}</form>
     </FormProvider>
   )
 }
 
-const FormSignUpInput = () => {
+const FormUserEditInput = () => {
   const {
     register,
     setValue,
     formState: { errors, isSubmitting, isValid },
+    reset
   } = useFormContext()
+  const [user, setUser] = useState<FormUserEditDataType>()
+
+  // ユーザー情報 取得
+  const getUser = async () => {
+    try {
+      const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      })
+
+      const data = await res.json()
+      setUser(data)
+    } catch (error) {
+    }
+  }
 
   useEffect(() => {
     autokanaFamilyName = AutoKana.bind('#family-name', '#family-name-kana', { katakana: true })
     autokanaGivenName = AutoKana.bind('#given-name', '#given-name-kana', { katakana: true })
+    getUser()
   }, [])
+
+  useEffect(() => {
+    reset(user)
+  }, [reset, user])
 
   const handleFamilyNameInput = () => {
     setValue('familyNameKana', autokanaFamilyName.getFurigana())
@@ -122,16 +147,6 @@ const FormSignUpInput = () => {
         {errors.email && <p className="text-error">{(errors.email as any).message}</p>}
       </div>
 
-      <div>
-        <label htmlFor="password" className="label-text">
-          パスワード
-        </label>
-        <FieldHasIcon name="password">
-          <input {...register('password')} id="password" className="input input-bordered w-full pr-14" autoComplete="current-password" type="password" />
-        </FieldHasIcon>
-        {errors.password && <p className="text-error">{(errors.password as any).message}</p>}
-      </div>
-
       <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>
         入力内容の確認
       </button>
@@ -139,7 +154,7 @@ const FormSignUpInput = () => {
   )
 }
 
-const FormSignUpConfirm = ({ setIsConfirming }: any) => {
+const FormUserEditConfirm = ({ setIsConfirming }: any) => {
   const { getValues } = useFormContext()
   const values = getValues()
 
@@ -157,16 +172,11 @@ const FormSignUpConfirm = ({ setIsConfirming }: any) => {
         <p>{values.email}</p>
       </div>
 
-      <div>
-        <p className="label-text">パスワード</p>
-        <p>{values.password}</p>
-      </div>
-
       <button type="button" className="btn" onClick={() => setIsConfirming(false)}>
         入力内容の修正
       </button>
       <button type="submit" className="btn btn-accent">
-        新規登録
+        お客様情報を更新
       </button>
     </div>
   )
