@@ -23,8 +23,8 @@ declare namespace Theme {
       creator?: string
     }
     extend?: {
-      link?: Partial<Link>[]
-      meta?: Partial<Meta>[]
+      link?: Partial<HeadLink>[]
+      meta?: Partial<HeadMeta>[]
     }
     schemaOrg?: Array[]
   }
@@ -33,17 +33,17 @@ declare namespace Theme {
     [key: string]: string
   }
 
-  interface Link extends Omit<HTMLLinkElement, 'sizes'> {
+  interface HeadLink extends Omit<HTMLLinkElement, 'sizes'> {
     prefetch: boolean
     crossorigin: string
     sizes: string
   }
 
-  interface Meta extends HTMLMetaElement {
+  interface HeadMeta extends HTMLMetaElement {
     property: string
   }
 
-  type Menu = {
+  type Link = {
     title: string
     icon: string
     permalink: string

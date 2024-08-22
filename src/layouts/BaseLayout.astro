@@ -23,5 +23,21 @@ const { seo } = Astro.props
     <Fragment set:html={Icons} />
     <SplashScreen />
     <slot />
+    <script>
+      const init = () => {
+        const labelButtons = document.querySelectorAll('label[role="button"]') as NodeListOf<HTMLLabelElement>
+        labelButtons.forEach((button: HTMLLabelElement) => {
+          button.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault()
+              button.click()
+            }
+          })
+        })
+      }
+
+      init()
+      document.addEventListener('astro:after-swap', init)
+    </script>
   </body>
 </html>

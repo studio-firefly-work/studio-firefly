@@ -8,7 +8,7 @@ import HambMenu from '@/components/molecules/HambMenu.astro'
 import Logo from '@/assets/images/common/logo.svg?raw'
 
 const currentPath = Astro.url.pathname
-const menues: Theme.Menu[] = [
+const links: Theme.Link[] = [
   {
     title: '自己紹介',
     icon: 'icon-identification',
@@ -49,11 +49,11 @@ const menues: Theme.Menu[] = [
         <div class="hidden flex-none md:inline-flex">
           <ul class="menu menu-horizontal">
             {
-              menues.map((menu: Theme.Menu) => (
+              links.map((link: Theme.Link) => (
                 <li>
-                  <a href={menu.permalink} class={`btn btn-ghost ${currentPath.startsWith(menu.permalink) ? 'theme-current-page' : undefined}`}>
-                    <Icon name={menu.icon} class="hidden lg:block" />
-                    {menu.title}
+                  <a href={link.permalink} class={`btn btn-ghost ${currentPath.startsWith(link.permalink) ? 'theme-current-page' : undefined}`}>
+                    <Icon name={link.icon} class="hidden lg:block" />
+                    {link.title}
                   </a>
                 </li>
               ))
@@ -63,7 +63,7 @@ const menues: Theme.Menu[] = [
           </ul>
         </div>
         <div class="flex-none md:hidden">
-          <HambMenu {menues} />
+          <HambMenu {links} />
         </div>
       </nav>
     </Inner>
