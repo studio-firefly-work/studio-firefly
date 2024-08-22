@@ -4,38 +4,68 @@ import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle.astro'
 import Icon from '@/components/atoms/Icon.astro'
 
 interface Props {
-  menues: Theme.Menu[]
+  links: Theme.Link[]
 }
-const { menues } = Astro.props
+const { links } = Astro.props
 
 const currentPath = Astro.url.pathname
 ---
 
 <div class="drawer">
   <input id="js-hamb-checkbox" type="checkbox" class="drawer-toggle hidden" />
-  <button id="js-hamb-button" class="btn btn-ghost drawer-button px-0" aria-controls="js-hamb-nav" aria-expanded="false" aria-label="メニューを開く">
+  <label for="js-hamb-checkbox" id="js-hamb-button" class="btn btn-ghost drawer-button px-0" tabindex="0" role="button" aria-controls="js-hamb-menu" aria-expanded="false" aria-label="メニューを開く">
     <Icon name="icon-bars-3" class="h-10 w-10" />
-  </button>
-  <nav id="js-hamb-nav" class="drawer-side z-50" area-hidden="true">
+  </label>
+  <nav id="js-hamb-menu" class="drawer-side z-50" area-hidden="true">
     <label for="js-hamb-checkbox" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu min-h-full w-80 bg-base-200 p-4 text-base-content">
       {
-        menues.map((menu: Theme.Menu) => (
-          <li class="js-hamb-menu hidden">
-            <a href={menu.permalink} class={`btn btn-ghost justify-start ${currentPath.startsWith(menu.permalink) ? 'theme-current-page w-fit' : undefined}`}>
-              <Icon name={menu.icon} />
-              {menu.title}
+        links.map((link: Theme.Link) => (
+          <li class="js-hamb-link">
+            <a href={link.permalink} class={`btn btn-ghost justify-start ${currentPath.startsWith(link.permalink) ? 'theme-current-page w-fit' : undefined}`}>
+              <Icon name={link.icon} />
+              {link.title}
             </a>
           </li>
         ))
       }
-      <li class="js-hamb-menu hidden"><ButtonLoginOrProfile class={currentPath.startsWith('/user/') || currentPath.startsWith('/login/') ? 'theme-current-page' : null} /></li>
-      <li class="js-hamb-menu hidden"><ButtonThemeToggle /></li>
+      <li class="js-hamb-link"><ButtonLoginOrProfile class={currentPath.startsWith('/user/') || currentPath.startsWith('/login/') ? 'theme-current-page' : null} /></li>
+      <li><ButtonThemeToggle /></li>
     </ul>
   </nav>
 </div>
 
+<style lang="scss">
+  .drawer {
+    .drawer-toggle {
+      // メニューを閉じる時
+      ~ .drawer-side {
+        li {
+          visibility: visible;
+          animation: hideMenu 0s linear 0.3s forwards;
+
+          @keyframes hideMenu {
+            to {
+              visibility: hidden;
+            }
+          }
+        }
+      }
+
+      // メニューを開く時
+      &:checked ~ .drawer-side {
+        li {
+          visibility: visible;
+          animation: none;
+        }
+      }
+    }
+  }
+</style>
+
 <script>
+  import type { EventModule } from 'astro:transitions/client'
+
   // チェックボックスの状態を切り替える関数
   const toggleCheckbox = (checkbox: HTMLInputElement) => {
     checkbox.checked = !checkbox.checked
@@ -43,47 +73,37 @@ const currentPath = Astro.url.pathname
   }
 
   // メニューの状態を切り替える関数
-  const toggleMenuState = (isExpanded: boolean, button: HTMLButtonElement, nav: HTMLElement, menus: NodeListOf<HTMLLIElement>) => {
+  const toggleMenuState = (isExpanded: boolean, button: HTMLLabelElement, menu: HTMLElement) => {
     button.setAttribute('aria-expanded', isExpanded.toString())
     button.setAttribute('aria-label', isExpanded ? 'メニューを閉じる' : 'メニューを開く')
-    nav.setAttribute('aria-hidden', (!isExpanded).toString())
-
-    if (isExpanded) {
-      menus.forEach((menu) => menu.classList.remove('hidden'))
-    } else {
-      setTimeout(() => {
-        menus.forEach((menu) => menu.classList.add('hidden'))
-      }, 300)
-    }
+    menu.setAttribute('aria-hidden', (!isExpanded).toString())
   }
 
   // 初期化関数
   const init = () => {
     const checkbox = document.getElementById('js-hamb-checkbox') as HTMLInputElement
-    const button = document.getElementById('js-hamb-button') as HTMLButtonElement
-    const nav = document.getElementById('js-hamb-nav') as HTMLElement
-    const menus = document.querySelectorAll('.js-hamb-menu') as NodeListOf<HTMLLIElement>
+    const button = document.getElementById('js-hamb-button') as HTMLLabelElement
+    const menu = document.getElementById('js-hamb-menu') as HTMLElement
+    const links = document.querySelectorAll('.js-hamb-link') as NodeListOf<HTMLLIElement>
 
-    // チェックボックスの状態が変わったとき
+    // チェックボックスの状態変化時アクセシビリティ関連のプロパティを切り替える
     checkbox.addEventListener('change', () => {
-      toggleMenuState(checkbox.checked, button, nav, menus)
+      toggleMenuState(checkbox.checked, button, menu)
     })
 
-    // ハンバーガーメニューボタンでハンバーガーメニューを開閉する
-    button.addEventListener('click', () => toggleCheckbox(checkbox))
-
-    // Esc押下時ハンバーガーメニューを閉じる
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && checkbox.checked) {
+    // Esc押下時メニューを閉じる
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && checkbox.checked) {
         toggleCheckbox(checkbox)
       }
     })
 
-    // メニュー押下時ハンバーガーメニューを閉じる
-    menus.forEach((menu) => menu.addEventListener('click', () => toggleCheckbox(checkbox)))
+    // リンク押下時メニューを閉じる
+    links.forEach((link: HTMLLIElement) => {
+      link.addEventListener('click', () => toggleCheckbox(checkbox))
+    })
   }
 
-  // ページ読み込み時とページ遷移時に初期化
   init()
   document.addEventListener('astro:after-swap', init)
 </script>
