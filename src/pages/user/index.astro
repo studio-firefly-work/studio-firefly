@@ -48,12 +48,11 @@ const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
   }
 
   // 初期化関数
-  const initUserPage = () => {
+  const init = () => {
     const ButtonLogout = document.getElementById('btn-logout')
     ButtonLogout.onclick = () => logout()
-    getUser()
   }
 
   // ページ読み込み時に初期化
-  initUserPage()
+  init()
 </script>

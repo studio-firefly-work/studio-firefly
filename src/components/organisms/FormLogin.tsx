@@ -1,20 +1,18 @@
 import React from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, useFormContext, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { utils } from '@/utils'
+import { FormField, FieldInput } from '@/components/molecules/FormField'
 
-const schema = z.object({
-  email: z.string().min(1, { message: 'メールアドレスを入力してください。' }).email({ message: 'メールアドレスの形式で入力してください。' }),
-  password: z.string().min(1, { message: 'パスワードを入力してください。' }),
+const loginSchema = utils.schema.pick({
+  email: true,
+  password: true
 })
-type FormLoginDataType = z.infer<typeof schema>
+type FormLoginDataType = z.infer<typeof loginSchema>
 
-export default function FormLogin() {
-  const methods = useForm<FormLoginDataType>({ mode: 'onChange', resolver: zodResolver(schema) })
-  const {
-    register,
-    formState: { errors, isSubmitting, isValid },
-  } = methods
+export const FormLogin = () => {
+  const methods = useForm<FormLoginDataType>({ mode: 'onChange', resolver: zodResolver(loginSchema) })
 
   // ログイン
   const login = async (data: FormLoginDataType) => {
@@ -36,36 +34,46 @@ export default function FormLogin() {
         console.error('ログインに失敗しました：' + data.message)
       } else {
         console.log('ログインに成功しました：' + data.message)
-        window.location.href = '/user/'
       }
+
+      return res
     } catch (error) {
       console.error('通信に失敗しました', error)
     }
   }
 
+  const onSubmit = async (data: FormLoginDataType) => {
+    // ログイン
+    const res = await login(data)
+    if (res?.ok) {
+      // 成功したらユーザー画面へ
+      window.location.href = '/user/'
+    }
+  }
+
   return (
-    <form onSubmit={methods.handleSubmit(login)}>
-      <div className="flex flex-col gap-4">
-        <div>
-          <label htmlFor="email-login" className="label-text">
-            メールアドレス
-          </label>
-          <input {...register('email')} id="email-login" className="input input-bordered w-full pr-14" autoComplete="email" type="email" placeholder="example@studio-firefly.co.jp" />
-          {errors.email && <p className="text-error">{errors.email.message}</p>}
-        </div>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <FormLoginEdit />
+      </form>
+    </FormProvider>
+  )
+}
 
-        <div>
-          <label htmlFor="password-login" className="label-text">
-            パスワード
-          </label>
-          <input {...register('password')} id="password-login" className="input input-bordered w-full pr-14" autoComplete="new-password" type="password" />
-          {errors.password && <p className="text-error">{errors.password.message}</p>}
-        </div>
+const FormLoginEdit = () => {
+  const { formState: { errors, isSubmitting, isValid } } = useFormContext()
 
-        <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''} `} aria-disabled={!isValid || isSubmitting}>
-          ログイン
-        </button>
-      </div>
-    </form>
+  return (
+    <div className="flex flex-col gap-4">
+      <FormField label="メールアドレス" id="email" >
+        <FieldInput id="email" name="email" type='email' placeholder='email@example.com' autoComplete='email' />
+      </FormField>
+
+      <FormField label="パスワード" id="current-password" error={errors.password?.message}>
+        <FieldInput id="current-password" name='password' type='password' autoComplete="current-password" />
+      </FormField>
+
+      <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''} `} aria-disabled={!isValid || isSubmitting}>ログイン</button>
+    </div>
   )
 }
