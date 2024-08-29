@@ -22,6 +22,8 @@ const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
       <FormUserEdit client:only="react" />
 
       <button id="btn-logout" type="button" class="btn btn-neutral">ログアウト</button>
+
+      <button id="btn-delete-user" type="button" class="btn btn-neutral">退会</button>
     </Inner>
   </Container>
 </PageLayout>
@@ -40,7 +42,29 @@ const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
         console.error('ログアウトに失敗しました：' + data.message)
       } else {
         console.log('ログアウトに成功しました：' + data.message)
-        window.location.href = '/login/'
+        // window.location.href = '/login/'
+      }
+    } catch (error) {
+      console.error('通信に失敗しました', error)
+    }
+  }
+
+  // ユーザー情報を論理削除
+  const deleteUser = async () => {
+    try {
+      const res = await fetch(`${apiBaseUrl}/users/me/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      })
+
+      if (!res.ok) {
+        console.error('サーバーエラー')
+      } else {
+        console.log('お客様情報の更新が正常に完了しました')
+        logout()
       }
     } catch (error) {
       console.error('通信に失敗しました', error)
@@ -49,8 +73,11 @@ const apiBaseUrl = import.meta.env.PUBLIC_API_BASE_URL
 
   // 初期化関数
   const init = () => {
-    const ButtonLogout = document.getElementById('btn-logout')
-    ButtonLogout.onclick = () => logout()
+    const BtnLogout = document.getElementById('btn-logout')
+    BtnLogout.onclick = () => logout()
+
+    const BtnDeleteUser = document.getElementById('btn-delete-user')
+    BtnDeleteUser.onclick = () => deleteUser()
   }
 
   // ページ読み込み時に初期化

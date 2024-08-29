@@ -4,7 +4,7 @@ import { useForm, useFormContext, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { utils } from '@/utils'
-import { FormField, FieldInput, FieldTextarea } from '@/components/molecules/FormField'
+import { FormField, FieldInput } from '@/components/molecules/FormField'
 
 let autokanaFamilyName: AutoKana.AutoKana
 let autokanaGivenName: AutoKana.AutoKana
@@ -23,35 +23,6 @@ export default function FormUserData() {
 
   // ユーザー情報を更新
   const updateUser = async (data: FormUserDataType) => {
-    const formData = new FormData()
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value)
-    })
-    const formDataObj = Object.fromEntries(formData.entries())
-
-    try {
-      const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(formDataObj),
-      })
-
-      if (!res.ok) {
-        console.error('サーバーエラー')
-      } else {
-        console.log('お客様情報の更新が正常に完了しました')
-      }
-      return res
-    } catch (error) {
-      console.error('通信に失敗しました', error)
-    }
-  }
-
-  // ユーザー情報を削除
-  const deleteUser = async (data: FormUserDataType) => {
     const formData = new FormData()
     Object.entries(data).forEach(([key, value]) => {
       formData.append(key, value)
