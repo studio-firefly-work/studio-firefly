@@ -13,33 +13,26 @@ const style = tv({
 </a>
 
 <script>
-  // APIエンドポイントにリクエストを送信してログイン状態を確認する関数
-  const checkLoginStatus = async () => {
-    try {
-      const response = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/auth/login/`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-      })
+  import { api } from '@/api'
+  let href = '/user/'
 
-      return response.ok
-    } catch (error) {
-      console.error('Error checking login status:', error)
-      return false
-    }
-  }
-
-  // 初期化関数
-  const init = async () => {
+  // hrefを更新
+  const setHref = () => {
     const authButtons = document.querySelectorAll('.js-auth-button') as NodeListOf<HTMLLinkElement>
-    const isLoggedIn = await checkLoginStatus()
-    const href = isLoggedIn ? '/user/' : '/login/'
-    authButtons.forEach((button: HTMLLinkElement) => {
+    authButtons?.forEach((button: HTMLLinkElement) => {
       button.href = href
     })
   }
 
+  // 初期化関数
+  const init = async () => {
+    // APIエンドポイントにリクエストを送信してログイン状態を確認
+    const isLoggedIn = await api.auth.isLogin()
+    href = isLoggedIn ? '/user/' : '/login/'
+    setHref()
+  }
+
   // ページ読み込み時に初期化
   init()
-  document.addEventListener('astro:after-swap', init)
+  document.addEventListener('astro:after-swap', setHref)
 </script>

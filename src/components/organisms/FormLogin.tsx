@@ -2,6 +2,7 @@ import React from 'react'
 import { useForm, useFormContext, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { api } from '@/api'
 import { utils } from '@/utils'
 import { FormField, FieldInput } from '@/components/molecules/FormField'
 
@@ -14,37 +15,10 @@ type FormLoginDataType = z.infer<typeof loginSchema>
 export const FormLogin = () => {
   const methods = useForm<FormLoginDataType>({ mode: 'onChange', resolver: zodResolver(loginSchema) })
 
-  // ログイン
-  const login = async (data: FormLoginDataType) => {
-    const email = data.email
-    const password = data.password
-
-    try {
-      const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/auth/login/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-        credentials: 'include',
-      })
-
-      const data = await res.json()
-      if (!res.ok) {
-        console.error('ログインに失敗しました：' + data.message)
-      } else {
-        console.log('ログインに成功しました：' + data.message)
-      }
-
-      return res
-    } catch (error) {
-      console.error('通信に失敗しました', error)
-    }
-  }
-
+  // button type='submit' 押下時
   const onSubmit = async (data: FormLoginDataType) => {
     // ログイン
-    const res = await login(data)
+    const res = await api.auth.login(data.email, data.password)
     if (res?.ok) {
       // 成功したらユーザー画面へ
       window.location.href = '/user/'

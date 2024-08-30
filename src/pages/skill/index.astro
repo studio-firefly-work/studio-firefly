@@ -1,6 +1,7 @@
 ---
-export const prerender = false
 import PageLayout from '@/layouts/PageLayout.astro'
+import Container from '@/components/atoms/Container.astro'
+import Inner from '@/components/atoms/Inner.astro'
 
 const seo: Theme.SEO = {
   title: 'スキルセット',
@@ -11,49 +12,8 @@ const seo: Theme.SEO = {
 ---
 
 <PageLayout {seo}>
-  <button class="login">login</button>
-  <button class="getUsers">getUsers</button>
-  <button class="logout">logout</button>
-  <div id="user-data" class="user-data"></div>
+  <Container>
+    <Inner>
+    </Inner>
+  </Container>
 </PageLayout>
-
-<script>
-  const getUsersButton = document.querySelector('button.getUsers') as HTMLButtonElement
-
-  getUsersButton.onclick = () => getUsers()
-
-  window.addEventListener('load', getUsers)
-
-  async function getUsers() {
-    const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-    })
-    const data = await res.json()
-    console.log(data)
-
-    displayUserData(data)
-  }
-
-  function displayUserData(users: any) {
-    const userDataDiv = document.getElementById('user-data')
-    if (userDataDiv) {
-      userDataDiv.innerHTML = '' // 以前のデータをクリア
-
-      users.forEach((user: any) => {
-        const userDiv = document.createElement('div')
-        userDiv.className = 'user'
-
-        const userName = document.createElement('h2')
-        userName.textContent = user.name
-
-        userDiv.appendChild(userName)
-
-        userDataDiv.appendChild(userDiv)
-      })
-    }
-  }
-</script>

@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { utils } from '@/utils'
 import { FormField, FieldInput } from '@/components/molecules/FormField'
+import { api } from '@/api'
 
 let autokanaFamilyName: AutoKana.AutoKana
 let autokanaGivenName: AutoKana.AutoKana
@@ -21,46 +22,21 @@ export default function FormUserData() {
   const methods = useForm<FormUserDataType>({ mode: 'onChange', resolver: zodResolver(userDataSchema) })
   const [formStatus, setFormStatus] = useState<'edit' | 'confirm' | 'complete'>('edit')
 
-  // ユーザー情報を更新
-  const updateUser = async (data: FormUserDataType) => {
-    const formData = new FormData()
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value)
-    })
-    const formDataObj = Object.fromEntries(formData.entries())
-
-    try {
-      const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify(formDataObj),
-      })
-
-      if (!res.ok) {
-        console.error('サーバーエラー')
-      } else {
-        console.log('お客様情報の更新が正常に完了しました')
-      }
-      return res
-    } catch (error) {
-      console.error('通信に失敗しました', error)
-    }
-  }
-
+  // button type='submit' 押下時
   const onSubmit = async (data: FormUserDataType) => {
-    if (formStatus == 'edit') {
-      // 入力画面から確認画面へ
-      setFormStatus('confirm')
-    } else if (formStatus == 'confirm') {
-      // 確認画面から送信
-      const res = await updateUser(data)
-      if (res?.ok) {
-        // 成功したら完了画面へ
-        setFormStatus('complete')
-      }
+    switch (formStatus) {
+      case 'edit':
+        // 編集画面で押下された場合は確認画面へ遷移
+        setFormStatus('confirm')
+        break
+      case 'confirm':
+        // 確認画面で押下された場合はユーザー情報更新
+        const res = await api.user.updateUser(data)
+        if (res?.ok) {
+          // ユーザー情報更新に成功した場合は完了画面へ遷移
+          setFormStatus('complete')
+        }
+        break
     }
   }
 
@@ -81,19 +57,8 @@ const FormUserDataEdit = () => {
 
   // ユーザー情報 取得
   const getUser = async () => {
-    try {
-      const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-      })
-
-      const data = await res.json()
-      setUser(data)
-    } catch (error) {
-    }
+    const userData = await api.user.getUser()
+    setUser(userData)
   }
 
   useEffect(() => {
