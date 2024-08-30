@@ -1,21 +1,18 @@
 import React from 'react'
-import { useForm, useFormContext, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { api } from '@/api'
 import { utils } from '@/utils'
-import { FormField, FieldInput } from '@/components/molecules/FormField'
+import { BaseForm } from '@/components/molecules/BaseForm'
+import { FormFieldText } from '@/components/molecules/FormFieldText'
 
-const loginSchema = utils.schema.pick({
-  email: true,
-  password: true
+const schema = z.object({
+  email: utils.schema.email,
+  password: utils.schema.password,
 })
-type FormLoginDataType = z.infer<typeof loginSchema>
+
+type FormLoginDataType = z.infer<typeof schema>
 
 export const FormLogin = () => {
-  const methods = useForm<FormLoginDataType>({ mode: 'onChange', resolver: zodResolver(loginSchema) })
-
-  // button type='submit' 押下時
   const onSubmit = async (data: FormLoginDataType) => {
     // ログイン
     const res = await api.auth.login(data.email, data.password)
@@ -26,28 +23,35 @@ export const FormLogin = () => {
   }
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <FormLoginEdit />
-      </form>
-    </FormProvider>
-  )
-}
+    <BaseForm<FormLoginDataType> onSubmit={onSubmit} schema={schema}>
+      {({ formState: { isSubmitting, isValid } }) => (
+        <div className="flex flex-col gap-4">
+          <FormFieldText
+            label='メールアドレス'
+            id='email'
+            type='email'
+            placeholder='email@example.com'
+            autoComplete='email'
+            icon='icon-envelope'
+          />
 
-const FormLoginEdit = () => {
-  const { formState: { errors, isSubmitting, isValid } } = useFormContext()
+          <FormFieldText
+            label='パスワード'
+            id='password'
+            type='password'
+            autoComplete='current-password'
+            icon='icon-key'
+          />
 
-  return (
-    <div className="flex flex-col gap-4">
-      <FormField label="メールアドレス" id="email" >
-        <FieldInput id="email" name="email" type='email' placeholder='email@example.com' autoComplete='email' />
-      </FormField>
-
-      <FormField label="パスワード" id="current-password" error={errors.password?.message}>
-        <FieldInput id="current-password" name='password' type='password' autoComplete="current-password" />
-      </FormField>
-
-      <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''} `} aria-disabled={!isValid || isSubmitting}>ログイン</button>
-    </div>
+          <button
+            type="submit"
+            className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`}
+            aria-disabled={!isValid || isSubmitting}
+          >
+            ログイン
+          </button>
+        </div>
+      )}
+    </BaseForm>
   )
 }
