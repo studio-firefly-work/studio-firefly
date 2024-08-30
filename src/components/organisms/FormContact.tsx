@@ -3,65 +3,40 @@ import * as AutoKana from 'vanilla-autokana'
 import { useForm, useFormContext, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { api } from '@/api'
 import { utils } from '@/utils'
-import { FormField, FieldInput, FieldTextarea } from '@/components/molecules/FormField'
+import { FormFieldText } from '@/components/molecules/FormFieldText'
+import { FormFieldTextarea } from '@/components/molecules/FormFieldTextarea'
 
-let autokanaFamilyName: AutoKana.AutoKana
-let autokanaGivenName: AutoKana.AutoKana
-const contactSchema = utils.schema.pick({
-  familyName: true,
-  givenName: true,
-  familyNameKana: true,
-  givenNameKana: true,
+const schema = utils.schema.pick({
+  name: true,
+  kana: true,
   email: true,
   message: true
 })
-type FormContactDataType = z.infer<typeof contactSchema>
+type FormContactDataType = z.infer<typeof schema>
+
+let kana: AutoKana.AutoKana
 
 export const FormContact = () => {
-  const methods = useForm<FormContactDataType>({ mode: 'onChange', resolver: zodResolver(contactSchema) })
+  const methods = useForm<FormContactDataType>({ mode: 'onChange', resolver: zodResolver(schema) })
   const [formStatus, setFormStatus] = useState<'edit' | 'confirm' | 'complete'>('edit')
 
-  // フォームの内容を送信
-  const sendFormData = async (data: FormContactDataType) => {
-    const formData = new FormData()
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value)
-    })
-    const formDataObj = Object.fromEntries(formData.entries())
-
-    try {
-      const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formDataObj),
-      })
-
-      if (!res.ok) {
-        console.error('サーバーエラー')
-      } else {
-        console.log('送信が正常に完了しました')
-      }
-      return res
-    } catch (error) {
-      console.error('通信に失敗しました', error)
-    }
-  }
-
-  // 
+  // button type='submit' 押下時
   const onSubmit = async (data: FormContactDataType) => {
-    if (formStatus == 'edit') {
-      // 入力画面から確認画面へ
-      setFormStatus('confirm')
-    } else if (formStatus == 'confirm') {
-      // 確認画面から送信
-      const res = await sendFormData(data)
-      if (res?.ok) {
-        // 成功したら完了画面へ
-        setFormStatus('complete')
-      }
+    switch (formStatus) {
+      case 'edit':
+        // 編集画面で押下された場合は確認画面へ遷移
+        setFormStatus('confirm')
+        break
+      case 'confirm':
+        // 確認画面で押下された場合は問い合わせ送信
+        const res = await api.mail.sendMail(data)
+        if (res?.ok) {
+          // 問い合わせ送信に成功した場合は完了画面へ遷移
+          setFormStatus('complete')
+        }
+        break
     }
   }
 
@@ -77,40 +52,19 @@ export const FormContact = () => {
 }
 
 const FormContactEdit = () => {
-  const { setValue, formState: { errors, isSubmitting, isValid } } = useFormContext()
+  const { setValue, formState: { isSubmitting, isValid } } = useFormContext()
+  const handleNameInput = () => { setValue('kana', kana.getFurigana()) }
 
   useEffect(() => {
-    autokanaFamilyName = AutoKana.bind('#family-name', '#family-name-kana', { katakana: true })
-    autokanaGivenName = AutoKana.bind('#given-name', '#given-name-kana', { katakana: true })
+    kana = AutoKana.bind('#name', '#kana', { katakana: true })
   }, [])
-
-  const handleFamilyNameInput = () => {
-    setValue('familyNameKana', autokanaFamilyName.getFurigana())
-  }
-  const handleGivenNameInput = () => {
-    setValue('givenNameKana', autokanaGivenName.getFurigana())
-  }
 
   return (
     <div className="flex flex-col gap-4">
-      <FormField label="お名前" id='family-name' error={errors.familyName?.message ?? errors.givenName?.message}>
-        <FieldInput id="family-name" name="familyName" placeholder='姓' autoComplete='family-name' onInput={handleFamilyNameInput} />
-        <FieldInput id="given-name" name="givenName" placeholder='名' autoComplete='given-name' onInput={handleGivenNameInput} />
-      </FormField>
-
-      <FormField label="フリガナ" id="family-name-kana" error={errors.familyNameKana?.message ?? errors.givenNameKana?.message}>
-        <FieldInput id="family-name-kana" name="familyNameKana" placeholder='セイ' />
-        <FieldInput id="given-name-kana" name="givenNameKana" placeholder='メイ' />
-      </FormField>
-
-      <FormField label="メールアドレス" id="email" >
-        <FieldInput id="email" name="email" type='email' placeholder='email@example.com' autoComplete='' />
-      </FormField>
-
-      <FormField label="お問い合わせ内容" id="message" >
-        <FieldTextarea id="message" name="message" placeholder='お問い合わせ内容を入力してください' />
-      </FormField>
-
+      <FormFieldText label='お名前' id='name' placeholder='山田太郎' autoComplete='name' icon='icon-user' onInput={handleNameInput} />
+      <FormFieldText label='フリガナ' id='kana' placeholder='ヤマダタロウ' />
+      <FormFieldText label='メールアドレス' id='email' type='email' placeholder='email@example.com' autoComplete='email' icon='icon-envelope' />
+      <FormFieldTextarea label='お問い合わせ内容' id='message' placeholder='お問い合わせ内容を入力してください' />
       <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>入力内容の確認</button>
     </div>
   )
@@ -124,7 +78,7 @@ const FormContactConfirm = ({ setFormStatus }: any) => {
     <div className="flex flex-col gap-4">
       <div>
         <p className="label-text">お名前</p>
-        <p>{values.familyName}({values.familyNameKana}) {values.givenName}({values.givenNameKana})</p>
+        <p>{values.name}({values.kana})</p>
       </div>
 
       <div>
@@ -149,6 +103,5 @@ const FormContactComplete = () => {
       <p>送信が正常に完了しました</p>
       <a href="/" className='btn btn-neutral'>HOMEへ戻る</a>
     </div>
-
   )
 }

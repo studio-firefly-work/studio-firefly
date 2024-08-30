@@ -3,12 +3,19 @@ import { z } from 'zod'
 const kana = /^[\u30A0-\u30FF\uFF66-\uFF9F]+$/
 
 export const schema = z.object({
+  name: z
+    .string()
+    .min(1, { message: 'お名前を入力してください。' }),
   familyName: z
     .string()
     .min(1, { message: 'お名前を入力してください。' }),
   givenName: z
     .string()
     .min(1, { message: 'お名前を入力してください。' }),
+  kana: z
+    .string()
+    .min(1, { message: 'フリガナを入力してください。' })
+    .regex(kana, { message: 'カタカナで入力してください。' }),
   familyNameKana: z
     .string()
     .min(1, { message: 'フリガナを入力してください。' })

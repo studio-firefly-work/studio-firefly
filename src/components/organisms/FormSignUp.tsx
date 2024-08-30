@@ -3,12 +3,12 @@ import * as AutoKana from 'vanilla-autokana'
 import { useForm, useFormContext, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { api } from '@/api'
 import { utils } from '@/utils'
 import { FormField, FieldInput } from '@/components/molecules/FormField'
+import { FormFieldText } from '@/components/molecules/FormFieldText'
 
-let autokanaFamilyName: AutoKana.AutoKana
-let autokanaGivenName: AutoKana.AutoKana
-const signUpSchema = utils.schema.pick({
+const schema = utils.schema.pick({
   familyName: true,
   givenName: true,
   familyNameKana: true,
@@ -16,53 +16,29 @@ const signUpSchema = utils.schema.pick({
   email: true,
   password: true
 })
-type FormSignUpDataType = z.infer<typeof signUpSchema>
+type FormSignUpDataType = z.infer<typeof schema>
+
+let kana: AutoKana.AutoKana
 
 export const FormSignUp = () => {
-  const methods = useForm<FormSignUpDataType>({ mode: 'onChange', resolver: zodResolver(signUpSchema) })
+  const methods = useForm<FormSignUpDataType>({ mode: 'onChange', resolver: zodResolver(schema) })
   const [formStatus, setFormStatus] = useState<'edit' | 'confirm' | 'complete'>('edit')
 
-  // 新規ユーザーを作成
-  const createUser = async (data: FormSignUpDataType) => {
-    const formData = new FormData()
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value)
-    })
-    const formDataObj = Object.fromEntries(formData.entries())
-    console.log(formDataObj)
-
-    try {
-      const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formDataObj),
-      })
-
-      if (!res.ok) {
-        console.error('サーバーエラー')
-      } else {
-        console.log('新規登録が正常に完了しました')
-      }
-
-      return res
-    } catch (error) {
-      console.error('通信に失敗しました', error)
-    }
-  }
-
+  // button type='submit' 押下時
   const onSubmit = async (data: FormSignUpDataType) => {
-    if (formStatus == 'edit') {
-      // 入力画面から確認画面へ
-      setFormStatus('confirm')
-    } else if (formStatus == 'confirm') {
-      // 確認画面から送信
-      const res = await createUser(data)
-      if (res?.ok) {
-        // 成功したら完了画面へ
-        setFormStatus('complete')
-      }
+    switch (formStatus) {
+      case 'edit':
+        // 編集画面で押下された場合は確認画面へ遷移
+        setFormStatus('confirm')
+        break
+      case 'confirm':
+        // 確認画面で押下された場合は新規ユーザー作成
+        const res = await api.user.createUser(data)
+        if (res?.ok) {
+          // 新規ユーザー作成に成功した場合は完了画面へ遷移
+          setFormStatus('complete')
+        }
+        break
     }
   }
 
@@ -78,40 +54,19 @@ export const FormSignUp = () => {
 }
 
 const FormSignUpEdit = () => {
-  const { setValue, formState: { errors, isSubmitting, isValid } } = useFormContext()
+  const { setValue, formState: { isSubmitting, isValid } } = useFormContext()
+  const handleNameInput = () => { setValue('kana', kana.getFurigana()) }
 
   useEffect(() => {
-    autokanaFamilyName = AutoKana.bind('#family-name', '#family-name-kana', { katakana: true })
-    autokanaGivenName = AutoKana.bind('#given-name', '#given-name-kana', { katakana: true })
+    kana = AutoKana.bind('#name', '#kana', { katakana: true })
   }, [])
-
-  const handleFamilyNameInput = () => {
-    setValue('familyNameKana', autokanaFamilyName.getFurigana())
-  }
-  const handleGivenNameInput = () => {
-    setValue('givenNameKana', autokanaGivenName.getFurigana())
-  }
 
   return (
     <div className='flex flex-col gap-4'>
-      <FormField label='お名前' id='family-name' error={errors.familyName?.message ?? errors.givenName?.message}>
-        <FieldInput id='family-name' name='familyName' placeholder='姓' autoComplete='family-name' onInput={handleFamilyNameInput} />
-        <FieldInput id='given-name' name='givenName' placeholder='名' autoComplete='given-name' onInput={handleGivenNameInput} />
-      </FormField>
-
-      <FormField label='フリガナ' id='family-name-kana' error={errors.familyNameKana?.message ?? errors.givenNameKana?.message}>
-        <FieldInput id='family-name-kana' name='familyNameKana' placeholder='セイ' />
-        <FieldInput id='given-name-kana' name='givenNameKana' placeholder='メイ' />
-      </FormField>
-
-      <FormField label='メールアドレス' id='new-email' error={errors.email?.message}>
-        <FieldInput id='new-email' name='email' type='email' placeholder='email@example.com' autoComplete='' />
-      </FormField>
-
-      <FormField label='パスワード' id='new-password' error={errors.password?.message}>
-        <FieldInput id='new-password' name='password' type='password' autoComplete='new-password' />
-      </FormField>
-
+      <FormFieldText label='お名前' id='name' placeholder='山田太郎' autoComplete='name' icon='icon-user' onInput={handleNameInput} />
+      <FormFieldText label='フリガナ' id='kana' placeholder='ヤマダタロウ' />
+      <FormFieldText label='メールアドレス' id='new-email' validation='email' type='email' placeholder='email@example.com' autoComplete='email' icon='icon-envelope' />
+      <FormFieldText label='パスワード' id='password' type='password' autoComplete='new-password' icon='icon-key' />
       <button type='submit' className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>入力内容の確認</button>
     </div>
   )
@@ -121,24 +76,20 @@ const FormSignUpConfirm = ({ setFormStatus }: any) => {
   const { getValues } = useFormContext()
   const values = getValues()
 
+  const formFields = [
+    { label: 'お名前', type: 'text', value: `${values.familyName}(${values.familyNameKana}) ${values.givenName}(${values.givenNameKana})` },
+    { label: 'メールアドレス', type: 'email', value: values.email },
+    { label: 'パスワード', type: 'password', value: values.password }
+  ]
+
   return (
     <div className='flex flex-col gap-4'>
-      <div>
-        <p className='label-text'>お名前</p>
-        <p>
-          {values.familyName}({values.familyNameKana}) {values.givenName}({values.givenNameKana})
-        </p>
-      </div>
-
-      <div>
-        <p className='label-text'>メールアドレス</p>
-        <p>{values.email}</p>
-      </div>
-
-      <div>
-        <p className='label-text'>パスワード</p>
-        <p>{values.password}</p>
-      </div>
+      {formFields.map((field, index) => (
+        <div key={index} className="form-control w-full">
+          <label className="label label-text">{field.label}</label>
+          <input type={field.type} className='input' value={field.value} disabled />
+        </div>
+      ))}
 
       <button type='button' className='btn' onClick={() => setFormStatus('edit')}>入力内容の修正</button>
       <button type='submit' className='btn btn-accent'>新規登録</button>
@@ -149,9 +100,8 @@ const FormSignUpConfirm = ({ setFormStatus }: any) => {
 const FormSignUpComplete = () => {
   return (
     <div className='flex flex-col gap-4'>
-      <p>送信が正常に完了しました</p>
+      <p>ユーザー登録が正常に完了しました</p>
       <a href='/' className='btn btn-neutral'>HOMEへ戻る</a>
     </div>
-
   )
 }
