@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const kana = /^[\u30A0-\u30FF\uFF66-\uFF9F]+$/
 
-export const schema = z.object({
+export const schema = {
   name: z
     .string()
     .min(1, { message: 'お名前を入力してください。' }),
@@ -34,4 +34,4 @@ export const schema = z.object({
   password: z
     .string()
     .min(1, { message: 'パスワードを入力してください。' })
-})
+}

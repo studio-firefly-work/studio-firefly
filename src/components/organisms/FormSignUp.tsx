@@ -5,16 +5,13 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { api } from '@/api'
 import { utils } from '@/utils'
-import { FormField, FieldInput } from '@/components/molecules/FormField'
 import { FormFieldText } from '@/components/molecules/FormFieldText'
 
-const schema = utils.schema.pick({
-  familyName: true,
-  givenName: true,
-  familyNameKana: true,
-  givenNameKana: true,
-  email: true,
-  password: true
+const schema = z.object({
+  name: utils.schema.name,
+  kana: utils.schema.kana,
+  email: utils.schema.email,
+  password: utils.schema.password,
 })
 type FormSignUpDataType = z.infer<typeof schema>
 
@@ -63,10 +60,36 @@ const FormSignUpEdit = () => {
 
   return (
     <div className='flex flex-col gap-4'>
-      <FormFieldText label='お名前' id='name' placeholder='山田太郎' autoComplete='name' icon='icon-user' onInput={handleNameInput} />
-      <FormFieldText label='フリガナ' id='kana' placeholder='ヤマダタロウ' />
-      <FormFieldText label='メールアドレス' id='new-email' validation='email' type='email' placeholder='email@example.com' autoComplete='email' icon='icon-envelope' />
-      <FormFieldText label='パスワード' id='password' type='password' autoComplete='new-password' icon='icon-key' />
+      <FormFieldText
+        label='お名前'
+        id='name'
+        placeholder='山田太郎'
+        autoComplete='name'
+        icon='icon-user'
+        onInput={handleNameInput} />
+
+      <FormFieldText
+        label='フリガナ'
+        id='kana'
+        placeholder='ヤマダタロウ' />
+
+      <FormFieldText
+        label='メールアドレス'
+        id='new-email'
+        validation='email'
+        type='email'
+        placeholder='email@example.com'
+        autoComplete='email'
+        icon='icon-envelope' />
+
+      <FormFieldText
+        label='パスワード'
+        id='new-password'
+        validation='password'
+        type='password'
+        autoComplete='new-password'
+        icon='icon-key' />
+
       <button type='submit' className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>入力内容の確認</button>
     </div>
   )
@@ -77,7 +100,7 @@ const FormSignUpConfirm = ({ setFormStatus }: any) => {
   const values = getValues()
 
   const formFields = [
-    { label: 'お名前', type: 'text', value: `${values.familyName}(${values.familyNameKana}) ${values.givenName}(${values.givenNameKana})` },
+    { label: 'お名前', type: 'text', value: `${values.name}(${values.kana})` },
     { label: 'メールアドレス', type: 'email', value: values.email },
     { label: 'パスワード', type: 'password', value: values.password }
   ]

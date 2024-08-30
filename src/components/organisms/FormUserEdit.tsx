@@ -3,23 +3,21 @@ import * as AutoKana from 'vanilla-autokana'
 import { useForm, useFormContext, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { utils } from '@/utils'
-import { FormField, FieldInput } from '@/components/molecules/FormField'
 import { api } from '@/api'
+import { utils } from '@/utils'
+import { FormFieldText } from '@/components/molecules/FormFieldText'
 
-let autokanaFamilyName: AutoKana.AutoKana
-let autokanaGivenName: AutoKana.AutoKana
-const userDataSchema = utils.schema.pick({
-  familyName: true,
-  givenName: true,
-  familyNameKana: true,
-  givenNameKana: true,
-  email: true,
+const schema = z.object({
+  name: utils.schema.name,
+  kana: utils.schema.kana,
+  email: utils.schema.email,
 })
-type FormUserDataType = z.infer<typeof userDataSchema>
+type FormUserDataType = z.infer<typeof schema>
+
+let kana: AutoKana.AutoKana
 
 export default function FormUserData() {
-  const methods = useForm<FormUserDataType>({ mode: 'onChange', resolver: zodResolver(userDataSchema) })
+  const methods = useForm<FormUserDataType>({ mode: 'onChange', resolver: zodResolver(schema) })
   const [formStatus, setFormStatus] = useState<'edit' | 'confirm' | 'complete'>('edit')
 
   // button type='submit' 押下時
@@ -54,6 +52,7 @@ export default function FormUserData() {
 const FormUserDataEdit = () => {
   const { setValue, formState: { errors, isSubmitting, isValid }, reset } = useFormContext()
   const [user, setUser] = useState<FormUserDataType>()
+  const handleNameInput = () => { setValue('kana', kana.getFurigana()) }
 
   // ユーザー情報 取得
   const getUser = async () => {
@@ -62,8 +61,7 @@ const FormUserDataEdit = () => {
   }
 
   useEffect(() => {
-    autokanaFamilyName = AutoKana.bind('#family-name', '#family-name-kana', { katakana: true })
-    autokanaGivenName = AutoKana.bind('#given-name', '#given-name-kana', { katakana: true })
+    kana = AutoKana.bind('#name', '#kana', { katakana: true })
     getUser()
   }, [])
 
@@ -71,28 +69,29 @@ const FormUserDataEdit = () => {
     reset(user)
   }, [reset, user])
 
-  const handleFamilyNameInput = () => {
-    setValue('familyNameKana', autokanaFamilyName.getFurigana())
-  }
-  const handleGivenNameInput = () => {
-    setValue('givenNameKana', autokanaGivenName.getFurigana())
-  }
-
   return (
     <div className="flex flex-col gap-4">
-      <FormField label='お名前' id='family-name' error={errors.familyName?.message ?? errors.givenName?.message}>
-        <FieldInput id='family-name' name='familyName' placeholder='姓' autoComplete='family-name' onInput={handleFamilyNameInput} />
-        <FieldInput id='given-name' name='givenName' placeholder='名' autoComplete='given-name' onInput={handleGivenNameInput} />
-      </FormField>
+      <FormFieldText
+        label='お名前'
+        id='name'
+        placeholder='山田太郎'
+        autoComplete='name'
+        icon='icon-user'
+        onInput={handleNameInput} />
 
-      <FormField label='フリガナ' id='family-name-kana' error={errors.familyNameKana?.message ?? errors.givenNameKana?.message}>
-        <FieldInput id='family-name-kana' name='familyNameKana' placeholder='セイ' />
-        <FieldInput id='given-name-kana' name='givenNameKana' placeholder='メイ' />
-      </FormField>
+      <FormFieldText
+        label='フリガナ'
+        id='kana'
+        placeholder='ヤマダタロウ' />
 
-      <FormField label='メールアドレス' id='email'>
-        <FieldInput id='email' name='email' type='email' placeholder='email@example.com' autoComplete='' />
-      </FormField>
+      <FormFieldText
+        label='メールアドレス'
+        id='new-email'
+        validation='email'
+        type='email'
+        placeholder='email@example.com'
+        autoComplete='email'
+        icon='icon-envelope' />
 
       <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>入力内容の確認</button>
     </div>
@@ -107,7 +106,7 @@ const FormUserDataConfirm = ({ setFormStatus }: any) => {
     <div className="flex flex-col gap-4">
       <div>
         <p className="label-text">お名前</p>
-        <p>{values.familyName}({values.familyNameKana}) {values.givenName}({values.givenNameKana})</p>
+        <p>{values.name}({values.kana})</p>
       </div>
 
       <div>

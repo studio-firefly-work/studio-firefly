@@ -30,7 +30,7 @@ export const FormFieldText: React.FC<FormFieldTextProps> = ({ label, id, validat
   const { register, watch, formState: { errors } } = useFormContext()
   const [isPasswordVisible, setIsPasswordVisible] = useState(false) // パスワード表示/非表示の状態を管理
   const error = errors[validation] as FieldError
-  const inputValue = watch(id)
+  const inputValue = watch(validation)
 
   // クラス名を動的に設定。条件に応じて異なるクラスを適用。
   const className = classNames('input', 'input-bordered', 'w-full', {
