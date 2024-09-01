@@ -50,9 +50,15 @@ export default function FormUserData() {
 }
 
 const FormUserDataEdit = () => {
-  const { setValue, formState: { errors, isSubmitting, isValid }, reset } = useFormContext()
+  const {
+    setValue,
+    formState: { errors, isSubmitting, isValid },
+    reset,
+  } = useFormContext()
   const [user, setUser] = useState<FormUserDataType>()
-  const handleNameInput = () => { setValue('kana', kana.getFurigana()) }
+  const handleNameInput = () => {
+    setValue('kana', kana.getFurigana())
+  }
 
   // ユーザー情報 取得
   const getUser = async () => {
@@ -71,29 +77,15 @@ const FormUserDataEdit = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <FormFieldText
-        label='お名前'
-        id='name'
-        placeholder='山田太郎'
-        autoComplete='name'
-        icon='icon-user'
-        onInput={handleNameInput} />
+      <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" onInput={handleNameInput} />
 
-      <FormFieldText
-        label='フリガナ'
-        id='kana'
-        placeholder='ヤマダタロウ' />
+      <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" />
 
-      <FormFieldText
-        label='メールアドレス'
-        id='new-email'
-        validation='email'
-        type='email'
-        placeholder='email@example.com'
-        autoComplete='email'
-        icon='icon-envelope' />
+      <FormFieldText label="メールアドレス" id="new-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
 
-      <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>入力内容の確認</button>
+      <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>
+        入力内容の確認
+      </button>
     </div>
   )
 }
@@ -106,7 +98,9 @@ const FormUserDataConfirm = ({ setFormStatus }: any) => {
     <div className="flex flex-col gap-4">
       <div>
         <p className="label-text">お名前</p>
-        <p>{values.name}({values.kana})</p>
+        <p>
+          {values.name}({values.kana})
+        </p>
       </div>
 
       <div>
@@ -114,8 +108,12 @@ const FormUserDataConfirm = ({ setFormStatus }: any) => {
         <p>{values.email}</p>
       </div>
 
-      <button type="button" className="btn" onClick={() => setFormStatus('edit')}>入力内容の修正</button>
-      <button type="submit" className="btn btn-accent">お客様情報を更新</button>
+      <button type="button" className="btn" onClick={() => setFormStatus('edit')}>
+        入力内容の修正
+      </button>
+      <button type="submit" className="btn btn-accent">
+        お客様情報を更新
+      </button>
     </div>
   )
 }
@@ -124,8 +122,9 @@ const FormUserDataComplete = () => {
   return (
     <div className="flex flex-col gap-4">
       <p>更新が正常に完了しました</p>
-      <a href="/user/" className='btn btn-neutral'>お客様情報ページへ戻る</a>
+      <a href="/user/" className="btn btn-neutral">
+        お客様情報ページへ戻る
+      </a>
     </div>
-
   )
 }

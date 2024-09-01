@@ -10,14 +10,12 @@ type BaseFormProps<TFormValues extends FieldValues> = {
   children: (methods: UseFormReturn<TFormValues>) => React.ReactNode
 }
 
-export const BaseForm = <TFormValues extends FieldValues>({ onSubmit, schema, children, }: BaseFormProps<TFormValues>) => {
+export const BaseForm = <TFormValues extends FieldValues>({ onSubmit, schema, children }: BaseFormProps<TFormValues>) => {
   const methods = useForm<TFormValues>({ resolver: zodResolver(schema), mode: 'onChange' })
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        {children(methods)}
-      </form>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>{children(methods)}</form>
     </FormProvider>
   )
 }

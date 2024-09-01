@@ -1,4 +1,4 @@
-/** 
+/**
  * ログイン
  */
 export const login = async (email: string, password: string) => {
@@ -24,7 +24,7 @@ export const login = async (email: string, password: string) => {
   }
 }
 
-/** 
+/**
  * ログアウト
  */
 export const logout = async () => {

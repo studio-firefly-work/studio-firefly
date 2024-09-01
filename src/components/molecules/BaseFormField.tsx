@@ -11,16 +11,16 @@ type BaseFormFieldProps = {
 }
 
 export const BaseFormField: React.FC<BaseFormFieldProps> = ({ label, id, validation = id, noLabel, children }) => {
-  const { formState: { errors } } = useFormContext()
-  const error = errors[validation] as FieldError;
+  const {
+    formState: { errors },
+  } = useFormContext()
+  const error = errors[validation] as FieldError
 
   if (noLabel) {
     return (
       <fieldset className="form-control w-full">
         <legend className="label label-text">{label}</legend>
-        <div className='relative'>
-          {children}
-        </div>
+        <div className="relative">{children}</div>
         {error?.message && <span className="label label-text-alt text-error">{error.message}</span>}
       </fieldset>
     )
@@ -28,10 +28,10 @@ export const BaseFormField: React.FC<BaseFormFieldProps> = ({ label, id, validat
 
   return (
     <div className="form-control w-full">
-      <label htmlFor={id} className="label label-text">{label}</label>
-      <div className='relative'>
-        {children}
-      </div>
+      <label htmlFor={id} className="label label-text">
+        {label}
+      </label>
+      <div className="relative">{children}</div>
       {error?.message && <span className="label label-text-alt text-error">{error.message}</span>}
     </div>
   )

@@ -1,9 +1,10 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
-
 export const FormControl = ({ label, id, error, children }: any) => {
-  const { formState: { errors } } = useFormContext()
+  const {
+    formState: { errors },
+  } = useFormContext()
   const name = kebabToCamelCase(id)
   const errorMessage = error || errors[name]?.message
   const borderStyle = errorMessage ? 'input-error' : 'input-success'
@@ -18,12 +19,12 @@ export const FormControl = ({ label, id, error, children }: any) => {
           </svg>
           <input type="password" className="grow" value="" />
         </div>
-      </label >
-      {errorMessage && <span className='label label-text-alt text-error'>{errorMessage}</span>}
-    </div >
+      </label>
+      {errorMessage && <span className="label label-text-alt text-error">{errorMessage}</span>}
+    </div>
   )
 }
 
 function kebabToCamelCase(name: string): string {
-  return name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+  return name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
 }

@@ -26,28 +26,11 @@ export const FormLogin = () => {
     <BaseForm<FormLoginDataType> onSubmit={onSubmit} schema={schema}>
       {({ formState: { isSubmitting, isValid } }) => (
         <div className="flex flex-col gap-4">
-          <FormFieldText
-            label='メールアドレス'
-            id='email'
-            type='email'
-            placeholder='email@example.com'
-            autoComplete='email'
-            icon='icon-envelope'
-          />
+          <FormFieldText label="メールアドレス" id="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
 
-          <FormFieldText
-            label='パスワード'
-            id='password'
-            type='password'
-            autoComplete='current-password'
-            icon='icon-key'
-          />
+          <FormFieldText label="パスワード" id="password" type="password" autoComplete="current-password" icon="icon-key" />
 
-          <button
-            type="submit"
-            className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`}
-            aria-disabled={!isValid || isSubmitting}
-          >
+          <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>
             ログイン
           </button>
         </div>

@@ -51,46 +51,31 @@ export const FormSignUp = () => {
 }
 
 const FormSignUpEdit = () => {
-  const { setValue, formState: { isSubmitting, isValid } } = useFormContext()
-  const handleNameInput = () => { setValue('kana', kana.getFurigana()) }
+  const {
+    setValue,
+    formState: { isSubmitting, isValid },
+  } = useFormContext()
+  const handleNameInput = () => {
+    setValue('kana', kana.getFurigana())
+  }
 
   useEffect(() => {
     kana = AutoKana.bind('#name', '#kana', { katakana: true })
   }, [])
 
   return (
-    <div className='flex flex-col gap-4'>
-      <FormFieldText
-        label='お名前'
-        id='name'
-        placeholder='山田太郎'
-        autoComplete='name'
-        icon='icon-user'
-        onInput={handleNameInput} />
+    <div className="flex flex-col gap-4">
+      <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" onInput={handleNameInput} />
 
-      <FormFieldText
-        label='フリガナ'
-        id='kana'
-        placeholder='ヤマダタロウ' />
+      <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" />
 
-      <FormFieldText
-        label='メールアドレス'
-        id='new-email'
-        validation='email'
-        type='email'
-        placeholder='email@example.com'
-        autoComplete='email'
-        icon='icon-envelope' />
+      <FormFieldText label="メールアドレス" id="new-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
 
-      <FormFieldText
-        label='パスワード'
-        id='new-password'
-        validation='password'
-        type='password'
-        autoComplete='new-password'
-        icon='icon-key' />
+      <FormFieldText label="パスワード" id="new-password" validation="password" type="password" autoComplete="new-password" icon="icon-key" />
 
-      <button type='submit' className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>入力内容の確認</button>
+      <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>
+        入力内容の確認
+      </button>
     </div>
   )
 }
@@ -102,29 +87,35 @@ const FormSignUpConfirm = ({ setFormStatus }: any) => {
   const formFields = [
     { label: 'お名前', type: 'text', value: `${values.name}(${values.kana})` },
     { label: 'メールアドレス', type: 'email', value: values.email },
-    { label: 'パスワード', type: 'password', value: values.password }
+    { label: 'パスワード', type: 'password', value: values.password },
   ]
 
   return (
-    <div className='flex flex-col gap-4'>
+    <div className="flex flex-col gap-4">
       {formFields.map((field, index) => (
         <div key={index} className="form-control w-full">
           <label className="label label-text">{field.label}</label>
-          <input type={field.type} className='input' value={field.value} disabled />
+          <input type={field.type} className="input" value={field.value} disabled />
         </div>
       ))}
 
-      <button type='button' className='btn' onClick={() => setFormStatus('edit')}>入力内容の修正</button>
-      <button type='submit' className='btn btn-accent'>新規登録</button>
+      <button type="button" className="btn" onClick={() => setFormStatus('edit')}>
+        入力内容の修正
+      </button>
+      <button type="submit" className="btn btn-accent">
+        新規登録
+      </button>
     </div>
   )
 }
 
 const FormSignUpComplete = () => {
   return (
-    <div className='flex flex-col gap-4'>
+    <div className="flex flex-col gap-4">
       <p>ユーザー登録が正常に完了しました</p>
-      <a href='/' className='btn btn-neutral'>HOMEへ戻る</a>
+      <a href="/" className="btn btn-neutral">
+        HOMEへ戻る
+      </a>
     </div>
   )
 }

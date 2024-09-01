@@ -1,5 +1,5 @@
 import React from 'react'
-import classNames from 'classnames';
+import classNames from 'classnames'
 import { useFormContext } from 'react-hook-form'
 import type { FieldError } from 'react-hook-form'
 import { BaseFormField } from '@/components/molecules/BaseFormField'
@@ -14,7 +14,7 @@ type FormFieldTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> 
 
 /**
  * テキストエリアコンポーネント。react-hook-formと統合されています。
- * 
+ *
  * @param {string} label - テキストエリアのラベルテキスト。
  * @param {string} id - テキストエリアのIDおよび名前。react-hook-formでの登録に使用されます。
  * @param {string} [validation] - react-hook-formで使用するバリデーションキー。デフォルトは`id`と同じ。
@@ -22,7 +22,11 @@ type FormFieldTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> 
  * @param {string} [placeholder] - テキストエリアのプレースホルダーテキスト。
  */
 export const FormFieldTextarea: React.FC<FormFieldTextareaProps> = ({ label, id, validation = id, rows = 4, placeholder, ...rest }) => {
-  const { register, watch, formState: { errors } } = useFormContext()
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext()
   const error = errors[validation] as FieldError
   const textareaValue = watch(id)
 
@@ -34,7 +38,7 @@ export const FormFieldTextarea: React.FC<FormFieldTextareaProps> = ({ label, id,
 
   return (
     <BaseFormField label={label} id={id} validation={validation}>
-      <textarea {...register(validation)} id={id} rows={rows} placeholder={placeholder} className={className} {...rest} ></textarea>
+      <textarea {...register(validation)} id={id} rows={rows} placeholder={placeholder} className={className} {...rest}></textarea>
     </BaseFormField>
   )
 }
