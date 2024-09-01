@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import classNames from 'classnames';
+import classNames from 'classnames'
 import { useFormContext } from 'react-hook-form'
 import type { FieldError } from 'react-hook-form'
 import { BaseFormField } from '@/components/molecules/BaseFormField'
@@ -18,7 +18,7 @@ type FormFieldTextProps = React.InputHTMLAttributes<HTMLInputElement> & {
 
 /**
  * テキスト入力フォームコンポーネント。react-hook-formと統合されています。
- * 
+ *
  * @param {string} label - 入力フィールドのラベルテキスト。
  * @param {string} id - 入力フィールドのIDおよび名前。react-hook-formでの登録に使用されます。
  * @param {string} [validation] - react-hook-formで使用するバリデーションキー。デフォルトは`id`と同じ。
@@ -27,7 +27,11 @@ type FormFieldTextProps = React.InputHTMLAttributes<HTMLInputElement> & {
  * @param {string} [icon] - 入力フィールドの左側に表示するアイコンの名前。
  */
 export const FormFieldText: React.FC<FormFieldTextProps> = ({ label, id, validation = id, type = 'text', placeholder, icon, ...rest }) => {
-  const { register, watch, formState: { errors } } = useFormContext()
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useFormContext()
   const [isPasswordVisible, setIsPasswordVisible] = useState(false) // パスワード表示/非表示の状態を管理
   const error = errors[validation] as FieldError
   const inputValue = watch(validation)
@@ -44,24 +48,17 @@ export const FormFieldText: React.FC<FormFieldTextProps> = ({ label, id, validat
 
   return (
     <BaseFormField label={label} id={id} validation={validation}>
-      {icon && <Icon name={icon} className='h-full opacity-70 absolute left-4 inset-y-0' />}
+      {icon && <Icon name={icon} className="absolute inset-y-0 left-4 h-full opacity-70" />}
 
-      <input
-        {...register(validation)}
-        id={id}
-        type={type === 'password' && isPasswordVisible ? 'text' : type}
-        placeholder={placeholder}
-        className={className}
-        {...rest}
-      />
+      <input {...register(validation)} id={id} type={type === 'password' && isPasswordVisible ? 'text' : type} placeholder={placeholder} className={className} {...rest} />
 
-      {type === 'password' &&
-        <label className="swap absolute inset-y-0 right-4" >
+      {type === 'password' && (
+        <label className="swap absolute inset-y-0 right-4">
           <input type="checkbox" tabIndex={-1} onChange={togglePasswordVisibility} checked={isPasswordVisible} />
-          <Icon name="icon-eye" className='swap-on h-full opacity-70' />
-          <Icon name="icon-eye-slash" className='swap-off h-full opacity-70' />
+          <Icon name="icon-eye" className="swap-on h-full opacity-70" />
+          <Icon name="icon-eye-slash" className="swap-off h-full opacity-70" />
         </label>
-      }
+      )}
     </BaseFormField>
   )
 }

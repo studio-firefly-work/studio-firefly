@@ -33,17 +33,19 @@ export const FormField: React.FC<FormFieldType> = ({ label, id, error, children 
     throw new Error(`id "${id}" is not in kebab-case format`)
   }
 
-  const { formState: { errors } } = useFormContext()
+  const {
+    formState: { errors },
+  } = useFormContext()
   const name = kebabToCamelCase(id)
   const errorMessage = error || errors[name]?.message
 
   return (
     <div>
-      <label htmlFor={id} className='label-text'>{label}</label>
-      <div className='flex flex-col gap-4 md:flex-row'>
-        {children}
-      </div>
-      {errorMessage && <p className='text-error'>{errorMessage}</p>}
+      <label htmlFor={id} className="label-text">
+        {label}
+      </label>
+      <div className="flex flex-col gap-4 md:flex-row">{children}</div>
+      {errorMessage && <p className="text-error">{errorMessage}</p>}
     </div>
   )
 }
@@ -64,14 +66,7 @@ export const FieldInput: React.FC<FieldInputType> = ({ id, name, type = 'text', 
 
   return (
     <FieldHasIcon name={name}>
-      <input
-        {...register(name)}
-        id={id}
-        className='input input-bordered w-full pr-14'
-        type={type}
-        placeholder={placeholder}
-        autoComplete={autoComplete}
-        onInput={onInput} />
+      <input {...register(name)} id={id} className="input input-bordered w-full pr-14" type={type} placeholder={placeholder} autoComplete={autoComplete} onInput={onInput} />
     </FieldHasIcon>
   )
 }
@@ -92,37 +87,34 @@ export const FieldTextarea: React.FC<FieldTextareaType> = ({ id, name, rows = 4,
 
   return (
     <FieldHasIcon name={name}>
-      <textarea
-        {...register(name)}
-        id={id}
-        className='textarea textarea-bordered w-full pr-14'
-        rows={rows}
-        placeholder={placeholder} >
-      </textarea>
+      <textarea {...register(name)} id={id} className="textarea textarea-bordered w-full pr-14" rows={rows} placeholder={placeholder}></textarea>
     </FieldHasIcon>
   )
 }
 
 export const FieldHasIcon = ({ name, children }: any) => {
-  const { watch, formState: { errors }, } = useFormContext()
+  const {
+    watch,
+    formState: { errors },
+  } = useFormContext()
   const text = watch(name)
 
   return (
-    <div className='relative flex-1'>
+    <div className="relative flex-1">
       {children}
       {(() => {
         if (errors[name]?.message) {
           // ×アイコン
           return (
-            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' className='absolute right-4 top-2/4 size-6 -translate-y-1/2 transform text-error'>
-              <path strokeLinecap='round' strokeLinejoin='round' d='M6 18 18 6M6 6l12 12' />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute right-4 top-2/4 size-6 -translate-y-1/2 transform text-error">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
           )
         } else if (text) {
           // ✓アイコン
           return (
-            <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' className='absolute right-4 top-2/4 size-6 -translate-y-1/2 transform text-success'>
-              <path strokeLinecap='round' strokeLinejoin='round' d='m4.5 12.75 6 6 9-13.5' />
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute right-4 top-2/4 size-6 -translate-y-1/2 transform text-success">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
             </svg>
           )
         }
@@ -140,5 +132,5 @@ function isCamelCase(str: string): boolean {
 }
 
 function kebabToCamelCase(name: string): string {
-  return name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+  return name.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
 }

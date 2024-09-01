@@ -48,7 +48,9 @@ const seo: Theme.SEO = {
                   <div class="card-actions">
                     <div class="badge badge-outline">{site.category}</div>
                   </div>
-                  <h2 class="card-title" transition:name={`title-${site.url}`}>{site.name}</h2>
+                  <h2 class="card-title" transition:name={`title-${site.url}`}>
+                    {site.name}
+                  </h2>
                   <p>{site.text}</p>
                 </div>
               </a>

@@ -11,7 +11,7 @@ const schema = z.object({
   name: utils.schema.name,
   kana: utils.schema.kana,
   email: utils.schema.email,
-  message: utils.schema.message
+  message: utils.schema.message,
 })
 
 type FormContactDataType = z.infer<typeof schema>
@@ -51,35 +51,13 @@ export const FormContact = () => {
           <div className="flex flex-col gap-4">
             {formStatus === 'edit' && (
               <>
-                <FormFieldText
-                  label='お名前'
-                  id='name'
-                  placeholder='山田太郎'
-                  autoComplete='name'
-                  icon='icon-user'
-                  onInput={handleNameInput}
-                />
+                <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" onInput={handleNameInput} />
 
-                <FormFieldText
-                  label='フリガナ'
-                  id='kana'
-                  placeholder='ヤマダタロウ'
-                />
+                <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" />
 
-                <FormFieldText
-                  label='メールアドレス'
-                  id='email'
-                  type='email'
-                  placeholder='email@example.com'
-                  autoComplete='email'
-                  icon='icon-envelope'
-                />
+                <FormFieldText label="メールアドレス" id="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
 
-                <FormFieldTextarea
-                  label='お問い合わせ内容'
-                  id='message'
-                  placeholder='お問い合わせ内容を入力してください'
-                />
+                <FormFieldTextarea label="お問い合わせ内容" id="message" placeholder="お問い合わせ内容を入力してください" />
 
                 <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>
                   入力内容の確認
@@ -91,7 +69,9 @@ export const FormContact = () => {
               <>
                 <div>
                   <p className="label-text">お名前</p>
-                  <p>{getValues('name')}({getValues('kana')})</p>
+                  <p>
+                    {getValues('name')}({getValues('kana')})
+                  </p>
                 </div>
 
                 <div>
@@ -107,14 +87,18 @@ export const FormContact = () => {
                 <button type="button" className="btn" onClick={() => setFormStatus('edit')}>
                   入力内容の修正
                 </button>
-                <button type="submit" className="btn btn-accent">お問い合わせを送信</button>
+                <button type="submit" className="btn btn-accent">
+                  お問い合わせを送信
+                </button>
               </>
             )}
 
             {formStatus === 'complete' && (
               <div className="flex flex-col gap-4">
                 <p>送信が正常に完了しました</p>
-                <a href="/" className='btn btn-neutral'>HOMEへ戻る</a>
+                <a href="/" className="btn btn-neutral">
+                  HOMEへ戻る
+                </a>
               </div>
             )}
           </div>

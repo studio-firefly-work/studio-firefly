@@ -1,4 +1,4 @@
-/** 
+/**
  * ユーザー情報 取得
  */
 export const getUser = async () => {
@@ -23,7 +23,7 @@ export const getUser = async () => {
   }
 }
 
-/** 
+/**
  * ユーザー情報 作成
  */
 export const createUser = async (data: any) => {
@@ -47,7 +47,7 @@ export const createUser = async (data: any) => {
   }
 }
 
-/** 
+/**
  * ユーザー情報 更新
  */
 export const updateUser = async (data: any) => {
@@ -72,7 +72,7 @@ export const updateUser = async (data: any) => {
   }
 }
 
-/** 
+/**
  * ユーザー情報 論理削除
  */
 export const deleteUser = async () => {
