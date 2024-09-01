@@ -1,4 +1,6 @@
 ---
+import Inner from '@/components/atoms/Inner.astro'
+
 interface Props {
   seo: Theme.SEO
 }
@@ -24,7 +26,7 @@ if (seo.breadcrumb) {
 }
 ---
 
-<div class="theme-text-sm breadcrumbs max-w-full px-[calc((100%-(11/12*100%))/2)] md:px-[calc((100%-(10/12*100%))/2)]">
+<Inner size="full md:base" class="theme-text-sm breadcrumbs">
   <ol>
     {
       itemListElement.map((link: any, index: number) => {
@@ -41,4 +43,4 @@ if (seo.breadcrumb) {
       })
     }
   </ol>
-</div>
+</Inner>
