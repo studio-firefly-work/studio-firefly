@@ -26,14 +26,13 @@ export const getUser = async () => {
 /**
  * ユーザー情報 作成
  */
-export const createUser = async (data: any) => {
+export const createUser = async () => {
   try {
-    const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/`, {
-      method: 'POST',
+    const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/?token=${token}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
     })
 
     if (!res.ok) {

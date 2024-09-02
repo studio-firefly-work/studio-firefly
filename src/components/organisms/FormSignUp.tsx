@@ -29,10 +29,10 @@ export const FormSignUp = () => {
         setFormStatus('confirm')
         break
       case 'confirm':
-        // 確認画面で押下された場合は新規ユーザー作成
-        const res = await api.user.createUser(data)
+        // 確認画面で押下された場合は新規仮ユーザー作成
+        const res = await api.preUser.createPreUser(data)
         if (res?.ok) {
-          // 新規ユーザー作成に成功した場合は完了画面へ遷移
+          // 新規仮ユーザー作成に成功した場合は完了画面へ遷移
           setFormStatus('complete')
         }
         break
