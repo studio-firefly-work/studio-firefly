@@ -26,13 +26,14 @@ export const getUser = async () => {
 /**
  * ユーザー情報 作成
  */
-export const createUser = async () => {
+export const createUser = async (data: any) => {
   try {
-    const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/?token=${token}`, {
-      method: 'GET',
+    const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify(data),
     })
 
     if (!res.ok) {
@@ -88,6 +89,33 @@ export const deleteUser = async () => {
       console.error('サーバーエラー')
     } else {
       console.log('お客様情報の更新が正常に完了しました')
+    }
+  } catch (error) {
+    console.error('通信に失敗しました', error)
+  }
+}
+
+/**
+ * ユーザー情報 有効化
+ */
+export const activateUser = async () => {
+  try {
+    const urlParams = new URLSearchParams(window.location.search)
+    const token = urlParams.get("token")
+    console.log(token)
+
+    const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/activate/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+
+    if (!res.ok) {
+      console.error('サーバーエラー')
+    } else {
+      console.log('お客様情報の有効化が正常に完了しました')
     }
   } catch (error) {
     console.error('通信に失敗しました', error)
