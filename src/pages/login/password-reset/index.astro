@@ -1,0 +1,41 @@
+---
+export const prerender = false
+
+import PageLayout from '@/layouts/PageLayout.astro'
+import Container from '@/components/atoms/Container.astro'
+import Inner from '@/components/atoms/Inner.astro'
+
+const seo: Theme.SEO = {
+  title: 'パスワードリセット',
+  description: 'パスワードリセットページのdescriptionです',
+  permalink: ['user'],
+  noindex: true,
+  nofollow: true,
+}
+---
+
+<PageLayout {seo}>
+  <Container>
+    <Inner>
+      <input type="text" id="email" />
+      <button id="request" class="btn">request</button>
+    </Inner>
+  </Container>
+</PageLayout>
+
+<script>
+  import { api } from '@/api'
+
+  // 初期化関数
+  const init = () => {
+    const email = document.getElementById('email') as HTMLInputElement
+    const sendMailBtn = document.getElementById('request') as HTMLButtonElement
+
+    sendMailBtn?.addEventListener('click', () => {
+      console.log(email?.value)
+      api.auth.resetPassword(email?.value)
+    })
+  }
+
+  init()
+</script>

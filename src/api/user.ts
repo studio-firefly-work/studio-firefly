@@ -102,7 +102,6 @@ export const activateUser = async () => {
   try {
     const urlParams = new URLSearchParams(window.location.search)
     const token = urlParams.get("token")
-    console.log(token)
 
     const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/activate/`, {
       method: 'POST',
@@ -116,6 +115,33 @@ export const activateUser = async () => {
       console.error('サーバーエラー')
     } else {
       console.log('お客様情報の有効化が正常に完了しました')
+    }
+  } catch (error) {
+    console.error('通信に失敗しました', error)
+  }
+}
+
+/**
+ * パスワードをリセット
+ */
+export const resetPassword = async (newPassword: string) => {
+  try {
+    const urlParams = new URLSearchParams(window.location.search)
+    const token = urlParams.get("token")
+
+    const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/password-reset/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ newPassword }),
+    })
+
+    if (!res.ok) {
+      console.error('サーバーエラー')
+    } else {
+      console.log('正常に完了しました')
     }
   } catch (error) {
     console.error('通信に失敗しました', error)
