@@ -81,6 +81,7 @@ export const resetPassword = async (email: string) => {
     } else {
       console.log('正常に完了しました')
     }
+    return res
   } catch (error) {
     console.error('通信に失敗しました', error)
   }
