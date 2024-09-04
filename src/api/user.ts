@@ -124,7 +124,7 @@ export const activateUser = async () => {
 /**
  * パスワードをリセット
  */
-export const resetPassword = async (newPassword: string) => {
+export const resetPassword = async (password: string) => {
   try {
     const urlParams = new URLSearchParams(window.location.search)
     const token = urlParams.get("token")
@@ -135,7 +135,7 @@ export const resetPassword = async (newPassword: string) => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ newPassword }),
+      body: JSON.stringify({ password }),
     })
 
     if (!res.ok) {
@@ -143,6 +143,7 @@ export const resetPassword = async (newPassword: string) => {
     } else {
       console.log('正常に完了しました')
     }
+    return res
   } catch (error) {
     console.error('通信に失敗しました', error)
   }
