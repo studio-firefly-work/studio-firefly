@@ -62,3 +62,26 @@ export const isLogin = async () => {
     return false
   }
 }
+
+/**
+ * パスワードのリセットを要求
+ */
+export const resetPassword = async (email: string) => {
+  try {
+    const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/auth/password-reset/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    })
+
+    if (!res.ok) {
+      console.error('サーバーエラー')
+    } else {
+      console.log('正常に完了しました')
+    }
+  } catch (error) {
+    console.error('通信に失敗しました', error)
+  }
+}
