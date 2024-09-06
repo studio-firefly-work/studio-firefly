@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.15",
     "@types/cssesc": "^3.0.2",
     "@types/html-escaper": "^3.0.2",
     "@types/node": "^20.12.7",

@@ -1,27 +1,16 @@
 ---
-import PageLayout from '@/layouts/PageLayout.astro'
-import Container from '@/components/atoms/Container.astro'
+import { utils } from '@/utils'
+import { Image } from 'astro:assets'
+import type { MarkdownInstance } from 'astro'
 import type { GetStaticPathsOptions } from 'astro'
 import Inner from '@/components/atoms/Inner.astro'
+import PageLayout from '@/layouts/PageLayout.astro'
+import Container from '@/components/atoms/Container.astro'
 import PageNavigation from '@/components/molecules/PageNavigation.astro'
 
-const permalink = '/works'
-
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
-  const sites = [
-    { name: 'Astroストア', text: 'text', category: 'web', url: 'store' },
-    { name: 'Astroグッズ', text: 'text long test text long test text long test text long test', category: 'fashion', url: 'products' },
-    { name: '究極のAstroハンドブック', text: 'text', category: 'products', url: 'join' },
-    { name: 'Test1', text: 'text', category: 'test', url: 'test1' },
-    { name: 'Test2', text: 'text', category: 'test', url: 'test2' },
-    { name: 'Test3', text: 'text', category: 'test', url: 'test3' },
-    { name: 'Test4', text: 'text', category: 'test', url: 'test4' },
-    { name: 'Test5', text: 'text', category: 'test', url: 'test5' },
-    { name: 'Test6', text: 'text', category: 'test', url: 'test6' },
-    { name: 'Test7', text: 'text', category: 'test', url: 'test7' },
-    { name: 'Test8', text: 'text', category: 'test', url: 'test8' },
-  ]
-  return paginate(sites, { pageSize: 8 })
+  const pages: MarkdownInstance<Theme.Frontmatter>[] = await Astro.glob<Theme.Frontmatter>('../../content/works/*.md')
+  return paginate(pages, { pageSize: 12 })
 }
 const { page } = Astro.props
 
@@ -38,20 +27,17 @@ const seo: Theme.SEO = {
     <Inner>
       <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {
-          page.data.map((site) => (
+          page.data.map((post) => (
             <li class="flex">
-              <a href={`/works/${site.url}/`} class="card rounded-none bg-base-100 shadow-xl">
-                <figure>
-                  <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" transition:name={`image-${site.url}`} />
-                </figure>
+              <a href={`/works/${post.frontmatter.slug}/`} class="card rounded-none bg-base-100 shadow-xl">
+                <Image src={utils.getAssetsImage(post.frontmatter.image.src)} alt={post.frontmatter.image.alt} transition:name={`image-${post.frontmatter.slug}`} />
                 <div class="card-body">
                   <div class="card-actions">
-                    <div class="badge badge-outline">{site.category}</div>
+                    <div class="badge badge-outline">{post.frontmatter.category}</div>
                   </div>
-                  <h2 class="card-title" transition:name={`title-${site.url}`}>
-                    {site.name}
+                  <h2 class="card-title" transition:name={`title-${post.frontmatter.slug}`}>
+                    {post.frontmatter.title}
                   </h2>
-                  <p>{site.text}</p>
                 </div>
               </a>
             </li>
@@ -62,6 +48,6 @@ const seo: Theme.SEO = {
   </Container>
 
   <Inner class="text-center">
-    <PageNavigation {page} {permalink} />
+    <PageNavigation {page} permalink="/works" />
   </Inner>
 </PageLayout>

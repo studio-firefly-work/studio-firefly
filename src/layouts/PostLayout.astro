@@ -1,0 +1,40 @@
+---
+import { utils } from '@/utils'
+import { Image } from 'astro:assets'
+import Inner from '@/components/atoms/Inner.astro'
+import BaseLayout from '@/layouts/BaseLayout.astro'
+import Header from '@/components/organisms/Header.astro'
+import Footer from '@/components/organisms/Footer.astro'
+import Container from '@/components/atoms/Container.astro'
+import Breadcrumb from '@/components/molecules/Breadcrumb.astro'
+
+interface Props {
+  seo: Theme.SEO
+  frontmatter: Theme.Frontmatter
+}
+const { seo, frontmatter } = Astro.props
+---
+
+<BaseLayout {seo}>
+  <Header />
+  <main>
+    <Container size="tall" class="h-56">
+      <Inner>
+        <h1 class="theme-text-xl font-bold">{seo.title}</h1>
+        <p class="mt-4">{seo.description}</p>
+      </Inner>
+    </Container>
+
+    {seo.breadcrumb && <Breadcrumb {seo} />}
+
+    <Container>
+      <Inner>
+        <article class="prose">
+          <Image src={utils.getAssetsImage(frontmatter.image.src)} alt={frontmatter.image.alt} transition:name={`image-${frontmatter.slug}`} />
+          <slot />
+        </article>
+      </Inner>
+    </Container>
+  </main>
+  <Footer />
+</BaseLayout>
