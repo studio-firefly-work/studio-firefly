@@ -7,7 +7,10 @@ export default {
   future: {
     hoverOnlyWhenSupported: true
   },
-  plugins: [require('daisyui')],
+  plugins: [
+    require('daisyui'),
+    require('@tailwindcss/typography')
+  ],
   theme: {
     extend: {
       colors: {

@@ -1,51 +1,31 @@
 ---
-import PageLayout from '@/layouts/PageLayout.astro'
-import Container from '@/components/atoms/Container.astro'
-import Inner from '@/components/atoms/Inner.astro'
+import type { MarkdownInstance } from 'astro'
+import PostLayout from '@/layouts/PostLayout.astro'
 
-export async function getStaticPaths() {
-  const pages = [
-    {
-      slug: 'store',
-      title: 'Astroストア',
-      text: 'Astroにようこそ！',
-    },
-    {
-      slug: 'products',
-      title: 'Astroグッズ',
-      text: 'たくさんの商品があります',
-    },
-    {
-      slug: 'join',
-      title: '究極のAstroハンドブック',
-      text: 'Astroについて学びたければ、この本を読む必要があります',
-    },
-  ]
-  return pages.map(({ slug, title, text }) => {
+export const getStaticPaths = async () => {
+  const pages: MarkdownInstance<Theme.Frontmatter>[] = await Astro.glob<Theme.Frontmatter>('../../content/works/*.md')
+  return pages.map((page) => {
     return {
-      params: { slug },
-      props: { title, text, slug },
+      params: {
+        slug: page.frontmatter.slug,
+      },
+      props: {
+        page,
+      },
     }
   })
 }
 
-const { title, text, slug } = Astro.props
+const { Content, frontmatter } = Astro.props.page
 
 const seo: Theme.SEO = {
-  title: title,
-  description: `${title}ページのdescriptionです`,
-  permalink: ['works', slug],
-  breadcrumb: { works: '制作事例', [slug!]: title },
+  title: frontmatter.title,
+  description: frontmatter.description,
+  permalink: ['works', frontmatter.slug],
+  breadcrumb: { works: '制作事例', [frontmatter.slug]: frontmatter.title },
 }
 ---
 
-<PageLayout {seo}>
-  <Container>
-    <Inner>
-      <figure>
-        <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Shoes" transition:name={`image-${slug}`} />
-      </figure>
-      <p>{text}</p>
-    </Inner>
-  </Container>
-</PageLayout>
+<PostLayout {seo} {frontmatter}>
+  <Content />
+</PostLayout>

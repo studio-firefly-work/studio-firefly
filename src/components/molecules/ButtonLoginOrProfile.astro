@@ -8,31 +8,28 @@ const style = tv({
 })
 ---
 
-<a class={style()} {...rest}>
+<a class={style()} href="/login/" {...rest}>
   <Icon name="icon-user" />
 </a>
 
 <script>
   import { api } from '@/api'
-  let href = '/user/'
-
-  // hrefを更新
-  const setHref = () => {
-    const authButtons = document.querySelectorAll('.js-auth-button') as NodeListOf<HTMLLinkElement>
-    authButtons?.forEach((button: HTMLLinkElement) => {
-      button.href = href
-    })
-  }
 
   // 初期化関数
   const init = async () => {
-    // APIエンドポイントにリクエストを送信してログイン状態を確認
-    const isLoggedIn = await api.auth.isLogin()
-    href = isLoggedIn ? '/user/' : '/login/'
-    setHref()
+    const authButtons = document.querySelectorAll('.js-auth-button') as NodeListOf<HTMLLinkElement>
+    authButtons?.forEach((button: HTMLLinkElement) => {
+      button.addEventListener('click', async () => {
+        const isLoggedIn = await api.auth.isLogin()
+        if (isLoggedIn) {
+          // ログイン中の場合、/user/へリダイレクト
+          window.location.href = '/user/'
+        }
+      })
+    })
   }
 
   // ページ読み込み時に初期化
   init()
-  document.addEventListener('astro:after-swap', setHref)
+  document.addEventListener('astro:after-swap', init)
 </script>

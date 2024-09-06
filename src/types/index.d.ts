@@ -48,4 +48,13 @@ declare namespace Theme {
     icon: string
     permalink: string
   }
+
+  type Frontmatter = {
+    slug: string
+    title: string
+    description: string
+    category: string
+    image: { src: string, alt: string }
+    date: string
+  }
 }
