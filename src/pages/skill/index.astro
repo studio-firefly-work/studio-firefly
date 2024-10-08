@@ -9,24 +9,78 @@ const seo: Theme.SEO = {
   permalink: ['skill'],
   breadcrumb: { skill: 'スキルセット' },
 }
+
+const skillCategories = [
+  {
+    color: 'btn-primary',
+    skills: [
+      { name: 'HTML', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[20%]' },
+      { name: 'CSS', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[10%]' },
+      { name: 'JavaScript', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[50%]' },
+      { name: 'PHP', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[70%]' },
+      { name: 'SCSS', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[90%]' },
+      { name: 'TypeScript', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[90%]' },
+    ],
+  },
+  {
+    color: 'btn-secondary',
+    skills: [
+      { name: 'Astro', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[100%]' },
+      { name: 'Wordpress', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[60%]' },
+      { name: 'Vue', text: 'テキスト', good: 'left-[30%]', like: 'bottom-[90%]' },
+      { name: 'React', text: 'テキスト', good: 'left-[60%]', like: 'bottom-[90%]' },
+      { name: 'Express', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[80%]' },
+      { name: 'git', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[100%]' },
+      { name: 'docker', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[70%]' },
+      { name: 'MySQL', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[60%]' },
+      { name: 'Tailwind CSS', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[100%]' },
+    ],
+  },
+  {
+    color: 'btn-accent',
+    skills: [
+      { name: 'SEO', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[70%]' },
+      { name: 'アクセシビリティ', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[70%]' },
+    ],
+  },
+]
 ---
 
 <PageLayout {seo}>
   <Container>
     <Inner>
-      <button class="btn" onclick="my_modal_2.showModal()">open modal</button>
-      <dialog id="my_modal_2" class="modal">
-        <div class="modal-box">
-          <h3 class="text-lg font-bold">Hello!</h3>
-          <p class="py-4">Press ESC key or click outside to close</p>
-          <form method="dialog">
-            <button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">✕</button>
-          </form>
-        </div>
-        <form method="dialog" class="modal-backdrop">
-          <button>close</button>
-        </form>
-      </dialog>
+      <div class="border-normal relative h-dvh w-full border">
+        {
+          skillCategories.map((category, i) =>
+            category.skills.map((skill, j) => (
+              <div class={`${skill.good} ${skill.like} absolute -translate-x-2/4 translate-y-2/4`}>
+                <button class={`${category.color} btn btn-sm`} onclick={`skill_modal_${i}_${j}.showModal()`}>
+                  {skill.name}
+                </button>
+              </div>
+            ))
+          )
+        }
+      </div>
     </Inner>
+
+    {
+      skillCategories.map((category, i) =>
+        category.skills.map((skill, j) => (
+          <dialog id={`skill_modal_${i}_${j}`} class="modal">
+            <div class="modal-box">
+              <h3 class="text-lg font-bold">{skill.name}</h3>
+              <p class="py-4">{skill.text}</p>
+              <form method="dialog">
+                <button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">✕</button>
+              </form>
+            </div>
+            <form method="dialog" class="modal-backdrop">
+              <button>close</button>
+            </form>
+          </dialog>
+        ))
+      )
+    }
   </Container>
 </PageLayout>
