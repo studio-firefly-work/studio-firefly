@@ -1,6 +1,7 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro'
 import Container from '@/components/atoms/Container.astro'
+import Icon from '@/components/atoms/Icon.astro'
 import Inner from '@/components/atoms/Inner.astro'
 
 const seo: Theme.SEO = {
@@ -10,40 +11,29 @@ const seo: Theme.SEO = {
   breadcrumb: { skill: 'スキルセット' },
 }
 
-const skillCategories = [
-  {
-    color: 'btn-primary',
-    skills: [
-      { name: 'HTML', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[20%]' },
-      { name: 'CSS', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[10%]' },
-      { name: 'JavaScript', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[50%]' },
-      { name: 'PHP', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[70%]' },
-      { name: 'SCSS', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[90%]' },
-      { name: 'TypeScript', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[90%]' },
-    ],
-  },
-  {
-    color: 'btn-secondary',
-    skills: [
-      { name: 'Astro', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[100%]' },
-      { name: 'Wordpress', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[60%]' },
-      { name: 'Vue', text: 'テキスト', good: 'left-[30%]', like: 'bottom-[90%]' },
-      { name: 'React', text: 'テキスト', good: 'left-[60%]', like: 'bottom-[90%]' },
-      { name: 'Express', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[80%]' },
-      { name: 'Git', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[100%]' },
-      { name: 'Docker', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[70%]' },
-      { name: 'MySQL', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[60%]' },
-      { name: 'Prisma', text: 'テキスト', good: 'left-[60%]', like: 'bottom-[50%]' },
-      { name: 'Tailwind CSS', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[100%]' },
-    ],
-  },
-  {
-    color: 'btn-accent',
-    skills: [
-      { name: 'SEO', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[70%]' },
-      { name: 'アクセシビリティ', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[70%]' },
-    ],
-  },
+const skills = [
+  { name: 'C#', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[20%]', icon: 'icon-code-bracket' },
+  { name: 'CSS', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[30%]', icon: 'icon-code-bracket' },
+  { name: 'Java', text: 'テキスト', good: 'left-[10%]', like: 'bottom-[10%]', icon: 'icon-code-bracket' },
+  { name: 'PHP', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[70%]', icon: 'icon-code-bracket' },
+  { name: 'XAML', text: 'テキスト', good: 'left-[20%]', like: 'bottom-[20%]', icon: 'icon-code-bracket' },
+  { name: 'HTML', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[40%]', icon: 'icon-code-bracket' },
+  { name: 'SCSS', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[90%]', icon: 'icon-code-bracket' },
+  { name: 'TypeScript', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[90%]', icon: 'icon-code-bracket' },
+  { name: 'JavaScript', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[50%]', icon: 'icon-code-bracket' },
+  { name: 'Vue', text: 'テキスト', good: 'left-[30%]', like: 'bottom-[90%]', icon: 'icon-code-bracket' },
+  { name: 'Git', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[100%]', icon: 'icon-code-bracket' },
+  { name: 'React', text: 'テキスト', good: 'left-[60%]', like: 'bottom-[90%]', icon: 'icon-code-bracket' },
+  { name: 'Astro', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[100%]', icon: 'icon-code-bracket' },
+  { name: 'Docker', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[70%]', icon: 'icon-code-bracket' },
+  { name: 'MySQL', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[65%]', icon: 'icon-code-bracket' },
+  { name: 'Prisma', text: 'テキスト', good: 'left-[60%]', like: 'bottom-[50%]', icon: 'icon-code-bracket' },
+  { name: 'Express', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[80%]', icon: 'icon-code-bracket' },
+  { name: '.NET MAUI', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[40%]', icon: 'icon-code-bracket' },
+  { name: 'Wordpress', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[60%]', icon: 'icon-code-bracket' },
+  { name: 'Tailwind CSS', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[100%]', icon: 'icon-code-bracket' },
+  { name: 'SEO', text: 'テキス', good: 'left-[70%]', like: 'bottom-[70%]', icon: 'icon-code-bracket' },
+  { name: 'アクセシビリティ', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[70%]', icon: 'icon-code-bracket' },
 ]
 ---
 
@@ -52,36 +42,106 @@ const skillCategories = [
     <Inner>
       <div class="border-normal relative h-dvh w-full border">
         {
-          skillCategories.map((category, i) =>
-            category.skills.map((skill, j) => (
-              <div class={`${skill.good} ${skill.like} absolute -translate-x-2/4 translate-y-2/4`}>
-                <button class={`${category.color} btn btn-sm`} onclick={`skill_modal_${i}_${j}.showModal()`}>
-                  {skill.name}
+          skills.map((skill, index) => (
+            <div class={`${skill.good} ${skill.like} absolute -translate-x-2/4 translate-y-2/4`}>
+              <div class="tooltip" data-tip={skill.name}>
+                <button id={`js-skill-btn-${index}`} class="btn" onclick={`document.querySelector('#js-skill-modal-${index}').showModal()`}>
+                  <Icon name={skill.icon} />
                 </button>
               </div>
-            ))
-          )
+            </div>
+          ))
         }
       </div>
     </Inner>
 
     {
-      skillCategories.map((category, i) =>
-        category.skills.map((skill, j) => (
-          <dialog id={`skill_modal_${i}_${j}`} class="modal">
-            <div class="modal-box">
+      skills.map((skill, index) => (
+        <dialog id={`js-skill-modal-${index}`} class="group modal">
+          <div class="modal-box">
+            <div class="flex items-center gap-4">
+              <Icon name={skill.icon} />
               <h3 class="text-lg font-bold">{skill.name}</h3>
-              <p class="py-4">{skill.text}</p>
-              <form method="dialog">
-                <button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">✕</button>
-              </form>
             </div>
-            <form method="dialog" class="modal-backdrop">
-              <button>close</button>
+            <p class="py-4">{skill.text}</p>
+            <form method="dialog">
+              <button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 hidden group-open:inline-flex">✕</button>
             </form>
-          </dialog>
-        ))
-      )
+          </div>
+          <form method="dialog" class="modal-backdrop">
+            <button tabindex="-1" />
+          </form>
+        </dialog>
+      ))
     }
   </Container>
 </PageLayout>
+
+<script>
+  const modals = document.querySelectorAll('[id^="js-skill-modal-"]') // "js-skill-modal-*" の全てのモーダルを取得
+  const btns = document.querySelectorAll('[id^="js-skill-btn-"]') // "js-skill-btn-*" の全てのボタンを取得
+
+  modals.forEach((modal, index) => {
+    // モーダルの状態変化を監視
+    const observer = new MutationObserver((mutationsList) => {
+      mutationsList.forEach((mutation) => {
+        if (mutation.attributeName === 'open') {
+          const isOpen = modal.hasAttribute('open')
+          const btn = btns[index] // 同じインデックスのボタンを取得
+          const modalIcon = modal.querySelector('svg')
+          const btnIcon = btn.querySelector('svg')
+          handleModalState(modalIcon, btnIcon, isOpen ? 'open' : 'close')
+        }
+      })
+    })
+
+    // モーダルのopen属性を監視対象に追加
+    observer.observe(modal, { attributes: true })
+  })
+
+  // モーダルの開閉状態を処理
+  const handleModalState = (modalIcon, btnIcon, state) => {
+    if (!document.startViewTransition) return
+
+    if (state === 'open') {
+      btnIcon.style.viewTransitionName = 'modal'
+      applyTransition(
+        () => {
+          btnIcon.style.viewTransitionName = null
+          modalIcon.style.viewTransitionName = 'modal'
+          btnIcon.classList.remove('visible')
+          btnIcon.classList.add('invisible')
+        },
+        () => {
+          btnIcon.style.viewTransitionName = null
+          modalIcon.style.viewTransitionName = null
+        }
+      )
+    } else if (state === 'close') {
+      modalIcon.style.viewTransitionName = 'modal'
+      applyTransition(
+        () => {
+          modalIcon.style.viewTransitionName = null
+          btnIcon.style.viewTransitionName = 'modal'
+          btnIcon.classList.remove('invisible')
+          btnIcon.classList.add('visible')
+        },
+        () => {
+          modalIcon.style.viewTransitionName = null
+          btnIcon.style.viewTransitionName = null
+        }
+      )
+    }
+  }
+
+  // アニメーションと終了処理を適用
+  const applyTransition = (startCallback, finishCallback) => {
+    const transition = document.startViewTransition(() => {
+      startCallback()
+    })
+
+    transition.finished.finally(() => {
+      finishCallback()
+    })
+  }
+</script>
