@@ -32,20 +32,23 @@ const skills = [
   { name: '.NET MAUI', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[40%]', icon: 'icon-code-bracket' },
   { name: 'Wordpress', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[60%]', icon: 'icon-code-bracket' },
   { name: 'Tailwind CSS', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[100%]', icon: 'icon-code-bracket' },
-  { name: 'SEO', text: 'テキス', good: 'left-[70%]', like: 'bottom-[70%]', icon: 'icon-code-bracket' },
+  { name: 'SEO', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[70%]', icon: 'icon-code-bracket' },
   { name: 'アクセシビリティ', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[70%]', icon: 'icon-code-bracket' },
 ]
 ---
 
 <PageLayout {seo}>
-  <Container>
-    <Inner>
-      <div class="border-normal relative h-dvh w-full border">
+  <Container class="overflow-x-auto">
+    <Inner size="slim">
+      <div class="relative h-dvh w-full">
+        <div class="absolute left-1/2 h-full -translate-x-1/2 transform border-l border-black"></div>
+        <div class="absolute top-1/2 w-full -translate-y-1/2 transform border-b border-black"></div>
+
         {
           skills.map((skill, index) => (
             <div class={`${skill.good} ${skill.like} absolute -translate-x-2/4 translate-y-2/4`}>
               <div class="tooltip" data-tip={skill.name}>
-                <button id={`js-skill-btn-${index}`} class="btn" onclick={`document.querySelector('#js-skill-modal-${index}').showModal()`}>
+                <button id={`js-skill-btn-${index}`} class="btn btn-circle btn-ghost">
                   <Icon name={skill.icon} />
                 </button>
               </div>
@@ -82,6 +85,11 @@ const skills = [
   const btns = document.querySelectorAll('[id^="js-skill-btn-"]') as NodeListOf<HTMLButtonElement>
 
   modals.forEach((modal, index) => {
+    // ボタンにクリックイベントリスナーを追加
+    btns[index].addEventListener('click', () => {
+      modal.showModal()
+    })
+
     // モーダルの状態変化を監視
     const observer = new MutationObserver((mutationsList: MutationRecord[]) => {
       const mutation = mutationsList.find((mutation) => mutation.attributeName === 'open')
