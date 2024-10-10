@@ -78,21 +78,17 @@ const skills = [
 </PageLayout>
 
 <script>
-  const modals = document.querySelectorAll('[id^="js-skill-modal-"]') // "js-skill-modal-*" の全てのモーダルを取得
-  const btns = document.querySelectorAll('[id^="js-skill-btn-"]') // "js-skill-btn-*" の全てのボタンを取得
+  const modals = document.querySelectorAll('[id^="js-skill-modal-"]') as NodeListOf<HTMLDialogElement>
+  const btns = document.querySelectorAll('[id^="js-skill-btn-"]') as NodeListOf<HTMLButtonElement>
 
   modals.forEach((modal, index) => {
     // モーダルの状態変化を監視
-    const observer = new MutationObserver((mutationsList) => {
-      mutationsList.forEach((mutation) => {
-        if (mutation.attributeName === 'open') {
-          const isOpen = modal.hasAttribute('open')
-          const btn = btns[index] // 同じインデックスのボタンを取得
-          const modalIcon = modal.querySelector('svg')
-          const btnIcon = btn.querySelector('svg')
-          handleModalState(modalIcon, btnIcon, isOpen ? 'open' : 'close')
-        }
-      })
+    const observer = new MutationObserver((mutationsList: MutationRecord[]) => {
+      const mutation = mutationsList.find((mutation) => mutation.attributeName === 'open')
+      if (mutation) {
+        const isOpen = modal.hasAttribute('open')
+        handleModalState(modal, btns[index], isOpen)
+      }
     })
 
     // モーダルのopen属性を監視対象に追加
@@ -100,48 +96,32 @@ const skills = [
   })
 
   // モーダルの開閉状態を処理
-  const handleModalState = (modalIcon, btnIcon, state) => {
+  const handleModalState = (modal: HTMLDialogElement, btn: HTMLButtonElement, isOpen: boolean) => {
     if (!document.startViewTransition) return
 
-    if (state === 'open') {
-      btnIcon.style.viewTransitionName = 'modal'
-      applyTransition(
-        () => {
-          btnIcon.style.viewTransitionName = null
-          modalIcon.style.viewTransitionName = 'modal'
-          btnIcon.classList.remove('visible')
-          btnIcon.classList.add('invisible')
-        },
-        () => {
-          btnIcon.style.viewTransitionName = null
-          modalIcon.style.viewTransitionName = null
-        }
-      )
-    } else if (state === 'close') {
-      modalIcon.style.viewTransitionName = 'modal'
-      applyTransition(
-        () => {
-          modalIcon.style.viewTransitionName = null
-          btnIcon.style.viewTransitionName = 'modal'
-          btnIcon.classList.remove('invisible')
-          btnIcon.classList.add('visible')
-        },
-        () => {
-          modalIcon.style.viewTransitionName = null
-          btnIcon.style.viewTransitionName = null
-        }
-      )
-    }
+    const modalIcon = modal.querySelector('svg') as SVGElement
+    const btnIcon = btn.querySelector('svg') as SVGElement
+
+    const [fromIcon, toIcon, fromClass, toClass] = isOpen ? [btnIcon, modalIcon, 'visible', 'invisible'] : [modalIcon, btnIcon, 'invisible', 'visible']
+
+    fromIcon.style.viewTransitionName = 'modal'
+
+    applyTransition(
+      () => {
+        fromIcon.style.viewTransitionName = ''
+        toIcon.style.viewTransitionName = 'modal'
+        btnIcon.classList.remove(fromClass)
+        btnIcon.classList.add(toClass)
+      },
+      () => {
+        fromIcon.style.viewTransitionName = ''
+        toIcon.style.viewTransitionName = ''
+      }
+    )
   }
 
   // アニメーションと終了処理を適用
-  const applyTransition = (startCallback, finishCallback) => {
-    const transition = document.startViewTransition(() => {
-      startCallback()
-    })
-
-    transition.finished.finally(() => {
-      finishCallback()
-    })
+  const applyTransition = (startCallback: () => void, finishCallback: () => void) => {
+    document.startViewTransition(startCallback).finished.finally(finishCallback)
   }
 </script>
