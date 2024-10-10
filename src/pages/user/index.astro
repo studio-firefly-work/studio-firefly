@@ -31,7 +31,7 @@ const seo: Theme.SEO = {
   import { api } from '@/api'
 
   // 初期化関数
-  const init = () => {
+  const setClickEvent = () => {
     // ログアウトボタン
     const btnLogout = document.getElementById('btn-logout') as HTMLButtonElement
     btnLogout?.addEventListener('click', api.auth.logout)
@@ -41,6 +41,12 @@ const seo: Theme.SEO = {
     btnDeleteUser?.addEventListener('click', api.user.deleteUser)
   }
 
+  // ページ読み込み時に初期化
+  const init = () => {
+    if (window.location.pathname === '/user/') {
+      setClickEvent()
+    }
+  }
   init()
   document.addEventListener('astro:after-swap', init)
 </script>

@@ -39,16 +39,16 @@ const skills = [
 
 <PageLayout {seo}>
   <Container class="overflow-x-auto">
-    <Inner size="slim">
-      <div class="relative h-dvh w-full">
-        <div class="absolute left-1/2 h-full -translate-x-1/2 transform border-l border-black"></div>
-        <div class="absolute top-1/2 w-full -translate-y-1/2 transform border-b border-black"></div>
+    <Inner size="full md:base">
+      <div class="relative h-dvh w-full min-w-[640px]">
+        <div class="divider divider-horizontal absolute left-1/2 m-0 h-full -translate-x-1/2"></div>
+        <div class="divider absolute top-1/2 m-0 w-full -translate-y-1/2"></div>
 
         {
           skills.map((skill, index) => (
             <div class={`${skill.good} ${skill.like} absolute -translate-x-2/4 translate-y-2/4`}>
               <div class="tooltip" data-tip={skill.name}>
-                <button id={`js-skill-btn-${index}`} class="btn btn-circle btn-ghost">
+                <button id={`js-skill-btn-${index}`} class="btn btn-circle btn-ghost" aria-label={skill.name}>
                   <Icon name={skill.icon} />
                 </button>
               </div>
@@ -81,55 +81,67 @@ const skills = [
 </PageLayout>
 
 <script>
-  const modals = document.querySelectorAll('[id^="js-skill-modal-"]') as NodeListOf<HTMLDialogElement>
-  const btns = document.querySelectorAll('[id^="js-skill-btn-"]') as NodeListOf<HTMLButtonElement>
+  // アイコンにViewTransitionを設定
+  const setupIconViewTransition = () => {
+    const modals = document.querySelectorAll('[id^="js-skill-modal-"]') as NodeListOf<HTMLDialogElement>
+    const btns = document.querySelectorAll('[id^="js-skill-btn-"]') as NodeListOf<HTMLButtonElement>
 
-  modals.forEach((modal, index) => {
-    // ボタンにクリックイベントリスナーを追加
-    btns[index].addEventListener('click', () => {
-      modal.showModal()
+    modals.forEach((modal, index) => {
+      // ボタンにクリックイベントリスナーを追加
+      btns[index].addEventListener('click', () => {
+        modal.showModal()
+      })
+
+      // モーダルの状態変化を監視
+      const observer = new MutationObserver((mutationsList: MutationRecord[]) => {
+        const mutation = mutationsList.find((mutation) => mutation.attributeName === 'open')
+        if (mutation) {
+          const isOpen = modal.hasAttribute('open')
+          handleModalState(modal, btns[index], isOpen)
+        }
+      })
+
+      // モーダルのopen属性を監視対象に追加
+      observer.observe(modal, { attributes: true })
     })
 
-    // モーダルの状態変化を監視
-    const observer = new MutationObserver((mutationsList: MutationRecord[]) => {
-      const mutation = mutationsList.find((mutation) => mutation.attributeName === 'open')
-      if (mutation) {
-        const isOpen = modal.hasAttribute('open')
-        handleModalState(modal, btns[index], isOpen)
-      }
-    })
+    // モーダルの開閉状態を処理
+    const handleModalState = (modal: HTMLDialogElement, btn: HTMLButtonElement, isOpen: boolean) => {
+      if (!document.startViewTransition) return
 
-    // モーダルのopen属性を監視対象に追加
-    observer.observe(modal, { attributes: true })
-  })
+      const modalIcon = modal.querySelector('svg') as SVGElement
+      const btnIcon = btn.querySelector('svg') as SVGElement
 
-  // モーダルの開閉状態を処理
-  const handleModalState = (modal: HTMLDialogElement, btn: HTMLButtonElement, isOpen: boolean) => {
-    if (!document.startViewTransition) return
+      const [fromIcon, toIcon, fromClass, toClass] = isOpen ? [btnIcon, modalIcon, 'visible', 'invisible'] : [modalIcon, btnIcon, 'invisible', 'visible']
 
-    const modalIcon = modal.querySelector('svg') as SVGElement
-    const btnIcon = btn.querySelector('svg') as SVGElement
+      fromIcon.style.viewTransitionName = 'modal'
 
-    const [fromIcon, toIcon, fromClass, toClass] = isOpen ? [btnIcon, modalIcon, 'visible', 'invisible'] : [modalIcon, btnIcon, 'invisible', 'visible']
+      applyTransition(
+        () => {
+          fromIcon.style.viewTransitionName = ''
+          toIcon.style.viewTransitionName = 'modal'
+          btnIcon.classList.remove(fromClass)
+          btnIcon.classList.add(toClass)
+        },
+        () => {
+          fromIcon.style.viewTransitionName = ''
+          toIcon.style.viewTransitionName = ''
+        }
+      )
+    }
 
-    fromIcon.style.viewTransitionName = 'modal'
-
-    applyTransition(
-      () => {
-        fromIcon.style.viewTransitionName = ''
-        toIcon.style.viewTransitionName = 'modal'
-        btnIcon.classList.remove(fromClass)
-        btnIcon.classList.add(toClass)
-      },
-      () => {
-        fromIcon.style.viewTransitionName = ''
-        toIcon.style.viewTransitionName = ''
-      }
-    )
+    // アニメーションと終了処理を適用
+    const applyTransition = (startCallback: () => void, finishCallback: () => void) => {
+      document.startViewTransition(startCallback).finished.finally(finishCallback)
+    }
   }
 
-  // アニメーションと終了処理を適用
-  const applyTransition = (startCallback: () => void, finishCallback: () => void) => {
-    document.startViewTransition(startCallback).finished.finally(finishCallback)
+  // ページ読み込み時に初期化
+  const init = () => {
+    if (window.location.pathname === '/skill/') {
+      setupIconViewTransition()
+    }
   }
+  init()
+  document.addEventListener('astro:after-swap', init)
 </script>
