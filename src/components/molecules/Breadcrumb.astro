@@ -11,7 +11,7 @@ if (seo.breadcrumb) {
   itemListElement = [
     {
       name: 'ホーム',
-      item: Astro.site,
+      item: '/',
     },
   ]
   let path = ''
@@ -20,7 +20,7 @@ if (seo.breadcrumb) {
     path += `${key}/`
     itemListElement.push({
       name: seo.breadcrumb![key],
-      item: new URL(path, Astro.site),
+      item: `/${path}`,
     })
   })
 }
