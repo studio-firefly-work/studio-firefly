@@ -1,5 +1,5 @@
 ---
-slug: post3
+slug: frontend-trends-in-2024
 title: Frontend Trends in 2024
 description: As we move through 2024, several frontend trends are emerging that will shape the web development landscape.
 category: web

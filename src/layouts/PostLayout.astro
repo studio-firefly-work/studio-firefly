@@ -7,12 +7,16 @@ import Header from '@/components/organisms/Header.astro'
 import Footer from '@/components/organisms/Footer.astro'
 import Container from '@/components/atoms/Container.astro'
 import Breadcrumb from '@/components/molecules/Breadcrumb.astro'
+import ArticleNavigation from '@/components/molecules/ArticleNavigation.astro'
+import type { MarkdownInstance } from 'astro'
 
 interface Props {
   seo: Theme.SEO
   frontmatter: Theme.Frontmatter
+  prev: MarkdownInstance<Theme.Frontmatter> | null
+  next: MarkdownInstance<Theme.Frontmatter> | null
 }
-const { seo, frontmatter } = Astro.props
+const { seo, frontmatter, prev, next } = Astro.props
 ---
 
 <BaseLayout {seo}>
@@ -22,7 +26,7 @@ const { seo, frontmatter } = Astro.props
       <Inner class="relative">
         <h1 class="theme-text-xl font-bold">{seo.title}</h1>
         <p class="mt-4">{seo.description}</p>
-        <time datetime={frontmatter.date} class="theme-text-sm absolute right-0 top-0">{utils.formatDate(frontmatter.date)}</time>
+        <time datetime={frontmatter.date} class="theme-text-sm absolute -top-4 right-0">{utils.formatDate(frontmatter.date)}</time>
       </Inner>
     </Container>
 
@@ -34,6 +38,12 @@ const { seo, frontmatter } = Astro.props
           <Image src={utils.getAssetsImage(frontmatter.image.src)} alt={frontmatter.image.alt} transition:name={`image-${frontmatter.slug}`} />
           <slot />
         </article>
+      </Inner>
+    </Container>
+
+    <Container>
+      <Inner>
+        <ArticleNavigation {seo} {prev} {next} />
       </Inner>
     </Container>
   </main>

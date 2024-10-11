@@ -1,5 +1,5 @@
 ---
-slug: post1
+slug: my-first-post
 title: My First Post
 description: This is the content of my first post. I'm excited to share my journey with you!
 category: news
