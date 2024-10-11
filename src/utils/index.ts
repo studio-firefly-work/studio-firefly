@@ -1,3 +1,4 @@
+import { post } from '@/utils/post'
 import { schema } from '@/utils/schema'
 
 /**
@@ -25,8 +26,10 @@ export const formatDate = (dateString: string): string => {
   return new Date(dateString).toLocaleDateString('ja-JP', options)
 }
 
+
 export const utils = {
   getAssetsImage,
   formatDate,
+  post,
   schema,
 }

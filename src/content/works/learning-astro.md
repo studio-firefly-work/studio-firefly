@@ -1,5 +1,5 @@
 ---
-slug: post2
+slug: learning-astro
 title: Learning Astro
 description: Astro is an exciting new framework that I've recently started learning. It’s fast, flexible, and developer-friendly.
 category: web

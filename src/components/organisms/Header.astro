@@ -51,14 +51,14 @@ const links: Theme.Link[] = [
             {
               links.map((link: Theme.Link) => (
                 <li>
-                  <a href={link.permalink} class={`btn btn-ghost ${currentPath.startsWith(link.permalink) ? 'theme-current-page' : undefined}`}>
+                  <a href={link.permalink} class={`btn btn-ghost ${currentPath.startsWith(link.permalink) ? 'theme-current-page' : ''}`}>
                     <Icon name={link.icon} class="hidden lg:block" />
                     {link.title}
                   </a>
                 </li>
               ))
             }
-            <li><ButtonLoginOrProfile class={currentPath.startsWith('/user/') || currentPath.startsWith('/login/') ? 'theme-current-page' : null} /></li>
+            <li><ButtonLoginOrProfile class={currentPath.startsWith('/user/') || currentPath.startsWith('/login/') ? 'theme-current-page' : ''} /></li>
             <li><ButtonThemeToggle /></li>
           </ul>
         </div>

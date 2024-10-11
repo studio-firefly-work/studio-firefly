@@ -1,5 +1,5 @@
 ---
-slug: post4
+slug: introduction-to-tailwind-css
 title: Introduction to Tailwind CSS
 description: Tailwind CSS is a utility-first CSS framework that is revolutionizing the way we style our web applications.
 category: web

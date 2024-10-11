@@ -1,22 +1,37 @@
 ---
+import { utils } from '@/utils'
 import type { MarkdownInstance } from 'astro'
 import PostLayout from '@/layouts/PostLayout.astro'
 
 export const getStaticPaths = async () => {
-  const pages: MarkdownInstance<Theme.Frontmatter>[] = await Astro.glob<Theme.Frontmatter>('../../content/works/*.md')
-  return pages.map((page) => {
+  const pages: MarkdownInstance<Theme.Frontmatter>[] = await Astro.glob<Theme.Frontmatter>(`../../content/works/*.md`)
+
+  // 新しい順にソート
+  pages.sort(utils.post.sortByDate)
+
+  return pages.map((page, index) => {
+    const prev = index > 0 ? pages[index - 1] : null
+    const next = index < pages.length - 1 ? pages[index + 1] : null
+
+    // 同一カテゴリーの記事を取得
+    const sameCatPosts = utils.post.getSameCategory(3, page, pages)
+
     return {
       params: {
         slug: page.frontmatter.slug,
       },
       props: {
         page,
+        prev,
+        next,
+        sameCatPosts,
       },
     }
   })
 }
 
 const { Content, frontmatter } = Astro.props.page
+const { prev, next, sameCatPosts } = Astro.props
 
 const seo: Theme.SEO = {
   title: frontmatter.title,
@@ -26,6 +41,10 @@ const seo: Theme.SEO = {
 }
 ---
 
-<PostLayout {seo} {frontmatter}>
+<PostLayout {seo} {frontmatter} {prev} {next}>
   <Content />
+
+  <nav>
+    {sameCatPosts.map((post) => <div>{post.frontmatter.title}</div>)}
+  </nav>
 </PostLayout>

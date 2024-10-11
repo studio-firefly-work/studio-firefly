@@ -6,11 +6,15 @@ import type { GetStaticPathsOptions } from 'astro'
 import Inner from '@/components/atoms/Inner.astro'
 import PageLayout from '@/layouts/PageLayout.astro'
 import Container from '@/components/atoms/Container.astro'
-import PageNavigation from '@/components/molecules/PageNavigation.astro'
+import Pagination from '@/components/molecules/Pagination.astro'
 
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const pages: MarkdownInstance<Theme.Frontmatter>[] = await Astro.glob<Theme.Frontmatter>('../../content/works/*.md')
-  return paginate(pages, { pageSize: 12 })
+
+  // 新しい順にソート
+  pages.sort(utils.post.sortByDate)
+
+  return paginate(pages, { pageSize: 3 })
 }
 const { page } = Astro.props
 
@@ -29,7 +33,7 @@ const seo: Theme.SEO = {
         {
           page.data.map((post) => (
             <li>
-              <a href={`/works/${post.frontmatter.slug}/`} class="group btn card h-full rounded-none bg-base-100 p-0 text-left font-normal shadow-xl">
+              <a href={`/works/${post.frontmatter.slug}/`} class="group btn card btn-ghost h-full rounded-none bg-base-100 p-0 text-left font-normal shadow-xl">
                 <figure class="overflow-hidden">
                   <Image src={utils.getAssetsImage(post.frontmatter.image.src)} alt={post.frontmatter.image.alt} transition:name={`image-${post.frontmatter.slug}`} class="duration-300 group-hover:scale-110" />
                 </figure>
@@ -51,6 +55,6 @@ const seo: Theme.SEO = {
   </Container>
 
   <Inner class="text-center">
-    <PageNavigation {page} permalink="/works" />
+    <Pagination {page} permalink="/works" />
   </Inner>
 </PageLayout>
