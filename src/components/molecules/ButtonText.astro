@@ -1,9 +1,0 @@
----
-import Button from '@/components/atoms/Button.astro'
-
-const { href, class: addClasses = '', ...rest } = Astro.props
----
-
-<Button {href} class=`hover:text-primary ${addClasses}` {...rest}>
-  <slot />
-</Button>

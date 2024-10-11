@@ -19,9 +19,10 @@ const { seo, frontmatter } = Astro.props
   <Header />
   <main>
     <Container size="tall" class="h-56">
-      <Inner>
+      <Inner class="relative">
         <h1 class="theme-text-xl font-bold">{seo.title}</h1>
         <p class="mt-4">{seo.description}</p>
+        <time datetime={frontmatter.date} class="theme-text-sm absolute right-0 top-0">{utils.formatDate(frontmatter.date)}</time>
       </Inner>
     </Container>
 
@@ -29,7 +30,7 @@ const { seo, frontmatter } = Astro.props
 
     <Container>
       <Inner>
-        <article class="prose">
+        <article class="prose max-w-screen-xl">
           <Image src={utils.getAssetsImage(frontmatter.image.src)} alt={frontmatter.image.alt} transition:name={`image-${frontmatter.slug}`} />
           <slot />
         </article>
