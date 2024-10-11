@@ -28,16 +28,19 @@ const seo: Theme.SEO = {
       <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {
           page.data.map((post) => (
-            <li class="flex">
-              <a href={`/works/${post.frontmatter.slug}/`} class="card rounded-none bg-base-100 shadow-xl">
-                <Image src={utils.getAssetsImage(post.frontmatter.image.src)} alt={post.frontmatter.image.alt} transition:name={`image-${post.frontmatter.slug}`} />
-                <div class="card-body">
+            <li>
+              <a href={`/works/${post.frontmatter.slug}/`} class="group btn card h-full rounded-none bg-base-100 p-0 text-left font-normal shadow-xl">
+                <figure class="overflow-hidden">
+                  <Image src={utils.getAssetsImage(post.frontmatter.image.src)} alt={post.frontmatter.image.alt} transition:name={`image-${post.frontmatter.slug}`} class="duration-300 group-hover:scale-110" />
+                </figure>
+                <div class="card-body w-full py-4">
                   <div class="card-actions">
                     <div class="badge badge-outline">{post.frontmatter.category}</div>
                   </div>
-                  <h2 class="card-title">
-                    {post.frontmatter.title}
-                  </h2>
+                  <h2 class="card-title flex-1 items-start">{post.frontmatter.title}</h2>
+                  <time datetime={post.frontmatter.date} class="theme-text-sm text-right">
+                    {utils.formatDate(post.frontmatter.date)}
+                  </time>
                 </div>
               </a>
             </li>
