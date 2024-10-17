@@ -72,7 +72,7 @@ if (seo.breadcrumb) {
   openGraph={{
     basic: {
       title: seo.title ?? siteData.name,
-      type: seo.type ?? 'website',
+      type: seo.type ?? 'WebSite',
       image: seo.image ?? Astro.url.origin + '/og_image.png',
       url: seo.permalink ? new URL(`${seo.permalink.join('/')}/`, Astro.site) : Astro.site,
     },

@@ -8,4 +8,5 @@ export const schema = {
   email: z.string().min(1, { message: 'メールアドレスを入力してください。' }).email({ message: 'メールアドレスの形式で入力してください。' }),
   message: z.string().min(1, { message: 'お問い合わせ内容を入力してください。' }),
   password: z.string().min(1, { message: 'パスワードを入力してください。' }),
+  privacy: z.boolean().refine((val) => val === true, { message: 'プライバシーポリシーに同意いただく必要があります。' }),
 }
