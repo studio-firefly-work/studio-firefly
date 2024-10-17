@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import classNames from 'classnames'
 import * as AutoKana from 'vanilla-autokana'
 import { useForm, useFormContext, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
@@ -83,7 +84,7 @@ const FormUserDataEdit = () => {
 
       <FormFieldText label="メールアドレス" id="new-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
 
-      <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>
+      <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
         入力内容の確認
       </button>
     </div>

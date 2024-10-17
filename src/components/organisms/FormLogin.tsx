@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import { z } from 'zod'
 import { api } from '@/api'
 import { utils } from '@/utils'
@@ -30,7 +31,7 @@ export const FormLogin = () => {
 
           <FormFieldText label="パスワード" id="password" type="password" autoComplete="current-password" icon="icon-key" />
 
-          <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>
+          <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
             ログイン
           </button>
         </div>
