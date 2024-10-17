@@ -7,12 +7,6 @@ import Inner from '@/components/atoms/Inner.astro'
   <Container class="bg-base-300 py-10 md:py-10">
     <Inner size="wide">
       <div class="footer footer-center rounded text-base-content">
-        <nav class="grid grid-flow-col gap-4">
-          <a class="link-hover link text-base">About us</a>
-          <a class="link-hover link text-base">Contact</a>
-          <a class="link-hover link text-base">Jobs</a>
-          <a class="link-hover link text-base">Press kit</a>
-        </nav>
         <nav>
           <div class="grid grid-flow-col gap-4">
             <a>
@@ -33,6 +27,12 @@ import Inner from '@/components/atoms/Inner.astro'
               </svg>
             </a>
           </div>
+        </nav>
+        <nav class="grid grid-flow-col gap-4">
+          <a href="/privacy/" class="link-hover link text-base">プライバシーポリシー</a>
+          <a class="link-hover link text-base">Contact</a>
+          <a class="link-hover link text-base">Jobs</a>
+          <a class="link-hover link text-base">Press kit</a>
         </nav>
         <aside>
           <p class="theme-text-sm">Copyright © {new Date().getFullYear()} - All right reserved by ACME Industries Ltd</p>

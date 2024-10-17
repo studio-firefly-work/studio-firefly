@@ -1,0 +1,79 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+import Container from '@/components/atoms/Container.astro'
+import Inner from '@/components/atoms/Inner.astro'
+
+const seo: Theme.SEO = {
+  title: 'プライバシーポリシー',
+  description: 'プライバシーポリシーページのdescriptionです',
+  permalink: ['profile'],
+  breadcrumb: { profile: 'プライバシーポリシー' },
+}
+
+const policies = [
+  {
+    title: '個人情報の取得',
+    text: ['当サイトでは、お問い合わせフォームを通じて、以下の個人情報を取得することがあります。', ['氏名', 'メールアドレス', 'その他お問い合わせ内容に含まれる情報']],
+  },
+  {
+    title: '個人情報の利用目的',
+    text: ['取得した個人情報は、以下の目的で利用いたします。', ['お問い合わせへの対応', 'サービス向上のためのフィードバックの収集', '必要に応じたご連絡']],
+  },
+  {
+    title: '個人情報の第三者提供',
+    text: ['取得した個人情報を、以下の場合を除いて第三者に提供することはありません。', ['本人の同意がある場合', '法令に基づく場合']],
+  },
+  {
+    title: '個人情報の管理',
+    text: ['当サイトは、取得した個人情報の漏洩や不正アクセスを防止するために、適切な管理を行います。'],
+  },
+  {
+    title: '個人情報の保存期間',
+    text: ['取得した個人情報は、利用目的に必要な期間に限り保存し、その後適切に削除いたします。'],
+  },
+  {
+    title: 'Cookieの利用について',
+    text: ['当サイトでは、ユーザー体験の向上のためにCookieを使用することがあります。Cookieは個人を特定できる情報を含むものではなく、ブラウザの設定で無効化することが可能です。'],
+  },
+  {
+    title: '他サイトへのリンク',
+    text: ['当サイトには外部サイトへのリンクが含まれる場合があります。リンク先サイトでの個人情報の取り扱いについては、当サイトは一切責任を負いません。'],
+  },
+  {
+    title: 'お問い合わせ',
+    text: ['プライバシーポリシーに関するお問い合わせは、以下の連絡先までご連絡ください。', 'メールアドレス: your-email@example.com'],
+  },
+  {
+    title: 'プライバシーポリシーの変更',
+    text: ['本ポリシーは、必要に応じて変更することがあります。変更後のポリシーは当サイトに掲載された時点で有効となります。'],
+  },
+]
+---
+
+<PageLayout {seo}>
+  <Container>
+    <Inner>
+      <div class="prose max-w-full">
+        {
+          policies.map((policy) => (
+            <>
+              <h2>{policy.title}</h2>
+
+              {policy.text.map((text) =>
+                Array.isArray(text) ? (
+                  <ul>
+                    {text.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>{text}</p>
+                )
+              )}
+            </>
+          ))
+        }
+      </div>
+    </Inner>
+  </Container>
+</PageLayout>

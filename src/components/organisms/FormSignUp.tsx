@@ -1,38 +1,35 @@
 import React, { useEffect, useState } from 'react'
 import * as AutoKana from 'vanilla-autokana'
-import { useForm, useFormContext, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { api } from '@/api'
 import { utils } from '@/utils'
+import { BaseForm } from '@/components/molecules/BaseForm'
 import { FormFieldText } from '@/components/molecules/FormFieldText'
+import { FormFieldCheckbox } from '@/components/molecules/FormFieldCheckbox'
 
 const schema = z.object({
   name: utils.schema.name,
   kana: utils.schema.kana,
   email: utils.schema.email,
   password: utils.schema.password,
+  privacy: utils.schema.privacy,
 })
 type FormSignUpDataType = z.infer<typeof schema>
 
 let kana: AutoKana.AutoKana
 
 export const FormSignUp = () => {
-  const methods = useForm<FormSignUpDataType>({ mode: 'onChange', resolver: zodResolver(schema) })
   const [formStatus, setFormStatus] = useState<'edit' | 'confirm' | 'complete'>('edit')
 
-  // button type='submit' 押下時
   const onSubmit = async (data: FormSignUpDataType) => {
     switch (formStatus) {
       case 'edit':
-        // 編集画面で押下された場合は確認画面へ遷移
         setFormStatus('confirm')
         break
       case 'confirm':
-        // 確認画面で押下された場合は新規仮ユーザー作成
         const res = await api.user.createUser(data)
         if (res?.ok) {
-          // 新規仮ユーザー作成に成功した場合は完了画面へ遷移
           setFormStatus('complete')
         }
         break
@@ -40,82 +37,90 @@ export const FormSignUp = () => {
   }
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        {formStatus === 'edit' && <FormSignUpEdit />}
-        {formStatus === 'confirm' && <FormSignUpConfirm setFormStatus={setFormStatus} />}
-        {formStatus === 'complete' && <FormSignUpComplete />}
-      </form>
-    </FormProvider>
-  )
-}
+    <>
+      <div className="text-center">
+        <ul className="steps w-full">
+          <li className="step step-primary">入力</li>
+          <li className={`step ${formStatus !== 'edit' ? 'step-primary' : ''}`}>確認</li>
+          <li className={`step ${formStatus === 'complete' ? 'step-primary' : ''}`}>完了</li>
+        </ul>
+      </div>
 
-const FormSignUpEdit = () => {
-  const {
-    setValue,
-    formState: { isSubmitting, isValid },
-  } = useFormContext()
-  const handleNameInput = () => {
-    setValue('kana', kana.getFurigana())
-  }
+      <BaseForm<FormSignUpDataType> onSubmit={onSubmit} schema={schema}>
+        {({ formState: { isSubmitting, isValid }, setValue, getValues }) => {
+          useEffect(() => {
+            if (formStatus === 'edit') {
+              kana = AutoKana.bind('#name', '#kana', { katakana: true })
+            }
+          }, [formStatus])
 
-  useEffect(() => {
-    kana = AutoKana.bind('#name', '#kana', { katakana: true })
-  }, [])
+          const handleNameInput = () => {
+            if (formStatus === 'edit') {
+              setValue('kana', kana.getFurigana())
+            }
+          }
 
-  return (
-    <div className="flex flex-col gap-4">
-      <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" onInput={handleNameInput} />
+          return (
+            <div className="flex flex-col gap-4">
+              {formStatus === 'edit' && (
+                <>
+                  <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" onInput={handleNameInput} />
 
-      <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" />
+                  <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" />
 
-      <FormFieldText label="メールアドレス" id="new-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
+                  <FormFieldText label="メールアドレス" id="new-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
 
-      <FormFieldText label="パスワード" id="new-password" validation="password" type="password" autoComplete="new-password" icon="icon-key" />
+                  <FormFieldText label="パスワード" id="new-password" validation="password" type="password" autoComplete="new-password" icon="icon-key" />
 
-      <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>
-        入力内容の確認
-      </button>
-    </div>
-  )
-}
+                  <FormFieldCheckbox label="" id="privacy" items={['<a href="/privacy/" class="link" target="_blank">プライバシーポリシー</a>に同意する']} />
 
-const FormSignUpConfirm = ({ setFormStatus }: any) => {
-  const { getValues } = useFormContext()
-  const values = getValues()
+                  <button type="submit" className={`btn btn-primary ${!isValid || isSubmitting ? 'btn-disabled' : ''}`} aria-disabled={!isValid || isSubmitting}>
+                    入力内容の確認
+                  </button></>
+              )}
 
-  const formFields = [
-    { label: 'お名前', type: 'text', value: `${values.name}(${values.kana})` },
-    { label: 'メールアドレス', type: 'email', value: values.email },
-    { label: 'パスワード', type: 'password', value: values.password },
-  ]
+              {formStatus === 'confirm' && (
+                <>
+                  <div>
+                    <p className="label-text">お名前</p>
+                    <p>
+                      {getValues('name')}({getValues('kana')})
+                    </p>
+                  </div>
 
-  return (
-    <div className="flex flex-col gap-4">
-      {formFields.map((field, index) => (
-        <div key={index} className="form-control w-full">
-          <label className="label label-text">{field.label}</label>
-          <input type={field.type} className="input" value={field.value} disabled />
-        </div>
-      ))}
+                  <div>
+                    <p className="label-text">メールアドレス</p>
+                    <p>{getValues('email')}</p>
+                  </div>
 
-      <button type="button" className="btn" onClick={() => setFormStatus('edit')}>
-        入力内容の修正
-      </button>
-      <button type="submit" className="btn btn-accent">
-        新規登録
-      </button>
-    </div>
-  )
-}
+                  <div>
+                    <p className="label-text">パスワード</p>
+                    <p>{'•'.repeat(getValues('password').length)}</p>
+                  </div>
 
-const FormSignUpComplete = () => {
-  return (
-    <div className="flex flex-col gap-4">
-      <p>ユーザー登録が正常に完了しました</p>
-      <a href="/" className="btn btn-neutral">
-        HOMEへ戻る
-      </a>
-    </div>
+                  <div className='flex gap-4 md:flex-row flex-col'>
+                    <button type="submit" className="btn btn-accent md:w-1/2 md:order-2">
+                      新規登録
+                    </button>
+                    <button type="button" className="btn md:w-1/2 md:order-1" onClick={() => setFormStatus('edit')}>
+                      入力内容の修正
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {formStatus === 'complete' && (
+                <>
+                  <p>ユーザー登録が正常に完了しました</p>
+                  <a href="/" className="btn btn-neutral">
+                    ホームへ戻る
+                  </a>
+                </>
+              )}
+            </div>
+          )
+        }}
+      </BaseForm>
+    </>
   )
 }

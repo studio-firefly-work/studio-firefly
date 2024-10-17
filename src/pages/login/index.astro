@@ -18,23 +18,24 @@ const seo: Theme.SEO = {
     <Inner size="slim">
       <div role="tablist" class="tabs tabs-bordered tabs-lg grid-cols-2">
         <input type="radio" name="toggle-login-signup" role="tab" class="theme-text-md tab" aria-label="ログイン" checked="checked" />
-        <div role="tabpanel" class="tab-content md:p-10 py-8">
+        <div role="tabpanel" class="tab-content py-8 md:p-10">
           <FormLogin client:only="react" />
 
-          <details class="collapse collapse-arrow mt-10 bg-base-300">
-            <summary class="collapse-title">パスワードをお忘れですか？</summary>
-            <div class="collapse-content pt-4">
+          <div class="collapse collapse-arrow mt-10 bg-base-300">
+            <input type="checkbox" />
+            <div class="collapse-title">パスワードをお忘れですか？</div>
+            <div class="collapse-content">
               <p class="mb-4">
                 ご登録されたメールアドレスをご入力の上、「確認メールを送信」ボタンを押してください。<br />
                 ご入力いただいたメールアドレスにパスワード再発行のご案内を送信します。
               </p>
               <FormRequestResetPassword client:only="react" />
             </div>
-          </details>
+          </div>
         </div>
 
         <input type="radio" name="toggle-login-signup" role="tab" class="theme-text-md tab" aria-label="新規登録" />
-        <div role="tabpanel" class="tab-content md:p-10 py-8">
+        <div role="tabpanel" class="tab-content py-8 md:p-10">
           <FormSignUp client:only="react" />
         </div>
       </div>
