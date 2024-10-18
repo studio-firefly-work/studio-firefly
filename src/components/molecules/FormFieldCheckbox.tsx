@@ -14,9 +14,9 @@ type FormFieldFormFieldCheckboxProps = React.InputHTMLAttributes<HTMLInputElemen
 /**
  * チェックボックスコンポーネント。react-hook-formと統合されています。
  *
- * @param {string} label - 入力フィールドのラベルテキスト。
- * @param {string} id - 入力フィールドのIDおよび名前。react-hook-formでの登録に使用されます。
- * @param {string} [validation] - react-hook-formで使用するバリデーションキー。デフォルトは`id`と同じ。
+ * @param label - 入力フィールドのラベルテキスト。
+ * @param id - 入力フィールドのIDおよび名前。react-hook-formでの登録に使用されます。
+ * @param validation - react-hook-formで使用するバリデーションキー。デフォルトは`id`と同じ。
  */
 export const FormFieldCheckbox: React.FC<FormFieldFormFieldCheckboxProps> = ({ label, id, items, validation = id, ...rest }) => {
   const {

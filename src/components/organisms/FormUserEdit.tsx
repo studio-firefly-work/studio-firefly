@@ -53,7 +53,7 @@ export default function FormUserData() {
 const FormUserDataEdit = () => {
   const {
     setValue,
-    formState: { errors, isSubmitting, isValid },
+    formState: { isSubmitting, isValid },
     reset,
   } = useFormContext()
   const [user, setUser] = useState<FormUserDataType>()

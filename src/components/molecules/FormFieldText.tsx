@@ -19,12 +19,12 @@ type FormFieldTextProps = React.InputHTMLAttributes<HTMLInputElement> & {
 /**
  * テキスト入力フォームコンポーネント。react-hook-formと統合されています。
  *
- * @param {string} label - 入力フィールドのラベルテキスト。
- * @param {string} id - 入力フィールドのIDおよび名前。react-hook-formでの登録に使用されます。
- * @param {string} [validation] - react-hook-formで使用するバリデーションキー。デフォルトは`id`と同じ。
- * @param {string} [type='text'] - 入力フィールドのタイプ。デフォルトは'text'。
- * @param {string} [placeholder] - 入力フィールドのプレースホルダーテキスト。
- * @param {string} [icon] - 入力フィールドの左側に表示するアイコンの名前。
+ * @param label - 入力フィールドのラベルテキスト。
+ * @param id - 入力フィールドのIDおよび名前。react-hook-formでの登録に使用されます。
+ * @param validation - react-hook-formで使用するバリデーションキー。デフォルトは`id`と同じ。
+ * @param type - 入力フィールドのタイプ。デフォルトは'text'。
+ * @param placeholder - 入力フィールドのプレースホルダーテキスト。
+ * @param icon - 入力フィールドの左側に表示するアイコンの名前。
  */
 export const FormFieldText: React.FC<FormFieldTextProps> = ({ label, id, validation = id, type = 'text', placeholder, icon, ...rest }) => {
   const {
