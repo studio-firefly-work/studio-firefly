@@ -17,102 +17,85 @@ const schema = z.object({
   message: utils.schema.message,
   privacy: utils.schema.privacy,
 })
-type FormContactDataType = z.infer<typeof schema>
-
-let kana: AutoKana.AutoKana
+type FormDataType = z.infer<typeof schema>
 
 export const FormContact = () => {
   const [step, setStep] = useState(1)
-  const formStepNames = ['入力', '確認', '完了']
+  let kana: AutoKana.AutoKana
 
-  const onSubmit = async (data: FormContactDataType) => {
-    switch (step) {
-      case 1:
-        setStep(2) // 確認画面へ
-        break
+  useEffect(() => {
+    if (step === 1) {
+      kana = AutoKana.bind('#name', '#kana', { katakana: true })
+    }
+  }, [step])
 
-      case 2:
-        const res = await api.mail.sendMail(data)
-        if (res?.ok) setStep(3) // 完了画面へ
-        break
+  const onSubmit = async (data: FormDataType) => {
+    if (step === 1) {
+      setStep(2) // 確認画面へ
+    }
+    else if (step === 2) {
+      const res = await api.mail.sendMail(data)
+      if (res?.ok) setStep(3) // 完了画面へ
     }
   }
 
+  const renderFields = (data: FormDataType) => [
+    { label: 'お名前', value: `${data.name} (${data.kana})` },
+    { label: 'メールアドレス', value: data.email },
+    { label: 'お問い合わせ内容', value: data.message },
+  ]
+
   return (
     <>
-      <FormStep names={formStepNames} step={step} />
+      <FormStep names={['入力', '確認', '完了']} step={step} />
 
-      <BaseForm<FormContactDataType> onSubmit={onSubmit} schema={schema}>
-        {({ formState: { isSubmitting, isValid }, setValue, getValues }) => {
-          useEffect(() => {
-            if (step === 1) kana = AutoKana.bind('#name', '#kana', { katakana: true })
-          }, [step])
+      <BaseForm<FormDataType> onSubmit={onSubmit} schema={schema}>
+        {({ formState: { isSubmitting, isValid }, setValue, getValues }) => (
+          <>
+            {step === 1 && (
+              <>
+                <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" onInput={() => setValue('kana', kana.getFurigana())} />
+                <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" />
+                <FormFieldText label="メールアドレス" id="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
+                <FormFieldTextarea label="お問い合わせ内容" id="message" placeholder="お問い合わせ内容を入力してください" />
+                <FormFieldCheckbox label="" id="privacy" items={['<a href="/privacy/" class="link" target="_blank">プライバシーポリシー</a>に同意する']} />
 
-          const handleNameInput = () => {
-            if (step === 1) setValue('kana', kana.getFurigana())
-          }
+                <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
+                  入力内容の確認
+                </button>
+              </>
+            )}
 
-          return (
-            <div className="flex flex-col gap-4">
-              {step === 1 && (
-                <>
-                  <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" onInput={handleNameInput} />
+            {step === 2 && (
+              <>
+                {renderFields(getValues()).map(({ label, value }, index) => (
+                  <div key={index}>
+                    <p className="label-text">{label}</p>
+                    <p>{value}</p>
+                  </div>
+                ))}
 
-                  <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" />
-
-                  <FormFieldText label="メールアドレス" id="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
-
-                  <FormFieldTextarea label="お問い合わせ内容" id="message" placeholder="お問い合わせ内容を入力してください" />
-
-                  <FormFieldCheckbox label="" id="privacy" items={['<a href="/privacy/" class="link" target="_blank">プライバシーポリシー</a>に同意する']} />
-
-                  <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
-                    入力内容の確認
+                <div className="flex flex-col gap-4 md:flex-row">
+                  <button type="submit" className="btn btn-accent md:order-2 md:w-1/2">
+                    お問い合わせを送信
                   </button>
-                </>
-              )}
+                  <button type="button" className="btn md:order-1 md:w-1/2" onClick={() => setStep(1)}>
+                    入力内容の修正
+                  </button>
+                </div>
+              </>
+            )}
 
-              {step === 2 && (
-                <>
-                  <div>
-                    <p className="label-text">お名前</p>
-                    <p>
-                      {getValues('name')}({getValues('kana')})
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="label-text">メールアドレス</p>
-                    <p>{getValues('email')}</p>
-                  </div>
-
-                  <div>
-                    <p className="label-text">お問い合わせ内容</p>
-                    <p>{getValues('message')}</p>
-                  </div>
-
-                  <div className="flex flex-col gap-4 md:flex-row">
-                    <button type="submit" className="btn btn-accent md:order-2 md:w-1/2">
-                      お問い合わせを送信
-                    </button>
-                    <button type="button" className="btn md:order-1 md:w-1/2" onClick={() => setStep(1)}>
-                      入力内容の修正
-                    </button>
-                  </div>
-                </>
-              )}
-
-              {step === 3 && (
-                <>
-                  <p>送信が正常に完了しました</p>
-                  <a href="/" className="btn btn-neutral">
-                    ホームへ戻る
-                  </a>
-                </>
-              )}
-            </div>
-          )
-        }}
+            {step === 3 && (
+              <>
+                <p>送信が正常に完了しました</p>
+                <a href="/" className="btn btn-neutral">
+                  ホームへ戻る
+                </a>
+              </>
+            )}
+          </>
+        )}
       </BaseForm>
     </>
   )

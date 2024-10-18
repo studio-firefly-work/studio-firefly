@@ -15,7 +15,11 @@ export const BaseForm = <TFormValues extends FieldValues>({ onSubmit, schema, ch
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>{children(methods)}</form>
+      <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-4">
+          {children(methods)}
+        </div>
+      </form>
     </FormProvider>
   )
 }
