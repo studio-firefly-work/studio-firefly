@@ -11,10 +11,8 @@ const schema = z.object({
   password: utils.schema.password,
 })
 
-type FormLoginDataType = z.infer<typeof schema>
-
 export const FormLogin = () => {
-  const onSubmit = async (data: FormLoginDataType) => {
+  const onSubmit = async (data: z.infer<typeof schema>) => {
     // ログイン
     const res = await api.auth.login(data.email, data.password)
     if (res?.ok) {
@@ -24,7 +22,7 @@ export const FormLogin = () => {
   }
 
   return (
-    <BaseForm<FormLoginDataType> onSubmit={onSubmit} schema={schema}>
+    <BaseForm<z.infer<typeof schema>> onSubmit={onSubmit} schema={schema}>
       {({ formState: { isSubmitting, isValid } }) => (
         <div className="flex flex-col gap-4">
           <FormFieldText label="メールアドレス" id="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
