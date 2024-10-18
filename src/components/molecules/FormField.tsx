@@ -25,10 +25,10 @@ interface FieldTextareaType {
 }
 
 /**
- * @param {string} id - ケバブケースで指定してください。
- * @param {string} [error] - error == errors[name].messageの場合、errorを省略できます。nameはidをキャメルケースに変換した文字列です。
+ * @param id - ケバブケースで指定してください。
+ * @param error - error == errors[name].messageの場合、errorを省略できます。nameはidをキャメルケースに変換した文字列です。
  */
-export const FormField: React.FC<FormFieldType> = ({ label, id, error, children }) => {
+export const FormField: React.FC<FormFieldType> = ({ label, id, error, children }: FormFieldType) => {
   if (!isKebabCase(id)) {
     throw new Error(`id "${id}" is not in kebab-case format`)
   }
@@ -51,10 +51,10 @@ export const FormField: React.FC<FormFieldType> = ({ label, id, error, children 
 }
 
 /**
- * @param {string} id - ケバブケースで指定してください。
- * @param {string} name - キャメルケースで指定してください。
+ * @param id - ケバブケースで指定してください。
+ * @param name - キャメルケースで指定してください。
  */
-export const FieldInput: React.FC<FieldInputType> = ({ id, name, type = 'text', placeholder = '', autoComplete = '', onInput }) => {
+export const FieldInput: React.FC<FieldInputType> = ({ id, name, type = 'text', placeholder = '', autoComplete = '', onInput }: FieldInputType) => {
   if (!isKebabCase(id)) {
     throw new Error(`id "${id}" is not in kebab-case format`)
   }
@@ -72,10 +72,10 @@ export const FieldInput: React.FC<FieldInputType> = ({ id, name, type = 'text', 
 }
 
 /**
- * @param {string} id - ケバブケースで指定してください。
- * @param {string} name - キャメルケースで指定してください。
+ * @param id - ケバブケースで指定してください。
+ * @param name - キャメルケースで指定してください。
  */
-export const FieldTextarea: React.FC<FieldTextareaType> = ({ id, name, rows = 4, placeholder = '' }) => {
+export const FieldTextarea: React.FC<FieldTextareaType> = ({ id, name, rows = 4, placeholder = '' }: FieldTextareaType) => {
   if (!isKebabCase(id)) {
     throw new Error(`id "${id}" is not in kebab-case format`)
   }

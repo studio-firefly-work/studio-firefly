@@ -15,11 +15,11 @@ type FormFieldTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> 
 /**
  * テキストエリアコンポーネント。react-hook-formと統合されています。
  *
- * @param {string} label - テキストエリアのラベルテキスト。
- * @param {string} id - テキストエリアのIDおよび名前。react-hook-formでの登録に使用されます。
- * @param {string} [validation] - react-hook-formで使用するバリデーションキー。デフォルトは`id`と同じ。
- * @param {number} [rows=4] - テキストエリアの行数。デフォルトは4。
- * @param {string} [placeholder] - テキストエリアのプレースホルダーテキスト。
+ * @param label - テキストエリアのラベルテキスト。
+ * @param id - テキストエリアのIDおよび名前。react-hook-formでの登録に使用されます。
+ * @param validation - react-hook-formで使用するバリデーションキー。デフォルトは`id`と同じ。
+ * @param rows - テキストエリアの行数。デフォルトは4。
+ * @param placeholder - テキストエリアのプレースホルダーテキスト。
  */
 export const FormFieldTextarea: React.FC<FormFieldTextareaProps> = ({ label, id, validation = id, rows = 4, placeholder, ...rest }) => {
   const {
