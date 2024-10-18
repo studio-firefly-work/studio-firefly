@@ -7,7 +7,7 @@ import { BaseFormField } from '@/components/molecules/BaseFormField'
 type FormFieldFormFieldCheckboxProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label: string
   id: string
-  items: string[],
+  items: string[]
   validation?: string
 }
 
@@ -36,7 +36,7 @@ export const FormFieldCheckbox: React.FC<FormFieldFormFieldCheckboxProps> = ({ l
   return (
     <BaseFormField label={label} id={id} validation={validation}>
       {items.map((item, index) => (
-        <label className="label cursor-pointer justify-start gap-2 w-fit" key={index}>
+        <label className="label w-fit cursor-pointer justify-start gap-2" key={index}>
           <input {...register(validation)} type="checkbox" className={className} {...rest} />
           <span className="label-text" dangerouslySetInnerHTML={{ __html: item }}></span>
         </label>

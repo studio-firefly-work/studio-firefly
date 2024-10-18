@@ -135,6 +135,7 @@ const skills = [
 
     // アニメーションと終了処理を適用
     const applyTransition = (startCallback: () => void, finishCallback: () => void) => {
+      if (!document.startViewTransition) return
       document.startViewTransition(startCallback).finished.finally(finishCallback)
     }
   }

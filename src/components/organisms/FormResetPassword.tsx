@@ -7,7 +7,7 @@ import { BaseForm } from '@/components/molecules/BaseForm'
 import { FormFieldText } from '@/components/molecules/FormFieldText'
 
 const schema = z.object({
-  password: utils.schema.password
+  password: utils.schema.password,
 })
 
 type FormResetPasswordType = z.infer<typeof schema>

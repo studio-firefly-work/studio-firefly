@@ -54,7 +54,22 @@ declare namespace Theme {
     title: string
     description: string
     category: string
-    image: { src: string, alt: string }
+    image: { src: string; alt: string }
     date: string
   }
+}
+
+interface ViewTransition {
+  ready: Promise<void>
+  finished: Promise<void>
+  updateCallbackDone: Promise<void>
+  skipTransition: () => undefined
+}
+
+interface Document {
+  startViewTransition?: (skipTransition) => ViewTransition
+}
+
+interface CSSStyleDeclaration {
+  viewTransitionName?: string
 }

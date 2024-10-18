@@ -11,7 +11,9 @@ export const FormStep: React.FC<FormStepProps> = ({ names, step }) => {
     <div className="text-center">
       <ul className="steps w-full">
         {names.map((name, index) => (
-          <li key={index} className={classNames('step', { 'step-primary': index + 1 <= step })}>{name}</li>
+          <li key={index} className={classNames('step', { 'step-primary': index + 1 <= step })}>
+            {name}
+          </li>
         ))}
       </ul>
     </div>

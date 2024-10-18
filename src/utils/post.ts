@@ -8,7 +8,7 @@ export const post = {
    * @returns {number} - 比較結果
    */
   sortByDate: (a: MarkdownInstance<Theme.Frontmatter>, b: MarkdownInstance<Theme.Frontmatter>): number => {
-    return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+    return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
   },
 
   /**
@@ -20,15 +20,14 @@ export const post = {
    */
   getSameCategory: (count: number, currentPage: MarkdownInstance<Theme.Frontmatter>, allPages: MarkdownInstance<Theme.Frontmatter>[]): MarkdownInstance<Theme.Frontmatter>[] => {
     const posts = allPages
-      .filter(page =>
-        page.frontmatter.category === currentPage.frontmatter.category &&
-        page.frontmatter.slug !== currentPage.frontmatter.slug // 自分自身を除外
+      .filter(
+        (page) => page.frontmatter.category === currentPage.frontmatter.category && page.frontmatter.slug !== currentPage.frontmatter.slug // 自分自身を除外
       )
       .sort(compareDateDistance(new Date(currentPage.frontmatter.date))) // 日数の近さでソート
-      .slice(0, count); // 指定した数だけ取得
+      .slice(0, count) // 指定した数だけ取得
 
-    return posts;
-  }
+    return posts
+  },
 }
 
 /**
@@ -38,13 +37,15 @@ export const post = {
  * @param b - 比較対象2
  * @returns 比較結果
  */
-const compareDateDistance = (pageDate: Date) => (a: MarkdownInstance<Theme.Frontmatter>, b: MarkdownInstance<Theme.Frontmatter>): number => {
-  const diffA = Math.abs(new Date(a.frontmatter.date).getTime() - pageDate.getTime());
-  const diffB = Math.abs(new Date(b.frontmatter.date).getTime() - pageDate.getTime());
+const compareDateDistance =
+  (pageDate: Date) =>
+  (a: MarkdownInstance<Theme.Frontmatter>, b: MarkdownInstance<Theme.Frontmatter>): number => {
+    const diffA = Math.abs(new Date(a.frontmatter.date).getTime() - pageDate.getTime())
+    const diffB = Math.abs(new Date(b.frontmatter.date).getTime() - pageDate.getTime())
 
-  // 日数が同じなら新しい方を優先
-  if (diffA === diffB) {
-    return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+    // 日数が同じなら新しい方を優先
+    if (diffA === diffB) {
+      return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+    }
+    return diffA - diffB // 日数の近さでソート
   }
-  return diffA - diffB; // 日数の近さでソート
-}
