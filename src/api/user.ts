@@ -101,14 +101,14 @@ export const deleteUser = async () => {
 export const activateUser = async () => {
   try {
     const urlParams = new URLSearchParams(window.location.search)
-    const token = urlParams.get("token")
+    const token = urlParams.get('token')
 
     const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/activate/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     })
 
     if (!res.ok) {
@@ -127,13 +127,13 @@ export const activateUser = async () => {
 export const resetPassword = async (password: string) => {
   try {
     const urlParams = new URLSearchParams(window.location.search)
-    const token = urlParams.get("token")
+    const token = urlParams.get('token')
 
     const res = await fetch(`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/password-reset/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ password }),
     })

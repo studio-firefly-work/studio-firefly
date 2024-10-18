@@ -7,7 +7,7 @@ import { schema } from '@/utils/schema'
  * @returns {Promise<ImageMetadata>} - 画像のメタデータを含むPromise
  * @throws {Error} - 指定されたパスの画像が存在しない場合にエラーを投げる
  */
-export const getAssetsImage = (path: string): Promise<{ default: ImageMetadata; }> => {
+export const getAssetsImage = (path: string): Promise<{ default: ImageMetadata }> => {
   const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/**/*.{jpeg,jpg,png,gif}')
   const fullPath = `/src/assets/images/${path}`
   if (!images[fullPath]) {
@@ -22,10 +22,9 @@ export const getAssetsImage = (path: string): Promise<{ default: ImageMetadata; 
  * @returns {string} - 変換後の日付（yyyy年mm月dd日形式）
  */
 export const formatDate = (dateString: string): string => {
-  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', };
+  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' }
   return new Date(dateString).toLocaleDateString('ja-JP', options)
 }
-
 
 export const utils = {
   getAssetsImage,

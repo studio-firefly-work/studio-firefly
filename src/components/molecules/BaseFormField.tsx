@@ -16,10 +16,7 @@ export const BaseFormField: React.FC<BaseFormFieldProps> = ({ label, id, validat
   const error = errors[validation] as FieldError
 
   // 子要素に<label>タグが含まれているかチェック
-  const childrenHasLabel = React.Children.toArray(children).some(
-    (child) =>
-      React.isValidElement(child) && child.type === 'label'
-  )
+  const childrenHasLabel = React.Children.toArray(children).some((child) => React.isValidElement(child) && child.type === 'label')
 
   if (label != '' && childrenHasLabel) {
     return (
@@ -33,7 +30,11 @@ export const BaseFormField: React.FC<BaseFormFieldProps> = ({ label, id, validat
 
   return (
     <div className="form-control w-full">
-      {!childrenHasLabel && <label htmlFor={id} className="label label-text">{label}</label>}
+      {!childrenHasLabel && (
+        <label htmlFor={id} className="label label-text">
+          {label}
+        </label>
+      )}
       <div className="relative">{children}</div>
       {error?.message && <span className="label label-text-alt text-error">{error.message}</span>}
     </div>

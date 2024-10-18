@@ -7,7 +7,7 @@ import { BaseForm } from '@/components/molecules/BaseForm'
 import { FormFieldText } from '@/components/molecules/FormFieldText'
 
 const schema = z.object({
-  email: utils.schema.email
+  email: utils.schema.email,
 })
 
 type FormRequestResetPasswordType = z.infer<typeof schema>
@@ -31,7 +31,7 @@ export const FormRequestResetPassword = () => {
           <div className="flex flex-col gap-4">
             {formStatus === 'edit' && (
               <>
-                <FormFieldText label="メールアドレス" id="reset-email" validation='email' type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
+                <FormFieldText label="メールアドレス" id="reset-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
 
                 <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
                   確認メールを送信

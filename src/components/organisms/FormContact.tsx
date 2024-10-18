@@ -54,7 +54,7 @@ export const FormContact = () => {
 
           return (
             <div className="flex flex-col gap-4">
-              {step === 1 &&
+              {step === 1 && (
                 <>
                   <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" onInput={handleNameInput} />
 
@@ -66,11 +66,13 @@ export const FormContact = () => {
 
                   <FormFieldCheckbox label="" id="privacy" items={['<a href="/privacy/" class="link" target="_blank">プライバシーポリシー</a>に同意する']} />
 
-                  <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>入力内容の確認</button>
+                  <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
+                    入力内容の確認
+                  </button>
                 </>
-              }
+              )}
 
-              {step === 2 &&
+              {step === 2 && (
                 <>
                   <div>
                     <p className="label-text">お名前</p>
@@ -89,25 +91,25 @@ export const FormContact = () => {
                     <p>{getValues('message')}</p>
                   </div>
 
-                  <div className='flex gap-4 md:flex-row flex-col'>
-                    <button type="submit" className="btn btn-accent md:w-1/2 md:order-2">
+                  <div className="flex flex-col gap-4 md:flex-row">
+                    <button type="submit" className="btn btn-accent md:order-2 md:w-1/2">
                       お問い合わせを送信
                     </button>
-                    <button type="button" className="btn md:w-1/2 md:order-1" onClick={() => setStep(1)}>
+                    <button type="button" className="btn md:order-1 md:w-1/2" onClick={() => setStep(1)}>
                       入力内容の修正
                     </button>
                   </div>
                 </>
-              }
+              )}
 
-              {step === 3 &&
+              {step === 3 && (
                 <>
                   <p>送信が正常に完了しました</p>
                   <a href="/" className="btn btn-neutral">
                     ホームへ戻る
                   </a>
                 </>
-              }
+              )}
             </div>
           )
         }}
