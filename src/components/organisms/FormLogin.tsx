@@ -10,29 +10,25 @@ const schema = z.object({
   email: utils.schema.email,
   password: utils.schema.password,
 })
+type FormSchemaType = z.infer<typeof schema>
 
 export const FormLogin = () => {
-  const onSubmit = async (data: z.infer<typeof schema>) => {
-    // ログイン
+  const onSubmit = async (data: FormSchemaType) => {
     const res = await api.auth.login(data.email, data.password)
-    if (res?.ok) {
-      // 成功したらユーザー画面へ
-      window.location.href = '/user/'
-    }
+    if (res?.ok) window.location.href = '/user/' // ユーザー画面へ
   }
 
   return (
-    <BaseForm<z.infer<typeof schema>> onSubmit={onSubmit} schema={schema}>
+    <BaseForm<FormSchemaType> onSubmit={onSubmit} schema={schema}>
       {({ formState: { isSubmitting, isValid } }) => (
-        <div className="flex flex-col gap-4">
+        <>
           <FormFieldText label="メールアドレス" id="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
-
           <FormFieldText label="パスワード" id="password" type="password" autoComplete="current-password" icon="icon-key" />
 
           <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
             ログイン
           </button>
-        </div>
+        </>
       )}
     </BaseForm>
   )

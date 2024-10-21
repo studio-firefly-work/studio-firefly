@@ -9,27 +9,22 @@ import { FormFieldText } from '@/components/molecules/FormFieldText'
 const schema = z.object({
   email: utils.schema.email,
 })
-
-type FormRequestResetPasswordType = z.infer<typeof schema>
+type FormSchemaType = z.infer<typeof schema>
 
 export const FormRequestResetPassword = () => {
-  const [formStatus, setFormStatus] = useState<'edit' | 'confirm' | 'complete'>('edit')
+  const [step, setStep] = useState(1)
 
-  const onSubmit = async (data: FormRequestResetPasswordType) => {
-    if (formStatus === 'edit') {
-      const res = await api.auth.resetPassword(data.email)
-      if (res?.ok) {
-        setFormStatus('complete')
-      }
-    }
+  const onSubmit = async (data: FormSchemaType) => {
+    const res = await api.auth.resetPassword(data.email)
+    if (res?.ok) setStep(2) // 完了画面へ
   }
 
   return (
-    <BaseForm<FormRequestResetPasswordType> onSubmit={onSubmit} schema={schema}>
+    <BaseForm<FormSchemaType> onSubmit={onSubmit} schema={schema}>
       {({ formState: { isSubmitting, isValid } }) => {
         return (
-          <div className="flex flex-col gap-4">
-            {formStatus === 'edit' && (
+          <>
+            {step === 1 && (
               <>
                 <FormFieldText label="メールアドレス" id="reset-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
 
@@ -39,15 +34,15 @@ export const FormRequestResetPassword = () => {
               </>
             )}
 
-            {formStatus === 'complete' && (
-              <div className="flex flex-col gap-4">
+            {step === 2 && (
+              <>
                 <p>送信が正常に完了しました</p>
                 <a href="/" className="btn btn-neutral">
                   HOMEへ戻る
                 </a>
-              </div>
+              </>
             )}
-          </div>
+          </>
         )
       }}
     </BaseForm>

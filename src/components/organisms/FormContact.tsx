@@ -17,7 +17,7 @@ const schema = z.object({
   message: utils.schema.message,
   privacy: utils.schema.privacy,
 })
-type FormDataType = z.infer<typeof schema>
+type FormSchemaType = z.infer<typeof schema>
 
 export const FormContact = () => {
   const [step, setStep] = useState(1)
@@ -29,7 +29,7 @@ export const FormContact = () => {
     }
   }, [step])
 
-  const onSubmit = async (data: FormDataType) => {
+  const onSubmit = async (data: FormSchemaType) => {
     if (step === 1) {
       setStep(2) // 確認画面へ
     }
@@ -39,7 +39,7 @@ export const FormContact = () => {
     }
   }
 
-  const renderFields = (data: FormDataType) => [
+  const inputDatas = (data: FormSchemaType) => [
     { label: 'お名前', value: `${data.name} (${data.kana})` },
     { label: 'メールアドレス', value: data.email },
     { label: 'お問い合わせ内容', value: data.message },
@@ -49,7 +49,7 @@ export const FormContact = () => {
     <>
       <FormStep names={['入力', '確認', '完了']} step={step} />
 
-      <BaseForm<FormDataType> onSubmit={onSubmit} schema={schema}>
+      <BaseForm<FormSchemaType> onSubmit={onSubmit} schema={schema}>
         {({ formState: { isSubmitting, isValid }, setValue, getValues }) => (
           <>
             {step === 1 && (
@@ -68,7 +68,7 @@ export const FormContact = () => {
 
             {step === 2 && (
               <>
-                {renderFields(getValues()).map(({ label, value }, index) => (
+                {inputDatas(getValues()).map(({ label, value }, index) => (
                   <div key={index}>
                     <p className="label-text">{label}</p>
                     <p>{value}</p>
