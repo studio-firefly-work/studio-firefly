@@ -28,7 +28,7 @@ export const FormResetPassword = () => {
     <BaseForm<FormResetPasswordType> onSubmit={onSubmit} schema={schema}>
       {({ formState: { isSubmitting, isValid } }) => {
         return (
-          <div className="flex flex-col gap-4">
+          <>
             {formStatus === 'edit' && (
               <>
                 <FormFieldText label="パスワード" id="reset-password" validation="password" type="password" autoComplete="new-password" icon="icon-key" />
@@ -40,14 +40,14 @@ export const FormResetPassword = () => {
             )}
 
             {formStatus === 'complete' && (
-              <div className="flex flex-col gap-4">
+              <>
                 <p>送信が正常に完了しました</p>
                 <a href="/login/" className="btn btn-neutral">
                   ログイン画面へ
                 </a>
-              </div>
+              </>
             )}
-          </div>
+          </>
         )
       }}
     </BaseForm>

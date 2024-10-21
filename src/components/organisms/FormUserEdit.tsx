@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
-import * as AutoKana from 'vanilla-autokana'
-import { useForm, useFormContext, FormProvider } from 'react-hook-form'
 import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { api } from '@/api'
 import { utils } from '@/utils'
+import { BaseForm } from '@/components/molecules/BaseForm'
+import { FormStep } from '@/components/molecules/FormStep'
 import { FormFieldText } from '@/components/molecules/FormFieldText'
 
 const schema = z.object({
@@ -13,119 +12,94 @@ const schema = z.object({
   kana: utils.schema.kana,
   email: utils.schema.email,
 })
-type FormUserDataType = z.infer<typeof schema>
+type FormSchemaType = z.infer<typeof schema>
 
-let kana: AutoKana.AutoKana
+export const FormUserEdit = () => {
+  const [user, setUser] = useState<FormSchemaType>()
 
-export default function FormUserData() {
-  const methods = useForm<FormUserDataType>({ mode: 'onChange', resolver: zodResolver(schema) })
-  const [formStatus, setFormStatus] = useState<'edit' | 'confirm' | 'complete'>('edit')
-
-  // button type='submit' 押下時
-  const onSubmit = async (data: FormUserDataType) => {
-    switch (formStatus) {
-      case 'edit':
-        // 編集画面で押下された場合は確認画面へ遷移
-        setFormStatus('confirm')
-        break
-      case 'confirm':
-        // 確認画面で押下された場合はユーザー情報更新
-        const res = await api.user.updateUser(data)
-        if (res?.ok) {
-          // ユーザー情報更新に成功した場合は完了画面へ遷移
-          setFormStatus('complete')
-        }
-        break
-    }
-  }
-
-  return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        {formStatus === 'edit' && <FormUserDataEdit />}
-        {formStatus === 'confirm' && <FormUserDataConfirm setFormStatus={setFormStatus} />}
-        {formStatus === 'complete' && <FormUserDataComplete />}
-      </form>
-    </FormProvider>
-  )
-}
-
-const FormUserDataEdit = () => {
-  const {
-    setValue,
-    formState: { isSubmitting, isValid },
-    reset,
-  } = useFormContext()
-  const [user, setUser] = useState<FormUserDataType>()
-  const handleNameInput = () => {
-    setValue('kana', kana.getFurigana())
-  }
-
-  // ユーザー情報 取得
   const getUser = async () => {
-    const userData = await api.user.getUser()
-    setUser(userData)
+    const user = await api.user.getUser()
+    setUser(user)
   }
 
   useEffect(() => {
-    kana = AutoKana.bind('#name', '#kana', { katakana: true })
     getUser()
   }, [])
 
-  useEffect(() => {
-    reset(user)
-  }, [reset, user])
-
-  return (
-    <div className="flex flex-col gap-4">
-      <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" onInput={handleNameInput} />
-
-      <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" />
-
-      <FormFieldText label="メールアドレス" id="new-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
-
-      <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
-        入力内容の確認
-      </button>
-    </div>
-  )
+  if (user) {
+    return <Form user={user} />
+  }
 }
 
-const FormUserDataConfirm = ({ setFormStatus }: any) => {
-  const { getValues } = useFormContext()
-  const values = getValues()
+const Form = ({ user }: any) => {
+  const [step, setStep] = useState(1)
+
+  const onSubmit = async (data: FormSchemaType) => {
+    if (step === 1) {
+      setStep(2) // 確認画面へ
+    }
+    else if (step === 2) {
+      const res = await api.user.updateUser(data)
+      if (res?.ok) setStep(3) // 完了画面へ
+    }
+  }
+
+  const inputDatas = (data: FormSchemaType) => [
+    { label: 'お名前', value: `${data.name} (${data.kana})` },
+    { label: 'メールアドレス', value: data.email },
+  ]
 
   return (
-    <div className="flex flex-col gap-4">
-      <div>
-        <p className="label-text">お名前</p>
-        <p>
-          {values.name}({values.kana})
-        </p>
-      </div>
+    <>
+      <FormStep names={['入力', '確認', '完了']} step={step} />
 
-      <div>
-        <p className="label-text">メールアドレス</p>
-        <p>{values.email}</p>
-      </div>
+      <BaseForm<FormSchemaType> onSubmit={onSubmit} schema={schema}>
+        {({ formState: { isSubmitting, isValid }, getValues }) => (
+          <>
+            {step === 1 && (
+              <>
+                <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" defaultValue={user.name} />
+                <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" defaultValue={user.kana} />
+                <FormFieldText label="メールアドレス" id="new-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" defaultValue={user.email} />
 
-      <button type="button" className="btn" onClick={() => setFormStatus('edit')}>
-        入力内容の修正
-      </button>
-      <button type="submit" className="btn btn-accent">
-        お客様情報を更新
-      </button>
-    </div>
-  )
-}
+                <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
+                  入力内容の確認
+                </button>
+              </>
+            )}
 
-const FormUserDataComplete = () => {
-  return (
-    <div className="flex flex-col gap-4">
-      <p>更新が正常に完了しました</p>
-      <a href="/user/" className="btn btn-neutral">
-        お客様情報ページへ戻る
-      </a>
-    </div>
+            {step === 2 && (
+              <>
+                {inputDatas(getValues()).map(({ label, value }, index) => (
+                  <div key={index}>
+                    <p className="label-text">{label}</p>
+                    <p>{value}</p>
+                  </div>
+                ))}
+
+                <div className="flex flex-col gap-4 md:flex-row">
+                  <button type="submit" className="btn btn-accent md:order-2 md:w-1/2">
+                    お客様情報を更新
+                  </button>
+                  <button type="button" className="btn md:order-1 md:w-1/2" onClick={() => setStep(1)}>
+                    入力内容の修正
+                  </button>
+                </div>
+              </>
+            )}
+
+            {step === 3 && (
+              <>
+                <p>更新が正常に完了しました</p>
+                <a href="/user/" className="btn btn-neutral">
+                  お客様情報ページへ戻る
+                </a>
+              </>
+            )}
+          </>
+        )
+        }
+      </BaseForm>
+    </>
   )
 }
