@@ -22,7 +22,7 @@ const seo: Theme.SEO = {
 
       <button id="btn-logout" type="button" class="btn btn-neutral">ログアウト</button>
 
-      <button id="btn-delete-user" type="button" class="btn btn-neutral">退会</button>
+      <button id="btn-delete-user" type="button" class="btn btn-error">退会</button>
     </Inner>
   </Container>
 </PageLayout>
@@ -34,7 +34,10 @@ const seo: Theme.SEO = {
   const setClickEvent = () => {
     // ログアウトボタン
     const btnLogout = document.getElementById('btn-logout') as HTMLButtonElement
-    btnLogout?.addEventListener('click', api.auth.logout)
+    btnLogout?.addEventListener('click', async () => {
+      const res = await api.auth.logout()
+      if (res) window.location.href = '/'
+    })
 
     // 退会ボタン
     const btnDeleteUser = document.getElementById('btn-delete-user') as HTMLButtonElement

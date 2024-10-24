@@ -56,6 +56,7 @@ declare namespace Theme {
     category: string
     image: { src: string; alt: string }
     date: string
+    membersonly?: boolean
   }
 }
 
