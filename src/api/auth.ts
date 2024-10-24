@@ -40,6 +40,8 @@ export const logout = async () => {
     } else {
       console.log('ログアウトに成功しました：' + data.message)
     }
+
+    return res
   } catch (error) {
     console.error('通信に失敗しました', error)
   }

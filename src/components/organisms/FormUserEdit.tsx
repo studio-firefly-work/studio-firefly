@@ -17,14 +17,14 @@ type FormSchemaType = z.infer<typeof schema>
 export const FormUserEdit = () => {
   const [user, setUser] = useState<FormSchemaType>()
 
+  useEffect(() => {
+    getUser()
+  }, [])
+
   const getUser = async () => {
     const user = await api.user.getUser()
     setUser(user)
   }
-
-  useEffect(() => {
-    getUser()
-  }, [])
 
   if (user) {
     return <Form user={user} />
