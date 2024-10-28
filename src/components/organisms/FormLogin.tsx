@@ -5,6 +5,7 @@ import { api } from '@/api'
 import { utils } from '@/utils'
 import { BaseForm } from '@/components/molecules/BaseForm'
 import { FormFieldText } from '@/components/molecules/FormFieldText'
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 const schema = z.object({
   email: utils.schema.email,
@@ -13,7 +14,14 @@ const schema = z.object({
 type FormSchemaType = z.infer<typeof schema>
 
 export const FormLogin = () => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
   const onSubmit = async (data: FormSchemaType) => {
+    if (!executeRecaptcha) {
+      alert('Recaptcha is not ready');
+      return;
+    }
+    const recaptchaToken = await executeRecaptcha('contact');
     const res = await api.auth.login(data.email, data.password)
     if (res?.ok) window.location.href = '/user/' // ユーザー画面へ
   }

@@ -21,7 +21,6 @@ const style = tv({
     authButtons?.forEach((button: HTMLLinkElement) => {
       button.addEventListener('click', async () => {
         const isLoggedIn = await api.auth.isLogin()
-        console.log(isLoggedIn)
         if (isLoggedIn) {
           // ログイン中の場合、/user/へリダイレクト
           window.location.href = '/user/'

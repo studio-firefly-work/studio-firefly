@@ -58,30 +58,3 @@ const seo: Theme.SEO = {
     <Pagination {page} permalink="/works" />
   </Inner>
 </PageLayout>
-
-<script>
-  import { api } from '@/api'
-
-  const init = async () => {
-    if (window.location.pathname === '/works/') {
-      const res = await api.auth.isLogin()
-
-      if (!res) {
-        // 未ログインなら data-membersonly="true" の要素に lock クラスを付与
-        document.querySelectorAll('a[data-membersonly]').forEach((link) => {
-          link.classList.add('lock')
-        })
-      }
-    }
-  }
-
-  // ページ初期化とページ遷移時の再初期化
-  init()
-  document.addEventListener('astro:after-swap', init)
-</script>
-
-<style lang="scss">
-  .lock {
-    display:;
-  }
-</style>
