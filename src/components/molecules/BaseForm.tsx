@@ -18,12 +18,11 @@ export const BaseForm = <TFormValues extends FieldValues>({ onSubmit, schema, ch
     <GoogleReCaptchaProvider reCaptchaKey={import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY} language="ja">
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-4">
-            {children(methods)}
+          <div className="flex flex-col gap-4">{children(methods)}</div>
 
-            <p>このサイトは reCAPTCHA で保護されており、Google の <a href="https://policies.google.com/privacy">プライバシーポリシー</a>と <a href="https://policies.google.com/terms">利用規約</a>が適用されます。
-            </p>
-          </div>
+          <p>
+            このサイトは reCAPTCHA で保護されており、Google の <a href="https://policies.google.com/privacy">プライバシーポリシー</a>と <a href="https://policies.google.com/terms">利用規約</a>が適用されます。
+          </p>
         </form>
       </FormProvider>
     </GoogleReCaptchaProvider>

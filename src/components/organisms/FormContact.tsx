@@ -32,8 +32,7 @@ export const FormContact = () => {
   const onSubmit = async (data: FormSchemaType) => {
     if (step === 1) {
       setStep(2) // 確認画面へ
-    }
-    else if (step === 2) {
+    } else if (step === 2) {
       const res = await api.mail.sendMail(data)
       if (res?.ok) setStep(3) // 完了画面へ
     }
