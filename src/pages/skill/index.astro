@@ -62,7 +62,7 @@ const skills = [
 
     {
       skills.map((skill, index) => (
-        <dialog id={`js-skill-modal-${index}`} class="group modal">
+        <dialog id={`js-skill-modal-${index}`} class="group modal" data-lenis-prevent>
           <div class="modal-box">
             <div class="flex items-center gap-4">
               <Icon name={skill.icon} />
