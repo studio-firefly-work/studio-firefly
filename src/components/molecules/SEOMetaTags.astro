@@ -1,13 +1,11 @@
 ---
 import { SEO } from 'astro-seo'
-import { getSiteDataAll } from '@/constants/siteDatas'
+import { GoogleAnalytics } from 'astro-google-analytics'
 
 interface Props {
   seo: Theme.SEO
 }
 const { seo } = Astro.props
-
-const siteData = getSiteDataAll()
 
 if (!seo.permalink) {
   // ホームの場合
@@ -15,7 +13,7 @@ if (!seo.permalink) {
     {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
-      name: siteData.name,
+      name: import.meta.env.PUBLIC_SITE_NAME,
       url: Astro.site,
     },
     {
@@ -29,49 +27,20 @@ if (!seo.permalink) {
     }
   )
 }
-
-if (seo.breadcrumb) {
-  // パンくずリストが有るページの場合
-  const itemListElement: any[] = [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: 'ホーム',
-      item: Astro.site,
-    },
-  ]
-  let path = ''
-
-  Object.keys(seo.breadcrumb).forEach((key, index) => {
-    path += `${key}/`
-    itemListElement.push({
-      '@type': 'ListItem',
-      position: index + 2,
-      name: seo.breadcrumb![key],
-      item: new URL(path, Astro.site),
-    })
-  })
-
-  seo.schemaOrg = (seo.schemaOrg || []).concat({
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: itemListElement,
-  })
-}
 ---
 
 <SEO
   title={seo.title}
-  titleTemplate={'%s | ' + siteData.name}
-  titleDefault={siteData.name}
+  titleTemplate={'%s | ' + import.meta.env.PUBLIC_SITE_NAME}
+  titleDefault={import.meta.env.PUBLIC_SITE_NAME}
   description={seo.description}
   canonical={seo.permalink ? new URL(`${seo.permalink.join('/')}/`, Astro.site) : Astro.site}
   noindex={seo.noindex ?? false}
   nofollow={seo.nofollow ?? false}
-  charset="UTF-8"
+  charset="utf-8"
   openGraph={{
     basic: {
-      title: seo.title ?? siteData.name,
+      title: seo.title ?? import.meta.env.PUBLIC_SITE_NAME,
       type: seo.type ?? 'WebSite',
       image: seo.image ?? Astro.url.origin + '/og_image.png',
       url: seo.permalink ? new URL(`${seo.permalink.join('/')}/`, Astro.site) : Astro.site,
@@ -79,7 +48,7 @@ if (seo.breadcrumb) {
     optional: {
       description: seo.description,
       locale: 'ja_JP',
-      siteName: siteData.name,
+      siteName: import.meta.env.PUBLIC_SITE_NAME,
     },
     image: {
       type: 'image/png',
@@ -95,7 +64,15 @@ if (seo.breadcrumb) {
       { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
       { rel: 'manifest', href: '/manifest.json' },
     ],
-    meta: [{ name: 'viewport', content: 'width=device-width, initial-scale=1' }],
+    meta: [
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'referrer', content: 'strict-origin-when-cross-origin' },
+      { name: 'theme-color', media: '(prefers-color-scheme: light)', content: '#4F4200' },
+      { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: '#E0CA72' },
+      { name: 'apple-mobile-web-app-title', content: import.meta.env.PUBLIC_SITE_NAME },
+      { name: 'apple-mobile-web-app-status-bar-style', content: 'default' },
+    ],
   }}
 />
 {seo.schemaOrg && seo.schemaOrg.map((structuredData: []) => <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />)}
+<GoogleAnalytics id={import.meta.env.PUBLIC_GA4_ID} />
