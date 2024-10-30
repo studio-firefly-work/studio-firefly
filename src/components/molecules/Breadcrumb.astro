@@ -27,22 +27,26 @@ if (seo.breadcrumb) {
 ---
 
 <Inner size="full md:base" class="theme-text-sm breadcrumbs">
-  <ol>
+  <ol itemscope itemtype="http://schema.org/BreadcrumbList">
     {
       itemListElement.map((link: any, index: number) => {
         const isLastItem = index === itemListElement.length - 1
         if (isLastItem) {
           return (
-            <li itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement" itemprop="item" area-current="page">
-              {link.name}
-              <meta itemprop="position" content={`${index + 1}`} />
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+              <a href={link.item} itemprop="item" area-current="page">
+                <span itemprop="name">{link.name}</span>
+                <meta itemprop="position" content={`${index + 1}`} />
+              </a>
             </li>
           )
         } else {
           return (
-            <li itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement" itemprop="item">
-              <a href={link.item}>{link.name}</a>
-              <meta itemprop="position" content={`${index + 1}`} />
+            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+              <a href={link.item} itemprop="item">
+                <span itemprop="name">{link.name}</span>
+                <meta itemprop="position" content={`${index + 1}`} />
+              </a>
             </li>
           )
         }
