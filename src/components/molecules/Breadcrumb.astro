@@ -32,11 +32,17 @@ if (seo.breadcrumb) {
       itemListElement.map((link: any, index: number) => {
         const isLastItem = index === itemListElement.length - 1
         if (isLastItem) {
-          return <li area-current="page">{link.name}</li>
+          return (
+            <li itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement" itemprop="item" area-current="page">
+              {link.name}
+              <meta itemprop="position" content={`${index + 1}`} />
+            </li>
+          )
         } else {
           return (
-            <li>
+            <li itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement" itemprop="item">
               <a href={link.item}>{link.name}</a>
+              <meta itemprop="position" content={`${index + 1}`} />
             </li>
           )
         }

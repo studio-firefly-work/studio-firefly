@@ -1,6 +1,5 @@
 ---
 import { ViewTransitions } from 'astro:transitions'
-import { GoogleAnalytics } from 'astro-google-analytics'
 import '@fontsource-variable/noto-sans'
 import '@fontsource-variable/noto-sans-jp'
 import 'lenis/dist/lenis.css'
@@ -16,11 +15,10 @@ const { seo } = Astro.props
 ---
 
 <!doctype html>
-<html lang="jp">
+<html lang="ja-JP">
   <head prefix="og: https://ogp.me/ns#">
     <SEOMetaTags {seo} />
     <ViewTransitions />
-    <GoogleAnalytics id={import.meta.env.GA4_ID} />
   </head>
   <body class="manipulation grid min-h-dvh grid-cols-1 grid-rows-[auto,1fr,auto] break-words bg-base-200 font-body text-base tracking-normal antialiased">
     <Fragment set:html={Icons} />
