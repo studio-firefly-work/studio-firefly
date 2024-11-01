@@ -36,7 +36,11 @@ export const BaseFormField: React.FC<BaseFormFieldProps> = ({ label, id, validat
         </label>
       )}
       <div className="relative">{children}</div>
-      {error?.message && <span className="label label-text-alt text-error">{error.message}</span>}
+      {error?.message && (
+        <span className="label label-text-alt text-error" aria-live="polite" role="alert">
+          {error.message}
+        </span>
+      )}
     </div>
   )
 }

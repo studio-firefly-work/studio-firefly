@@ -8,7 +8,7 @@ import HambMenu from '@/components/molecules/HambMenu.astro'
 // import Logo from '@/assets/images/common/logo.svg?raw'
 
 const currentPath = Astro.url.pathname
-const links: Theme.Link[] = [
+export const links: Theme.Link[] = [
   {
     title: '自己紹介',
     icon: 'icon-identification',
@@ -30,6 +30,10 @@ const links: Theme.Link[] = [
     permalink: '/contact/',
   },
 ]
+
+export const add = (...args: number[]) => {
+  return args.reduce((a, b) => a + b, 0)
+}
 ---
 
 <header>

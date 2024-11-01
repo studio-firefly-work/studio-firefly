@@ -6,51 +6,35 @@ interface Props {
 }
 const { seo } = Astro.props
 
-let itemListElement: any
-if (seo.breadcrumb) {
-  itemListElement = [
-    {
-      name: 'ホーム',
-      item: '/',
+const generateBreadcrumbs = (breadcrumb: Record<string, string>) => {
+  return Object.entries(breadcrumb).reduce(
+    (acc, [key, value]) => {
+      acc.path += `${key}/`
+      acc.items.push({
+        name: value,
+        item: `/${acc.path}`,
+      })
+      return acc
     },
-  ]
-  let path = ''
-
-  Object.keys(seo.breadcrumb).forEach((key) => {
-    path += `${key}/`
-    itemListElement.push({
-      name: seo.breadcrumb![key],
-      item: `/${path}`,
-    })
-  })
+    { path: '', items: [{ name: 'ホーム', item: '/' }] }
+  ).items
 }
+
+const itemList = generateBreadcrumbs(seo.breadcrumb!)
+const last = itemList.length - 1
 ---
 
 <Inner size="full md:base" class="theme-text-sm breadcrumbs">
   <ol itemscope itemtype="http://schema.org/BreadcrumbList">
     {
-      itemListElement.map((link: any, index: number) => {
-        const isLastItem = index === itemListElement.length - 1
-        if (isLastItem) {
-          return (
-            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-              <a href={link.item} itemprop="item" area-current="page">
-                <span itemprop="name">{link.name}</span>
-                <meta itemprop="position" content={`${index + 1}`} />
-              </a>
-            </li>
-          )
-        } else {
-          return (
-            <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-              <a href={link.item} itemprop="item">
-                <span itemprop="name">{link.name}</span>
-                <meta itemprop="position" content={`${index + 1}`} />
-              </a>
-            </li>
-          )
-        }
-      })
+      itemList.map((link, index) => (
+        <li itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
+          <a href={link.item} itemscope itemtype="http://schema.org/Thing" itemprop="item" {...(index === last ? { 'aria-current': 'page' } : {})}>
+            <span itemprop="name">{link.name}</span>
+            <meta itemprop="position" content={`${index + 1}`} />
+          </a>
+        </li>
+      ))
     }
   </ol>
 </Inner>

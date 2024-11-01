@@ -1,3 +1,4 @@
+/// <reference types="grecaptcha" />
 /**
  * メール 送信
  */
