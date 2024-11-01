@@ -2,7 +2,6 @@
 import { ViewTransitions } from 'astro:transitions'
 import '@fontsource-variable/noto-sans'
 import '@fontsource-variable/noto-sans-jp'
-import 'lenis/dist/lenis.css'
 import '@/styles/global.scss'
 import SplashScreen from '@/components/molecules/SplashScreen.astro'
 import SEOMetaTags from '@/components/molecules/SEOMetaTags.astro'
@@ -25,8 +24,6 @@ const { seo } = Astro.props
     <SplashScreen />
     <slot />
     <script>
-      import Lenis from 'lenis'
-
       const init = () => {
         const labelButtons = document.querySelectorAll('label[role="button"]') as NodeListOf<HTMLLabelElement>
         labelButtons.forEach((button: HTMLLabelElement) => {
@@ -37,13 +34,6 @@ const { seo } = Astro.props
             }
           })
         })
-
-        const lenis = new Lenis({ duration: 0.8 })
-        function raf(time: number) {
-          lenis.raf(time)
-          requestAnimationFrame(raf)
-        }
-        requestAnimationFrame(raf)
       }
 
       init()
