@@ -53,9 +53,9 @@ export const FormContact = () => {
           <>
             {step === 1 && (
               <>
-                <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" onInput={() => setValue('kana', kana.getFurigana())} />
+                <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="mdi:user" onInput={() => setValue('kana', kana.getFurigana())} />
                 <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" />
-                <FormFieldText label="メールアドレス" id="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" />
+                <FormFieldText label="メールアドレス" id="email" type="email" placeholder="email@example.com" autoComplete="email" icon="mdi:email" />
                 <FormFieldTextarea label="お問い合わせ内容" id="message" placeholder="お問い合わせ内容を入力してください" />
                 <FormFieldCheckbox label="" id="privacy" items={['<a href="/privacy/" class="link" target="_blank">プライバシーポリシー</a>に同意する']} />
 

@@ -1,32 +1,31 @@
 ---
+import { Icon } from 'astro-icon/components'
 import ButtonLoginOrProfile from '@/components/molecules/ButtonLoginOrProfile.astro'
 import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle.astro'
 import Container from '@/components/atoms/Container.astro'
-import Icon from '@/components/atoms/Icon.astro'
 import Inner from '@/components/atoms/Inner.astro'
 import HambMenu from '@/components/molecules/HambMenu.astro'
-// import Logo from '@/assets/images/common/logo.svg?raw'
 
 const currentPath = Astro.url.pathname
 export const links: Theme.Link[] = [
   {
     title: '自己紹介',
-    icon: 'icon-identification',
+    icon: 'mdi:human-handsup',
     permalink: '/profile/',
   },
   {
     title: 'スキルセット',
-    icon: 'icon-code-bracket',
+    icon: 'mdi:code',
     permalink: '/skill/',
   },
   {
     title: '制作事例',
-    icon: 'icon-window',
+    icon: 'mdi:work',
     permalink: '/works/',
   },
   {
     title: 'お問い合わせ',
-    icon: 'icon-envelope',
+    icon: 'mdi:email',
     permalink: '/contact/',
   },
 ]
@@ -41,13 +40,9 @@ export const add = (...args: number[]) => {
     <Inner size="wide">
       <nav class="flex">
         <div class="flex-1">
-          <!-- <a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>
-            <Fragment set:html={Logo} />
-            <svg width="140" height="60">
-              <use href="#logo-text" class="fill-black dark:fill-white"></use>
-              <use href="#logo-firefly"></use>
-            </svg>
-          </a> -->
+          <a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>
+            <!-- <Icon name="logo" width={140} height={60}/> -->
+          </a>
         </div>
 
         <div class="hidden flex-none md:inline-flex">
@@ -56,7 +51,7 @@ export const add = (...args: number[]) => {
               links.map((link: Theme.Link) => (
                 <li>
                   <a href={link.permalink} class={`btn btn-ghost ${currentPath.startsWith(link.permalink) ? 'theme-current-page' : ''}`}>
-                    <Icon name={link.icon} class="hidden lg:block" />
+                    <Icon name={link.icon} width={20} height={20} />
                     {link.title}
                   </a>
                 </li>

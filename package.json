@@ -27,6 +27,7 @@
     "@types/react-dom": "^18.3.0",
     "astro": "^4.16.6",
     "astro-google-analytics": "^1.0.3",
+    "astro-icon": "^1.1.1",
     "astro-seo": "^0.8.4",
     "classnames": "^2.5.1",
     "lenis": "^1.1.14",
@@ -41,6 +42,9 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@iconify-json/mdi": "^1.2.1",
+    "@iconify-json/tabler": "^1.2.7",
+    "@iconify/react": "^5.0.2",
     "@tailwindcss/typography": "^0.5.15",
     "@types/cssesc": "^3.0.2",
     "@types/grecaptcha": "^3.0.9",
