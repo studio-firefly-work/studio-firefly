@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import classNames from 'classnames'
 import { useFormContext } from 'react-hook-form'
 import type { FieldError } from 'react-hook-form'
-import { Icon } from '@iconify/react';
+import { Icon } from '@iconify/react'
 import { BaseFormField } from '@/components/molecules/BaseFormField'
 
 type InputType = 'text' | 'password' | 'email' | 'number' | 'tel'

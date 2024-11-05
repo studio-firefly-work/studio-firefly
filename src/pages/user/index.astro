@@ -20,36 +20,9 @@ const seo: Theme.SEO = {
     <Inner>
       <FormUserEdit client:only="react" />
 
-      <button id="btn-logout" type="button" class="btn btn-neutral">ログアウト</button>
+      <button class="btn btn-neutral" hx-delete={`${import.meta.env.PUBLIC_API_BASE_URL}/auth/logout/`} hx-trigger="click" hx-request='"credentials": true' hx-on="htmx:afterRequest: if (event.detail.successful) window.location.href = '/'" hx-swap="none">ログアウト</button>
 
-      <button id="btn-delete-user" type="button" class="btn btn-error">退会</button>
+      <button class="btn btn-error" hx-delete={`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/`} hx-trigger="click" hx-request='"credentials": true' hx-ext="ignore:json-enc" hx-on="htmx:afterRequest: if (event.detail.successful) window.location.href = '/'" hx-swap="none">退会</button>
     </Inner>
   </Container>
 </PageLayout>
-
-<script>
-  import { api } from '@/api'
-
-  // 初期化関数
-  const setClickEvent = () => {
-    // ログアウトボタン
-    const btnLogout = document.getElementById('btn-logout') as HTMLButtonElement
-    btnLogout?.addEventListener('click', async () => {
-      const res = await api.auth.logout()
-      if (res) window.location.href = '/'
-    })
-
-    // 退会ボタン
-    const btnDeleteUser = document.getElementById('btn-delete-user') as HTMLButtonElement
-    btnDeleteUser?.addEventListener('click', api.user.deleteUser)
-  }
-
-  // ページ読み込み時に初期化
-  const init = () => {
-    if (window.location.pathname === '/user/') {
-      setClickEvent()
-    }
-  }
-  init()
-  document.addEventListener('astro:after-swap', init)
-</script>

@@ -3,6 +3,7 @@ import { loadEnv } from 'vite'
 import fs from 'fs'
 import daisyui from 'daisyui'
 import icon from 'astro-icon'
+import htmx from 'astro-htmx'
 import node from '@astrojs/node'
 import partytown from '@astrojs/partytown'
 import sitemap from '@astrojs/sitemap'
@@ -18,7 +19,7 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone',
   }),
-  integrations: [icon(), partytown(), sitemap(), tailwind(), react()],
+  integrations: [icon({ iconDir: "src/assets/icons", }), htmx(), partytown(), sitemap(), tailwind(), react()],
   plugins: [daisyui],
   server: {
     host: true,
