@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import classNames from 'classnames'
 import { useFormContext } from 'react-hook-form'
 import type { FieldError } from 'react-hook-form'
+import { Icon } from '@iconify/react';
 import { BaseFormField } from '@/components/molecules/BaseFormField'
-import Icon from '@/components/atoms/Icon'
 
 type InputType = 'text' | 'password' | 'email' | 'number' | 'tel'
 type FormFieldTextProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -48,15 +48,15 @@ export const FormFieldText: React.FC<FormFieldTextProps> = ({ label, id, validat
 
   return (
     <BaseFormField label={label} id={id} validation={validation}>
-      {icon && <Icon name={icon} className="absolute inset-y-0 left-4 h-full opacity-70" />}
+      {icon && <Icon icon={icon} className="absolute inset-y-0 left-4 h-full opacity-70" width={20} height={20} />}
 
       <input {...register(validation)} id={id} type={type === 'password' && isPasswordVisible ? 'text' : type} placeholder={placeholder} className={className} {...rest} />
 
       {type === 'password' && (
         <label className="swap absolute inset-y-0 right-4">
           <input type="checkbox" tabIndex={-1} onChange={togglePasswordVisibility} checked={isPasswordVisible} />
-          <Icon name="icon-eye" className="swap-on h-full opacity-70" />
-          <Icon name="icon-eye-slash" className="swap-off h-full opacity-70" />
+          <Icon icon="mdi:eye" className="swap-on h-full opacity-70" width={20} height={20} />
+          <Icon icon="mdi:eye-off" className="swap-off h-full opacity-70" width={20} height={20} />
         </label>
       )}
     </BaseFormField>

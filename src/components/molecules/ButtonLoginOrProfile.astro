@@ -1,6 +1,6 @@
 ---
 import { tv } from 'tailwind-variants'
-import Icon from '@/components/atoms/Icon.astro'
+import { Icon } from 'astro-icon/components'
 
 const { size, class: addClasses, ...rest } = Astro.props
 const style = tv({
@@ -9,7 +9,7 @@ const style = tv({
 ---
 
 <a class={style()} href="/login/" {...rest}>
-  <Icon name="icon-user" />
+  <Icon name="mdi:user" width={28} height={28} />
 </a>
 
 <script>

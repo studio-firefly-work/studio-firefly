@@ -57,9 +57,9 @@ const Form = ({ user }: any) => {
           <>
             {step === 1 && (
               <>
-                <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="icon-user" defaultValue={user.name} />
+                <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="mdi:user" defaultValue={user.name} />
                 <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" defaultValue={user.kana} />
-                <FormFieldText label="メールアドレス" id="new-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="icon-envelope" defaultValue={user.email} />
+                <FormFieldText label="メールアドレス" id="new-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="mdi:email" defaultValue={user.email} />
 
                 <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
                   入力内容の確認

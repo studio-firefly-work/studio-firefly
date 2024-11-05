@@ -1,7 +1,7 @@
 ---
+import { Icon } from 'astro-icon/components'
 import ButtonLoginOrProfile from '@/components/molecules/ButtonLoginOrProfile.astro'
 import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle.astro'
-import Icon from '@/components/atoms/Icon.astro'
 
 interface Props {
   links: Theme.Link[]
@@ -14,7 +14,7 @@ const currentPath = Astro.url.pathname
 <div class="drawer">
   <input id="js-hamb-checkbox" type="checkbox" class="drawer-toggle hidden" />
   <label for="js-hamb-checkbox" id="js-hamb-button" class="btn btn-ghost drawer-button px-0" tabindex="0" role="button" aria-controls="js-hamb-menu" aria-expanded="false" aria-label="メニューを開く">
-    <Icon name="icon-bars-3" class="h-10 w-10" />
+    <Icon name="mdi:hamburger-menu" width={40} height={40} />
   </label>
   <nav id="js-hamb-menu" class="drawer-side z-50" area-hidden="true" data-lenis-prevent>
     <label for="js-hamb-checkbox" aria-label="close sidebar" class="drawer-overlay"></label>
@@ -23,7 +23,7 @@ const currentPath = Astro.url.pathname
         links.map((link: Theme.Link) => (
           <li class="js-hamb-link">
             <a href={link.permalink} class={`btn btn-ghost justify-start ${currentPath.startsWith(link.permalink) ? 'theme-current-page w-fit' : undefined}`}>
-              <Icon name={link.icon} />
+              <Icon name={link.icon} width={28} height={28} />
               {link.title}
             </a>
           </li>
