@@ -4,8 +4,11 @@
   "useTabs": false,
   "tabWidth": 2,
   "trailingComma": "es5",
-  "printWidth": 360,
+  "printWidth": 120,
   "bracketSpacing": true,
   "arrowParens": "always",
-  "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"]
+  "plugins": [
+    "prettier-plugin-astro",
+    "prettier-plugin-tailwindcss"
+  ]
 }
