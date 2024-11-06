@@ -1,0 +1,25 @@
+---
+import FormFieldText from '@/components/molecules/FormFieldText/FormFieldText.astro'
+import FormFieldTextarea from '@/components/molecules/FormFieldTextarea/FormFieldTextarea.astro'
+
+const { fields, ...rest } = Astro.props
+
+const data = fields.reduce((acc: any, field: any) => {
+  acc[field.id] = field.value
+  return acc
+}, {})
+---
+
+<form x-data={JSON.stringify(data)} {...rest}>
+  {
+    fields.map((field: any) => {
+      switch (field.type) {
+        case 'textarea':
+          return <FormFieldTextarea {field} />
+        default:
+          return <FormFieldText {field} />
+      }
+    })
+  }
+  <slot />
+</form>

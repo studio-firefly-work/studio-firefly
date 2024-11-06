@@ -13,6 +13,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@astrojs/alpinejs": "^0.4.0",
     "@astrojs/node": "^8.3.4",
     "@astrojs/partytown": "^2.1.2",
     "@astrojs/react": "^3.6.2",
@@ -23,8 +24,10 @@
     "@hookform/resolvers": "^3.9.0",
     "@splidejs/splide": "^4.1.4",
     "@splidejs/splide-extension-intersection": "^0.2.0",
+    "@types/alpinejs": "^3.13.10",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "alpinejs": "^3.14.3",
     "astro": "^4.16.6",
     "astro-google-analytics": "^1.0.3",
     "astro-htmx": "^1.0.6",

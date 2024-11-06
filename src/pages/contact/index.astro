@@ -2,7 +2,7 @@
 import PageLayout from '@/layouts/PageLayout.astro'
 import Container from '@/components/atoms/Container.astro'
 import Inner from '@/components/atoms/Inner.astro'
-import { FormContact } from '@/components/organisms/FormContact'
+import FormContact from '@/components/organisms/FormContact/FormContact.astro'
 
 const seo: Theme.SEO = {
   title: 'お問い合わせ',
@@ -15,7 +15,7 @@ const seo: Theme.SEO = {
 <PageLayout {seo}>
   <Container>
     <Inner size="slim">
-      <FormContact client:only="react" />
+      <FormContact />
     </Inner>
   </Container>
 </PageLayout>
