@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants'
 import { Icon } from 'astro-icon/components'
 import BaseFormField from '@/components/molecules/BaseFormField/BaseFormField.astro'
 
-const { field, ...rest } = Astro.props
+const { id, label, type, placeholder, autocomplete, icon, error, ...rest } = Astro.props
 
 const style = tv({
   base: 'input input-bordered w-full',
@@ -16,17 +16,17 @@ const style = tv({
 })
 ---
 
-<BaseFormField {field}>
-  {field.icon && <Icon name={field.icon} width={20} height={20} class="absolute inset-y-0 left-4 h-full opacity-70" />}
+<BaseFormField {id} {label} {error}>
+  {icon && <Icon name={icon} width={20} height={20} class="absolute inset-y-0 left-4 h-full opacity-70" />}
 
   <input
-    id={field.id}
-    type={field.type}
-    placeholder={field.placeholder}
-    autocomplete={field.autocomplete}
-    name={field.id}
-    x-model={field.id}
-    class={style({ icon: Boolean(field.icon) })}
+    {id}
+    {type}
+    {placeholder}
+    {autocomplete}
+    name={id}
+    x-model={id}
+    class={style({ icon: Boolean(icon) })}
     {...rest}
   />
 </BaseFormField>

@@ -1,20 +1,14 @@
 ---
-const { field, error } = Astro.props
+const { id, label, error } = Astro.props
 ---
 
 <div class="form-control w-full">
-  <label for={field.id} class="label label-text">
-    {field.label}
+  <label for={id} class="label label-text">
+    {label}
   </label>
   <div class="relative">
     <slot />
   </div>
 
-  {
-    error?.message && (
-      <span class="label label-text-alt text-error" aria-live="polite" role="alert">
-        {error.message}
-      </span>
-    )
-  }
+  <span x-show={error} class="label label-text-alt text-error" aria-live="polite" role="alert"> エラーメッセージ </span>
 </div>
