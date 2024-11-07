@@ -15,9 +15,9 @@ const data = fields.reduce((acc: any, field: any) => {
     fields.map((field: any) => {
       switch (field.type) {
         case 'textarea':
-          return <FormFieldTextarea {field} />
+          return <FormFieldTextarea {...field} />
         default:
-          return <FormFieldText {field} />
+          return <FormFieldText {...field} x-on:blur={(field.error = data[field.id])} />
       }
     })
   }

@@ -9,7 +9,6 @@ import partytown from '@astrojs/partytown'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 import react from '@astrojs/react'
-import alpinejs from '@astrojs/alpinejs';
 const { SITE, BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 
 // https://astro.build/config
@@ -20,7 +19,7 @@ export default defineConfig({
   adapter: node({
     mode: 'standalone',
   }),
-  integrations: [icon({ iconDir: "src/assets/icons", }), htmx(), partytown(), sitemap(), tailwind(), react(), alpinejs()],
+  integrations: [icon({ iconDir: "src/assets/icons", }), htmx(), partytown(), sitemap(), tailwind(), react()],
   plugins: [daisyui],
   server: {
     host: true,
