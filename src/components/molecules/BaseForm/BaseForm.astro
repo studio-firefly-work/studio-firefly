@@ -4,20 +4,24 @@ import FormFieldTextarea from '@/components/molecules/FormFieldTextarea/FormFiel
 
 const { fields, ...rest } = Astro.props
 
-const data = fields.reduce((acc: any, field: any) => {
-  acc[field.id] = field.value
-  return acc
-}, {})
+const data = fields
+  .reduce((acc: string, field: any) => {
+    return `${acc}${field.id}: ${JSON.stringify(field.value)}, `
+  }, '')
+  .slice(0, -2) // 最後のカンマとスペースを削除
+
+// xData文字列の作成
+const xData = `{ ${data}, validate() { this.name = 'changed' } }`
 ---
 
-<form x-data={JSON.stringify(data)} {...rest}>
+<form x-data={xData} {...rest}>
   {
     fields.map((field: any) => {
       switch (field.type) {
         case 'textarea':
           return <FormFieldTextarea {...field} />
         default:
-          return <FormFieldText {...field} x-on:blur={(field.error = data[field.id])} />
+          return <FormFieldText {...field} />
       }
     })
   }
