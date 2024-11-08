@@ -1,47 +1,38 @@
 ---
-import BaseForm from '@/components/molecules/BaseForm/BaseForm.astro'
+// Full Astro Component Syntax:
+// https://docs.astro.build/basics/astro-components/
 
-const fields = [
-  {
-    label: '名前',
-    value: '',
-    id: 'name',
-    type: 'text',
-    placeholder: '山田太郎',
-    autocomplete: 'name',
-    icon: 'mdi:user',
-  },
-  {
-    label: 'フリガナ',
-    value: '',
-    id: 'kana',
-    type: 'text',
-    placeholder: 'ヤマダタロウ',
-  },
-  {
-    label: 'メールアドレス',
-    value: '',
-    id: 'email',
-    type: 'email',
-    placeholder: 'email@example.com',
-    autocomplete: 'email',
-    icon: 'mdi:email',
-  },
-  {
-    label: '問い合わせ内容',
-    value: '',
-    id: 'contact',
-    type: 'textarea',
-    placeholder: 'お問い合わせ内容を入力してください。',
-  },
-]
+interface Props {
+  name?: string
+  initialCount?: number
+}
+
+const { name = 'test', initialCount = 0 } = Astro.props
 ---
 
-<BaseForm hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`} hx-trigger="submit" hx-swap="none" {fields}>
-  <button type="submit" class="btn btn-primary w-full">Submit</button>
-</BaseForm>
+<div class="counter" x-data={`{ count: ${initialCount}, name: '${name}', change() { this.name = 'change'; } }`}>
+  <button x-on:click="count--">-</button>
+  <pre x-text="count">{ initialCount }</pre>
+  <button x-on:click="count++">+</button>
 
-<script>
-  import * as AutoKana from 'vanilla-autokana'
-  AutoKana.bind('#name', '#kana', { katakana: true })
-</script>
+  <button @click="change">メッセージを変更</button>
+  <p x-text="name">{name}</p>
+</div>
+
+<div class="counter-message">
+  <slot />
+</div>
+
+<style>
+  .counter {
+    display: grid;
+    font-size: 2em;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 2em;
+    place-items: center;
+  }
+
+  .counter-message {
+    text-align: center;
+  }
+</style>
