@@ -11,7 +11,7 @@ const data = fields
   .slice(0, -2) // 最後のカンマとスペースを削除
 
 // xData文字列の作成
-const xData = `{ ${data}, validate() { this.name = 'changed' } }`
+const xData = `{ ${data}, validate(id) { this[id] = 'changed'} }`
 ---
 
 <form x-data={xData} {...rest}>
@@ -21,7 +21,7 @@ const xData = `{ ${data}, validate() { this.name = 'changed' } }`
         case 'textarea':
           return <FormFieldTextarea {...field} />
         default:
-          return <FormFieldText {...field} />
+          return <FormFieldText {...field} x-on:blur={`validate("${field.id}")`} />
       }
     })
   }
