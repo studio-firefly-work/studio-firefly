@@ -2,20 +2,20 @@
 import FormFieldText from '@/components/molecules/FormFieldText/FormFieldText.astro'
 import FormFieldTextarea from '@/components/molecules/FormFieldTextarea/FormFieldTextarea.astro'
 
-const { fields, ...rest } = Astro.props
+const { ...rest } = Astro.props
 
-const data = fields
-  .reduce((acc: string, field: any) => {
-    return `${acc}${field.id}: ${JSON.stringify(field.value)}, `
-  }, '')
-  .slice(0, -2) // 最後のカンマとスペースを削除
+// const data = fields
+//   .reduce((acc: string, field: any) => {
+//     return `${acc}${field.id}: ${JSON.stringify(field.value)}, `
+//   }, '')
+//   .slice(0, -2) // 最後のカンマとスペースを削除
 
-// xData文字列の作成
-const xData = `{ ${data}, validate(id) { this[id] = 'changed'} }`
+// // xData文字列の作成
+// const xData = `{ ${data}, validate(id) { this[id] = 'changed'} }`
 ---
 
-<form x-data={xData} {...rest}>
-  {
+<form {...rest}>
+  <!-- {
     fields.map((field: any) => {
       switch (field.type) {
         case 'textarea':
@@ -24,6 +24,8 @@ const xData = `{ ${data}, validate(id) { this[id] = 'changed'} }`
           return <FormFieldText {...field} x-on:blur={`validate("${field.id}")`} />
       }
     })
-  }
+  } -->
+  <input x-model="name" x-on:blur="check('name')" />
+  <input x-model="email" x-on:blur="check('email')" />
   <slot />
 </form>

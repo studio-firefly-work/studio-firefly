@@ -18,11 +18,13 @@ const { seo } = Astro.props
     <SEOMetaTags {seo} />
     <ViewTransitions />
   </head>
-  <body class="manipulation grid min-h-dvh grid-cols-1 grid-rows-[auto,1fr,auto] break-words bg-base-200 font-body text-base tracking-normal antialiased">
+  <body
+    class="manipulation grid min-h-dvh grid-cols-1 grid-rows-[auto,1fr,auto] break-words bg-base-200 font-body text-base tracking-normal antialiased"
+  >
     <SplashScreen />
     <slot />
     <script>
-      const init = () => {
+      document.addEventListener('astro:page-load', () => {
         const labelButtons = document.querySelectorAll('label[role="button"]') as NodeListOf<HTMLLabelElement>
         labelButtons.forEach((button: HTMLLabelElement) => {
           button.addEventListener('keydown', (event) => {
@@ -32,10 +34,7 @@ const { seo } = Astro.props
             }
           })
         })
-      }
-
-      init()
-      document.addEventListener('astro:after-swap', init)
+      })
     </script>
   </body>
 </html>

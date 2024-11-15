@@ -35,13 +35,30 @@ const fields = [
     placeholder: 'お問い合わせ内容を入力してください。',
   },
 ]
+
+const getUserData = `{
+      name: 'John Doe',
+      kana: 'カナ',
+      email: 'john@example.com',
+      check(data) {
+        console.log(data)
+      },
+}`
 ---
 
-<BaseForm hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`} hx-trigger="submit" hx-swap="none" {fields}>
+<form
+  hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`}
+  hx-trigger="submit"
+  hx-swap="none"
+  x-data={getUserData}
+>
+  <input id="name" x-model="name" x-on:blur="check(name)" />
+  <input id="kana" x-model="kana" x-on:blur="check(kana)" />
+  <input id="email" x-model="email" x-on:blur="check(email)" />
   <button type="submit" class="btn btn-primary w-full">Submit</button>
-</BaseForm>
+</form>
 
-<script>
-  import * as AutoKana from 'vanilla-autokana'
+<script is:inline data-astro-rerun type="module">
+  import AutoKana from 'https://cdn.jsdelivr.net/npm/vanilla-autokana/+esm'
   AutoKana.bind('#name', '#kana', { katakana: true })
 </script>
