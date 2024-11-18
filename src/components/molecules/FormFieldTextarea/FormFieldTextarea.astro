@@ -19,11 +19,14 @@ const style = tv({
   {icon && <Icon name={icon} width={20} height={20} class="absolute inset-y-0 left-4 h-full opacity-70" />}
 
   <textarea
-    id={id}
-    placeholder={placeholder}
-    name={id}
-    x-model={id}
-    class={style({ icon: Boolean(icon) })}
+    {id}
+    {placeholder}
     rows={4}
+    name={id}
+    class={style({ icon: Boolean(icon) })}
+    x-model={id}
+    x-bind:class={`errors.${id} ? 'textarea-error' : ($el.value ? 'textarea-success' : '')`}
+    x-on:input={`validate${id.charAt(0).toUpperCase() + id.slice(1)}('${id}')`}
+    x-on:blur={`validate${id.charAt(0).toUpperCase() + id.slice(1)}('${id}')`}
     {...rest}></textarea>
 </BaseFormField>

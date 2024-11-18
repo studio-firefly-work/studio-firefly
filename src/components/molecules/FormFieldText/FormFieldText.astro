@@ -3,8 +3,7 @@ import { tv } from 'tailwind-variants'
 import { Icon } from 'astro-icon/components'
 import BaseFormField from '@/components/molecules/BaseFormField/BaseFormField.astro'
 
-const { id, label, type, placeholder, autocomplete, icon, error, ...rest } = Astro.props
-
+const { id, label, type = 'text', placeholder, autocomplete, icon, validations, ...rest } = Astro.props
 const style = tv({
   base: 'input input-bordered w-full',
   variants: {
@@ -16,7 +15,7 @@ const style = tv({
 })
 ---
 
-<BaseFormField {id} {label} {error}>
+<BaseFormField {id} {label}>
   {icon && <Icon name={icon} width={20} height={20} class="absolute inset-y-0 left-4 h-full opacity-70" />}
 
   <input
@@ -25,8 +24,11 @@ const style = tv({
     {placeholder}
     {autocomplete}
     name={id}
-    x-model={id}
     class={style({ icon: Boolean(icon) })}
+    x-model={id}
+    x-bind:class={`errors.${id} ? 'input-error' : ($el.value ? 'input-success' : '')`}
+    x-on:input={`validate${id.charAt(0).toUpperCase() + id.slice(1)}('${id}')`}
+    x-on:blur={`validate${id.charAt(0).toUpperCase() + id.slice(1)}('${id}')`}
     {...rest}
   />
 </BaseFormField>

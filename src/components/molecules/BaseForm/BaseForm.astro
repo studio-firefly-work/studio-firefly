@@ -2,30 +2,62 @@
 import FormFieldText from '@/components/molecules/FormFieldText/FormFieldText.astro'
 import FormFieldTextarea from '@/components/molecules/FormFieldTextarea/FormFieldTextarea.astro'
 
-const { ...rest } = Astro.props
+const { fields, ...rest } = Astro.props
 
-// const data = fields
-//   .reduce((acc: string, field: any) => {
-//     return `${acc}${field.id}: ${JSON.stringify(field.value)}, `
-//   }, '')
-//   .slice(0, -2) // 最後のカンマとスペースを削除
+const dataStr = fields.map((field: any) => `${field.id}: ''`).join(', ')
+const validStr = fields
+  .map((field: any) => {
+    if (!field.validations || !Array.isArray(field.validations)) {
+      return ''
+    }
 
-// // xData文字列の作成
-// const xData = `{ ${data}, validate(id) { this[id] = 'changed'} }`
+    const validations = field.validations
+      .map((validation: any) => {
+        return `{ pattern: ${validation.pattern.toString()}, text: '${validation.text}' }`
+      })
+      .join(', ')
+
+    return `validate${field.id.charAt(0).toUpperCase() + field.id.slice(1)}() {
+        const validations = [${validations}]
+        let errorText = ''
+
+        ${validations
+          .split('}, {')
+          .map((_: any, index: any) => {
+            return `if (!validations[${index}]['pattern'].test(this.${field.id})) {
+              errorText = validations[${index}]['text']
+            }`
+          })
+          .join(' else ')}
+
+        if (errorText) {
+          this.errors.${field.id} = errorText
+        } else {
+          delete this.errors.${field.id}
+        }
+      },`
+  })
+  .join('\n')
+
+const xData = `{
+  ${dataStr},
+  errors: {
+    ${dataStr}
+  },
+  ${validStr}
+}`
 ---
 
-<form {...rest}>
-  <!-- {
+<form x-data={xData} {...rest}>
+  {
     fields.map((field: any) => {
       switch (field.type) {
         case 'textarea':
           return <FormFieldTextarea {...field} />
         default:
-          return <FormFieldText {...field} x-on:blur={`validate("${field.id}")`} />
+          return <FormFieldText {...field} />
       }
     })
-  } -->
-  <input x-model="name" x-on:blur="check('name')" />
-  <input x-model="email" x-on:blur="check('email')" />
+  }
   <slot />
 </form>
