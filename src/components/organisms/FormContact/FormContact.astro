@@ -43,16 +43,21 @@ const fields = [
 ]
 ---
 
-<BaseForm {fields} hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`} hx-triger="submit" hx-swap="none">
+<BaseForm
+  {fields}
+  hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`}
+  hx-trigger="submit"
+  hx-swap="none"
+  x-on:submit.prevent
+>
   <button
-    type="button"
+    type="submit"
     class="btn btn-disabled btn-primary w-full"
-    x-on:click="
-              if (Object.keys(errors).length === 0) { 
-                $dispatch('submit'); 
-              }"
-    x-bind:class="{'btn-disabled' : Object.keys(errors).length}">Submit</button
+    x-on:click.prevent="if (!Object.keys(errors).length) { if(confirm('本当に送信しますか？')) { $el.closest('form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); } }"
+    x-bind:class="{'btn-disabled': Object.keys(errors).length}"
   >
+    Submit
+  </button>
 </BaseForm>
 
 <script is:inline data-astro-rerun type="module">
