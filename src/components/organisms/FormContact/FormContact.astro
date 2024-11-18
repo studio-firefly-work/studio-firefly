@@ -37,12 +37,52 @@ const fields = [
 ]
 
 const getUserData = `{
-      name: 'John Doe',
-      kana: 'カナ',
-      email: 'john@example.com',
-      check(data) {
-        console.log(data)
-      },
+    name: '',
+    kana: '',
+    tel: '',
+    email: '',
+    errors: {},
+    
+    validateName() {
+      if (!this.name) {
+        this.errors.name = '※お名前は必須です。'
+      } else {
+        delete this.errors.name
+      }
+    },
+    
+    validateKana() {
+      const kanaPattern = /^[ァ-ヶー]+$/
+      if (!this.kana) {
+        this.errors.kana = '※カナは必須です。'
+      } else if (!kanaPattern.test(this.kana)) {
+        this.errors.kana = 'カタカナを入力してください。'
+      } else {
+        delete this.errors.kana
+      }
+    },
+
+    validateTel() {
+      const telPattern = /^[0-9]{2,4}-?[0-9]{2,4}-?[0-9]{4}$/
+      if (!this.tel) {
+        this.errors.tel = "※電話番号は必須です。"
+      } else if (!telPattern.test(this.tel)) {
+        this.errors.tel = "有効な電話番号を入力してください。"
+      } else {
+        delete this.errors.tel
+      }
+    },
+    
+    validateEmail() {
+      const emailPattern = /.+@.+\..+/
+      if (!this.email) {
+        this.errors.email = '※メールアドレスは必須です'
+      } else if (!emailPattern.test(this.email)) {
+        this.errors.email = 'メールアドレスの形式で入力してください'
+      } else {
+        delete this.errors.email
+      }
+    }
 }`
 ---
 
@@ -52,9 +92,50 @@ const getUserData = `{
   hx-swap="none"
   x-data={getUserData}
 >
-  <input id="name" x-model="name" x-on:blur="check(name)" />
-  <input id="kana" x-model="kana" x-on:blur="check(kana)" />
-  <input id="email" x-model="email" x-on:blur="check(email)" />
+  <dl class="list">
+    <div>
+      <dt>
+        <label for="name">お名前</label>
+      </dt>
+      <dd>
+        <input type="text" name="name" id="name" x-model="name" x-on:input="validateName" />
+        <p x-show="errors.name" x-text="errors.name"></p>
+      </dd>
+    </div>
+  </dl>
+  <dl class="list">
+    <div>
+      <dt>
+        <label for="kana">カナ</label>
+      </dt>
+      <dd>
+        <input type="text" name="kana" id="kana" x-model="kana" x-on:input="validateKana" />
+        <p x-show="errors.kana" x-text="errors.kana"></p>
+      </dd>
+    </div>
+  </dl>
+  <dl class="list">
+    <div>
+      <dt>
+        <label for="tel">電話</label>
+      </dt>
+      <dd>
+        <input type="text" name="tel" id="tel" x-model="tel" x-on:input="validateTel" />
+        <p x-show="errors.tel" x-text="errors.tel"></p>
+      </dd>
+    </div>
+  </dl>
+  <dl class="list">
+    <div>
+      <dt>
+        <label for="email">メールアドレス</label>
+      </dt>
+      <dd>
+        <input type="text" name="email" id="email" x-model="email" x-on:input="validateEmail" />
+        <p x-show="errors.email" x-text="errors.email"></p>
+      </dd>
+    </div>
+  </dl>
   <button type="submit" class="btn btn-primary w-full">Submit</button>
 </form>
 
