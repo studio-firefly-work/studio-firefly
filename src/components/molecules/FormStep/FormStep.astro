@@ -1,0 +1,15 @@
+---
+const { steps } = Astro.props
+---
+
+<div class="text-center">
+  <ol class="steps w-full">
+    {
+      steps.map((name: string, index: number) => (
+        <li class="step" x-bind:class={`{'step-primary': ${index + 1} <= step}`}>
+          {name}
+        </li>
+      ))
+    }
+  </ol>
+</div>

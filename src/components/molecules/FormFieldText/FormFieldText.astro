@@ -28,7 +28,6 @@ const style = tv({
     x-model={id}
     x-bind:class={`errors.${id} ? 'input-error' : ($el.value ? 'input-success' : '')`}
     x-on:input={`validate${id.charAt(0).toUpperCase() + id.slice(1)}('${id}')`}
-    x-on:blur={`validate${id.charAt(0).toUpperCase() + id.slice(1)}('${id}')`}
     {...rest}
   />
 </BaseFormField>
