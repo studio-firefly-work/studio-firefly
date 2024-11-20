@@ -1,68 +1,110 @@
 ---
-import BaseForm from '@/components/molecules/BaseForm/BaseForm.astro'
+import FormStep from '@/components/molecules/FormStep/FormStep.astro'
+import FormFieldArea from '@/components/molecules/FormFieldArea/FormFieldArea.astro'
+import { utils } from '@/utils'
 
-const steps = ['入力', '確認', '完了']
 const fields = [
   {
-    label: '名前',
+    label: { text: '名前', required: true },
     id: 'name',
     placeholder: '山田太郎',
     autocomplete: 'name',
     icon: 'mdi:user',
-    validations: [{ pattern: /^(?!\s*$).+/, text: '名前は必須です' }],
-    'x-on:change': '$refs.kana.dispatchEvent(new Event("input"))',
-    'x-on:blur': '$refs.kana.dispatchEvent(new Event("input"))',
+    validations: [{ pattern: /^(?!s*$).+/, text: '名前は必須です' }],
+    'x-on:change': '$refs.kana.dispatchEvent(new Event("input"))', // AutoKanaを発火する
+    'x-on:blur': '$refs.kana.dispatchEvent(new Event("input"))', // AutoKanaを発火する
   },
   {
-    label: 'フリガナ',
+    label: { text: 'フリガナ', required: true },
     id: 'kana',
     placeholder: 'ヤマダタロウ',
     validations: [
-      { pattern: /^(?!\s*$).+/, text: 'カナは必須です' },
+      { pattern: /^(?!s*$).+/, text: 'カナは必須です' },
       { pattern: /^[ァ-ヶー]+$/, text: 'カタカナで入力してください' },
     ],
-    'x-ref': 'kana',
+    'x-ref': 'kana', // AutoKanaで発火させる
   },
   {
-    label: 'メールアドレス',
+    label: { text: 'メールアドレス', required: true },
     id: 'email',
     type: 'email',
     placeholder: 'email@example.com',
     autocomplete: 'email',
     icon: 'mdi:email',
     validations: [
-      { pattern: /^(?!\s*$).+/, text: 'メールアドレスは必須です' },
-      { pattern: /.+@.+\..+/, text: 'メールアドレスの形式で入力してください' },
+      { pattern: /^(?!s*$).+/, text: 'メールアドレスは必須です' },
+      { pattern: /.+@.+..+/, text: 'メールアドレスの形式で入力してください' },
     ],
   },
   {
-    label: '問い合わせ内容',
+    label: { text: '問い合わせ内容', required: true },
     id: 'contact',
     type: 'textarea',
     placeholder: 'お問い合わせ内容を入力してください。',
-    validations: [{ pattern: /^(?!\s*$).+/, text: 'お問い合わせ内容は必須です' }],
+    validations: [{ pattern: /^(?!s*$).+/, text: 'お問い合わせ内容は必須です' }],
+  },
+  {
+    label: [],
+    id: 'privacy',
+    type: 'checkbox',
+    items: ['<a href="/privacy/" class="link" target="_blank">プライバシーポリシー</a>に同意する'],
+    validations: [
+      {
+        pattern: 'this.privacy.length',
+        text: 'プライバシーポリシーに同意いただく必要があります。',
+      },
+    ],
   },
 ]
 ---
 
-<BaseForm
-  {steps}
-  {fields}
-  hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`}
-  hx-trigger="submit"
-  hx-swap="none"
-  x-on:submit.prevent
->
-  <button
-    type="submit"
-    class="btn btn-disabled btn-primary w-full"
-    x-bind:class="{'btn-disabled': Object.keys(errors).length}"
-    x-on:click.prevent="if(!Object.keys(errors).length) { if(confirm('本当に送信しますか？')) { $el.closest('form').dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); } }"
-  >
-    Submit
-  </button>
-</BaseForm>
+<div x-data={utils.form.createXData(fields)}>
+  <FormStep steps={['入力', '確認', '完了']} />
 
+  <form
+    hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`}
+    hx-trigger="verified"
+    hx-swap="none"
+    x-ref="form"
+    x-on:submit.prevent
+  >
+    <div x-show="step == 1" x-transition>
+      <FormFieldArea {fields} />
+      <div class="mt-6">
+        <button
+          type="button"
+          class="btn btn-disabled btn-primary w-full"
+          x-bind:class="{'btn-disabled': Object.keys(errors).length}"
+          x-on:click="if(!Object.keys(errors).length){step = 2}"
+        >
+          入力内容の確認
+        </button>
+      </div>
+    </div>
+
+    <div x-show="step == 2" x-transition>
+      <FormFieldArea {fields} mode="confirm" />
+      <div class="mt-6 grid gap-4 md:grid-cols-2">
+        <button
+          type="submit"
+          class="btn btn-disabled btn-accent w-full md:order-2"
+          data-sitekey={import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}
+          data-callback="onSubmit"
+          data-action="submit"
+          x-bind:class="{'btn-disabled': Object.keys(errors).length}"
+        >
+          お問い合わせを送信
+        </button>
+        <button type="button" class="btn btn-ghost w-full md:order-1" x-on:click="step = 1">入力内容の修正</button>
+      </div>
+    </div>
+
+    <div x-show="step == 3">送信完了</div>
+  </form>
+</div>
+
+<script is:inline src={`https://www.google.com/recaptcha/api.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`}
+></script>
 <script is:inline data-astro-rerun type="module">
   import AutoKana from 'https://cdn.jsdelivr.net/npm/vanilla-autokana/+esm'
   AutoKana.bind('#name', '#kana', { katakana: true })

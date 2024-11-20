@@ -1,3 +1,4 @@
+import { form } from '@/utils/form'
 import { post } from '@/utils/post'
 import { schema } from '@/utils/schema'
 
@@ -29,6 +30,7 @@ export const formatDate = (dateString: string): string => {
 export const utils = {
   getAssetsImage,
   formatDate,
+  form,
   post,
   schema,
 }

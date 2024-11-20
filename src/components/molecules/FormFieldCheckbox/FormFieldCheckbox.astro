@@ -1,0 +1,26 @@
+---
+import BaseFormField from '@/components/molecules/BaseFormField/BaseFormField.astro'
+
+const { id, label, items, validations, ...rest } = Astro.props
+---
+
+<BaseFormField {id} {label}>
+  {
+    items.map((item: string, index: number) => (
+      <label class="label w-fit cursor-pointer justify-start gap-2">
+        <input
+          id={`${id}-${index}`}
+          type="checkbox"
+          name={`${id}-${index}`}
+          class="checkbox"
+          value={item}
+          x-model={id}
+          x-bind:class={`errors.${id} ? 'checkbox-error' : ($el.checked ? 'checkbox-success' : '')`}
+          x-on:change={`validate${id.charAt(0).toUpperCase() + id.slice(1)}`}
+          {...rest}
+        />
+        <span class="label-text" set:html={item} />
+      </label>
+    ))
+  }
+</BaseFormField>

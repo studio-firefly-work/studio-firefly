@@ -1,0 +1,31 @@
+---
+import FormFieldText from '@/components/molecules/FormFieldText/FormFieldText.astro'
+import FormFieldTextarea from '@/components/molecules/FormFieldTextarea/FormFieldTextarea.astro'
+import FormFieldCheckbox from '@/components/molecules/FormFieldCheckbox/FormFieldCheckbox.astro'
+
+const { fields, mode = 'input' } = Astro.props
+---
+
+<div class="grid gap-2">
+  {
+    fields.map((field: any) => {
+      if (mode == 'input') {
+        switch (field.type) {
+          case 'textarea':
+            return <FormFieldTextarea {...field} />
+          case 'checkbox':
+            return <FormFieldCheckbox {...field} />
+          default:
+            return <FormFieldText {...field} />
+        }
+      } else if (mode == 'confirm') {
+        return (
+          <div class="form-control w-full">
+            <p class="label label-text">{field.label}</p>
+            <p x-html={field.id} />
+          </div>
+        )
+      }
+    })
+  }
+</div>
