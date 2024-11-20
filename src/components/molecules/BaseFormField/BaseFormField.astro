@@ -3,9 +3,15 @@ const { id, label } = Astro.props
 ---
 
 <div class="form-control w-full">
-  <label for={id} class="label label-text">
-    {label}
-  </label>
+  {
+    label.text && (
+      <label for={id} class="label label-text justify-start gap-2">
+        {label.required && <div class="badge badge-secondary badge-outline">必須</div>}
+        {!label.required && <div class="badge badge-outline">任意</div>}
+        {label.text}
+      </label>
+    )
+  }
   <div class="relative">
     <slot />
   </div>

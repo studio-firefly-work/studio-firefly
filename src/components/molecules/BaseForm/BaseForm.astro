@@ -1,8 +1,4 @@
 ---
-import FormStep from '@/components/molecules/FormStep/FormStep.astro'
-import FormFieldText from '@/components/molecules/FormFieldText/FormFieldText.astro'
-import FormFieldTextarea from '@/components/molecules/FormFieldTextarea/FormFieldTextarea.astro'
-
 const { fields, steps, ...rest } = Astro.props
 
 const dataStr = fields.map((field: any) => `${field.id}: ''`).join(', ')
@@ -49,27 +45,3 @@ const xData = `{
   ${validStr}
 }`
 ---
-
-<div x-data={xData}>
-  {steps && <FormStep {steps} />}
-
-  <form {...rest}>
-    <div x-show="step == 1">
-      {
-        fields.map((field: any) => {
-          switch (field.type) {
-            case 'textarea':
-              return <FormFieldTextarea {...field} />
-            default:
-              return <FormFieldText {...field} />
-          }
-        })
-      }
-      <slot />
-    </div>
-
-    <div x-show="step == 2">
-      <p>test</p>
-    </div>
-  </form>
-</div>
