@@ -61,13 +61,9 @@ const fields = [
 <div x-data={utils.form.createXData(fields)}>
   <FormStep steps={['入力', '確認', '完了']} />
 
-  <form
-    hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`}
-    hx-trigger="verified"
-    hx-swap="none"
-    x-ref="form"
-    x-on:submit.prevent
-  >
+  <form hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`} hx-swap="none" x-ref="form" x-on:submit.prevent>
+    <input type="hidden" name="recaptchaToken" x-model="recaptchaToken" />
+
     <div x-show="step == 1" x-transition>
       <FormFieldArea {fields} />
       <div class="mt-6">
@@ -88,10 +84,8 @@ const fields = [
         <button
           type="submit"
           class="btn btn-disabled btn-accent w-full md:order-2"
-          data-sitekey={import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}
-          data-callback="onSubmit"
-          data-action="submit"
           x-bind:class="{'btn-disabled': Object.keys(errors).length}"
+          x-on:click="if(!Object.keys(errors).length){submitForm}"
         >
           お問い合わせを送信
         </button>
