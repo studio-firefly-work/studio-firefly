@@ -48,8 +48,14 @@ export const form = {
         ${errStr}
       },
       ${validStr}
-      onSubmit(token) {
-        htmx.trigger($refs.form, 'submit')
+      onClick(e) {
+        e.preventDefault()
+        grecaptcha.ready(function() {
+          grecaptcha.execute('${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}', {action: 'submit'}).then(function(token) {
+            $refs.token.value = token
+            htmx.trigger($refs.form, 'submit')
+          })
+        })
       }
     }`
 

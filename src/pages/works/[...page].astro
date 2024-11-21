@@ -33,9 +33,17 @@ const seo: Theme.SEO = {
         {
           page.data.map((post) => (
             <li>
-              <a href={`/works/${post.frontmatter.slug}/`} class="group btn card btn-ghost h-full rounded-none bg-base-100 p-0 text-left font-normal shadow-xl">
+              <a
+                href={`/works/${post.frontmatter.slug}/`}
+                class="group btn card btn-ghost h-full rounded-none bg-base-100 p-0 text-left font-normal shadow-xl"
+              >
                 <figure class="overflow-hidden">
-                  <Image src={utils.getAssetsImage(post.frontmatter.image.src)} alt={post.frontmatter.image.alt} transition:name={`image-${post.frontmatter.slug}`} class="duration-300 group-hover:scale-110" />
+                  <Image
+                    src={utils.getAssetsImage(post.frontmatter.image.src)}
+                    alt={post.frontmatter.image.alt}
+                    transition:name={`image-${post.frontmatter.slug}`}
+                    class="duration-300 group-hover:scale-110"
+                  />
                 </figure>
                 <div class="card-body w-full py-4">
                   <div class="card-actions">
