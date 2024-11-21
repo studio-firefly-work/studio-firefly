@@ -64,11 +64,9 @@ const fields = [
   <form
     hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`}
     hx-swap="none"
-    x-init="$nextTick(() => window.onSubmit = onSubmit)"
+    x-init="$nextTick(() => { window.onSubmit = onSubmit })"
     x-ref="form"
   >
-    <input type="hidden" name="g-recaptcha-response" x-ref="token" />
-
     <div x-show="step == 1" x-transition>
       <FormFieldArea {fields} />
       <div class="mt-6">
@@ -88,10 +86,10 @@ const fields = [
       <div class="mt-6 grid gap-4 md:grid-cols-2">
         <button
           class="g-recaptcha btn btn-disabled btn-accent w-full md:order-2"
+          x-bind:class="{'btn-disabled': Object.keys(errors).length}"
           data-sitekey={import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}
           data-callback="onSubmit"
           data-action="submit"
-          x-bind:class="{'btn-disabled': Object.keys(errors).length}"
         >
           お問い合わせを送信
         </button>
