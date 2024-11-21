@@ -21,7 +21,7 @@ const { fields, mode = 'input' } = Astro.props
       } else if (mode == 'confirm') {
         return (
           <div class="form-control w-full">
-            <p class="label label-text">{field.label}</p>
+            <p class="label label-text">{field.label.text}</p>
             <p x-html={field.id} />
           </div>
         )
