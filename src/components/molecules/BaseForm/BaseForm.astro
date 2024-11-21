@@ -1,47 +1,26 @@
 ---
+import FormStep from '@/components/molecules/FormStep/FormStep.astro'
+import { utils } from '@/utils'
+
+interface Props {
+  fields: Theme.FormField[]
+  steps?: string[]
+}
+
 const { fields, steps, ...rest } = Astro.props
-
-const dataStr = fields.map((field: any) => `${field.id}: ''`).join(', ')
-const validStr = fields
-  .map((field: any) => {
-    if (!field.validations || !Array.isArray(field.validations)) {
-      return ''
-    }
-
-    const validations = field.validations
-      .map((validation: any) => {
-        return `{ pattern: ${validation.pattern.toString()}, text: '${validation.text}' }`
-      })
-      .join(', ')
-
-    return `validate${field.id.charAt(0).toUpperCase() + field.id.slice(1)}() {
-        const validations = [${validations}]
-        let errorText = ''
-
-        ${validations
-          .split('}, {')
-          .map((_: any, index: any) => {
-            return `if (!validations[${index}]['pattern'].test(this.${field.id})) {
-              errorText = validations[${index}]['text']
-            }`
-          })
-          .join(' else ')}
-
-        if (errorText) {
-          this.errors.${field.id} = errorText
-        } else {
-          delete this.errors.${field.id}
-        }
-      },`
-  })
-  .join('\n')
-
-const xData = `{
-  step: 1,
-  ${dataStr},
-  errors: {
-    ${dataStr}
-  },
-  ${validStr}
-}`
 ---
+
+<div x-data={utils.form.createXData(fields)}>
+  {steps && <FormStep {steps} />}
+
+  <form
+    hx-swap="none"
+    x-ref="form"
+    x-on:htmx:after-request.camel="if(event.detail.successful){$dispatch('success')}"
+    {...rest}
+  >
+    <input type="hidden" name="g-recaptcha-response" x-ref="token" />
+
+    <slot />
+  </form>
+</div>

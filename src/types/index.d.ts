@@ -58,6 +58,27 @@ declare namespace Theme {
     date: string
     membersonly?: boolean
   }
+
+  type FormFieldLabel = {
+    text: string
+    required: boolean
+  }
+
+  type FormFieldValidation = {
+    pattern: RegExp | string
+    text: string
+  }
+
+  type FormField = {
+    label: FormFieldLabel | null
+    id: string
+    type: string
+    placeholder?: string
+    autocomplete?: string
+    icon?: string
+    items?: string[]
+    validations?: FormFieldValidation[]
+  }
 }
 
 interface ViewTransition {

@@ -1,10 +1,10 @@
 export const form = {
   /**
    * フォームのフィールド情報からx-dataを生成する関数
-   * @param {Object[]} fields - フィールドの情報
+   * @param {Theme.FormField[]} fields - フィールドの情報
    * @returns {string} - x-data
    */
-  createXData: (fields: Object[]) => {
+  createXData: (fields: Theme.FormField[]) => {
     const dataStr = fields
       .map((field: any) => (field.type === 'checkbox' ? `${field.id}: []` : `${field.id}: ''`))
       .join(', ')

@@ -1,28 +1,29 @@
 ---
-import FormStep from '@/components/molecules/FormStep/FormStep.astro'
+import BaseForm from '@/components/molecules/BaseForm/BaseForm.astro'
 import FormFieldArea from '@/components/molecules/FormFieldArea/FormFieldArea.astro'
-import { utils } from '@/utils'
 
 const fields = [
   {
     label: { text: '名前', required: true },
     id: 'name',
+    type: 'text',
     placeholder: '山田太郎',
     autocomplete: 'name',
     icon: 'mdi:user',
     validations: [{ pattern: /^(?!s*$).+/, text: '名前は必須です' }],
-    '@change': '$refs.kana.dispatchEvent(new Event("input"))', // AutoKanaを発火する
-    '@blur': '$refs.kana.dispatchEvent(new Event("input"))', // AutoKanaを発火する
+    '@change': '$refs.kana.dispatchEvent(new Event("input"))', // AutoKanaの結果を評価するため
+    '@blur': '$refs.kana.dispatchEvent(new Event("input"))', // AutoKanaの結果を評価するため
   },
   {
     label: { text: 'フリガナ', required: true },
     id: 'kana',
+    type: 'text',
     placeholder: 'ヤマダタロウ',
     validations: [
       { pattern: /^(?!s*$).+/, text: 'カナは必須です' },
       { pattern: /^[ァ-ヶー]+$/, text: 'カタカナで入力してください' },
     ],
-    'x-ref': 'kana', // AutoKanaで発火させる
+    'x-ref': 'kana', // AutoKanaの結果を評価させるため
   },
   {
     label: { text: 'メールアドレス', required: true },
@@ -44,7 +45,7 @@ const fields = [
     validations: [{ pattern: /^(?!s*$).+/, text: 'お問い合わせ内容は必須です' }],
   },
   {
-    label: [],
+    label: null,
     id: 'privacy',
     type: 'checkbox',
     items: ['<a href="/privacy/" class="link" tabindex="-1" target="_blank">プライバシーポリシー</a>に同意する'],
@@ -58,48 +59,42 @@ const fields = [
 ]
 ---
 
-<div x-data={utils.form.createXData(fields)}>
-  <FormStep steps={['入力', '確認', '完了']} />
-
-  <form
-    hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`}
-    hx-swap="none"
-    @htmx:after-request.camel="if(event.detail.successful){step = 3}"
-    x-ref="form"
-  >
-    <input type="hidden" name="g-recaptcha-response" x-ref="token" />
-
-    <div x-show="step == 1">
-      <FormFieldArea {fields} />
-      <div class="mt-6">
-        <button
-          type="button"
-          class="btn btn-disabled btn-primary w-full"
-          :class="{'btn-disabled': Object.keys(errors).length}"
-          @click="if(!Object.keys(errors).length){step = 2}"
-        >
-          入力内容の確認
-        </button>
-      </div>
+<BaseForm
+  {fields}
+  steps={['入力', '確認', '完了']}
+  hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`}
+  @success="step = 3"
+>
+  <div x-show="step == 1">
+    <FormFieldArea {fields} />
+    <div class="mt-6">
+      <button
+        type="button"
+        class="btn btn-disabled btn-primary w-full"
+        x-bind:class="{'btn-disabled': Object.keys(errors).length}"
+        x-on:click="if(!Object.keys(errors).length){step = 2}"
+      >
+        入力内容の確認
+      </button>
     </div>
+  </div>
 
-    <div x-show="step == 2">
-      <FormFieldArea {fields} mode="confirm" />
-      <div class="mt-6 grid gap-4 md:grid-cols-2">
-        <button
-          class="btn btn-disabled btn-accent w-full md:order-2"
-          :class="{'btn-disabled': Object.keys(errors).length}"
-          @click="if(!Object.keys(errors).length){onClick($event)}"
-        >
-          お問い合わせを送信
-        </button>
-        <button type="button" class="btn btn-ghost w-full md:order-1" @click="step = 1">入力内容の修正</button>
-      </div>
+  <div x-show="step == 2">
+    <FormFieldArea {fields} mode="confirm" />
+    <div class="mt-6 grid gap-4 md:grid-cols-2">
+      <button
+        class="btn btn-disabled btn-accent w-full md:order-2"
+        x-bind:class="{'btn-disabled': Object.keys(errors).length}"
+        x-on:click="if(!Object.keys(errors).length){onClick($event)}"
+      >
+        お問い合わせを送信
+      </button>
+      <button type="button" class="btn btn-ghost w-full md:order-1" x-on:click="step = 1">入力内容の修正</button>
     </div>
+  </div>
 
-    <div x-show="step == 3">送信完了</div>
-  </form>
-</div>
+  <div x-show="step == 3">送信完了</div>
+</BaseForm>
 
 <script
   is:inline
