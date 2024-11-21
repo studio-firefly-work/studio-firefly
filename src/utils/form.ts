@@ -49,8 +49,7 @@ export const form = {
       },
       ${validStr}
       onSubmit(token) {
-        $refs.token.value = token;
-        htmx.trigger($refs.form, 'submit');
+        htmx.trigger($refs.form, 'submit')
       }
     }`
 
