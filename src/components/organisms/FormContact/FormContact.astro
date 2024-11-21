@@ -47,7 +47,7 @@ const fields = [
     label: [],
     id: 'privacy',
     type: 'checkbox',
-    items: ['<a href="/privacy/" class="link" target="_blank">プライバシーポリシー</a>に同意する'],
+    items: ['<a href="/privacy/" class="link" tabindex="-1" target="_blank">プライバシーポリシー</a>に同意する'],
     validations: [
       {
         pattern: 'this.privacy.length',
@@ -61,12 +61,9 @@ const fields = [
 <div x-data={utils.form.createXData(fields)}>
   <FormStep steps={['入力', '確認', '完了']} />
 
-  <form
-    hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`}
-    hx-swap="none"
-    x-init="$nextTick(() => { window.onSubmit = onSubmit })"
-    x-ref="form"
-  >
+  <form hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`} hx-swap="none" x-ref="form">
+    <input type="hidden" name="g-recaptcha-response" x-ref="token" />
+
     <div x-show="step == 1" x-transition>
       <FormFieldArea {fields} />
       <div class="mt-6">
@@ -85,11 +82,9 @@ const fields = [
       <FormFieldArea {fields} mode="confirm" />
       <div class="mt-6 grid gap-4 md:grid-cols-2">
         <button
-          class="g-recaptcha btn btn-disabled btn-accent w-full md:order-2"
+          class="btn btn-disabled btn-accent w-full md:order-2"
           x-bind:class="{'btn-disabled': Object.keys(errors).length}"
-          data-sitekey={import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}
-          data-callback="onSubmit"
-          data-action="submit"
+          x-on:click="if(!Object.keys(errors).length){onClick($event)}"
         >
           お問い合わせを送信
         </button>
@@ -101,7 +96,12 @@ const fields = [
   </form>
 </div>
 
-<script is:inline src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script
+  is:inline
+  src={`https://www.google.com/recaptcha/api.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`}
+  async
+  data-astro-rerun
+  defer></script>
 <script is:inline data-astro-rerun type="module">
   import AutoKana from 'https://cdn.jsdelivr.net/npm/vanilla-autokana/+esm'
   AutoKana.bind('#name', '#kana', { katakana: true })
