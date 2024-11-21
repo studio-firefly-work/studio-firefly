@@ -1,6 +1,13 @@
 ---
 import BaseFormField from '@/components/molecules/BaseFormField/BaseFormField.astro'
 
+interface Props {
+  label: Theme.FormFieldLabel | null
+  id: string
+  items: string[]
+  validations?: Theme.FormFieldValidation[]
+}
+
 const { id, label, items, validations, ...rest } = Astro.props
 ---
 

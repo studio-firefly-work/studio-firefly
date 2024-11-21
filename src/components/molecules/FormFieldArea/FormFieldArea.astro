@@ -3,6 +3,11 @@ import FormFieldText from '@/components/molecules/FormFieldText/FormFieldText.as
 import FormFieldTextarea from '@/components/molecules/FormFieldTextarea/FormFieldTextarea.astro'
 import FormFieldCheckbox from '@/components/molecules/FormFieldCheckbox/FormFieldCheckbox.astro'
 
+interface Props {
+  fields: Theme.FormField[]
+  mode?: string
+}
+
 const { fields, mode = 'input' } = Astro.props
 ---
 
@@ -21,7 +26,7 @@ const { fields, mode = 'input' } = Astro.props
       } else if (mode == 'confirm') {
         return (
           <div class="form-control w-full">
-            <p class="label label-text">{field.label.text}</p>
+            {field.label && <p class="label label-text">{field.label.text}</p>}
             <p x-html={field.id} />
           </div>
         )

@@ -1,29 +1,22 @@
 ---
-import { tv } from 'tailwind-variants'
-import { Icon } from 'astro-icon/components'
 import BaseFormField from '@/components/molecules/BaseFormField/BaseFormField.astro'
 
-const { id, label, placeholder, icon, validations, ...rest } = Astro.props
-const style = tv({
-  base: 'textarea textarea-bordered w-full',
-  variants: {
-    icon: {
-      true: 'pl-12',
-      false: '',
-    },
-  },
-})
+interface Props {
+  label: Theme.FormFieldLabel | null
+  id: string
+  placeholder?: string
+  validations?: Theme.FormFieldValidation[]
+}
+const { id, label, placeholder, validations, ...rest } = Astro.props
 ---
 
 <BaseFormField {id} {label}>
-  {icon && <Icon name={icon} width={20} height={20} class="absolute inset-y-0 left-4 h-full opacity-70" />}
-
   <textarea
     {id}
     {placeholder}
     rows={4}
     name={id}
-    class={style({ icon: Boolean(icon) })}
+    class="textarea textarea-bordered w-full"
     x-model={id}
     x-bind:class={`errors.${id} ? 'textarea-error' : ($el.value ? 'textarea-success' : '')`}
     x-on:input={`validate${id.charAt(0).toUpperCase() + id.slice(1)}`}

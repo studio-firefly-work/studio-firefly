@@ -3,7 +3,17 @@ import { tv } from 'tailwind-variants'
 import { Icon } from 'astro-icon/components'
 import BaseFormField from '@/components/molecules/BaseFormField/BaseFormField.astro'
 
-const { id, label, type = 'text', placeholder, autocomplete, icon, validations, ...rest } = Astro.props
+interface Props {
+  label: Theme.FormFieldLabel | null
+  id: string
+  type: astroHTML.JSX.HTMLInputTypeAttribute
+  placeholder?: string
+  autocomplete?: string
+  icon?: string
+  validations?: Theme.FormFieldValidation[]
+}
+const { id, label, type, placeholder, autocomplete, icon, validations, ...rest } = Astro.props
+
 const style = tv({
   base: 'input input-bordered w-full',
   variants: {
