@@ -1,0 +1,125 @@
+---
+import { Icon } from 'astro-icon/components'
+
+const skills = [
+  { name: 'C#', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[20%]', icon: 'mdi:code' },
+  {
+    name: 'CSS',
+    text: 'CSSではなく<button class="link" x-on:click="toggleModal(6, \'open\')">SCSS</button>を使います',
+    good: 'left-[100%]',
+    like: 'bottom-[20%]',
+    icon: 'mdi:code',
+  },
+  { name: 'Java', text: 'テキスト', good: 'left-[10%]', like: 'bottom-[10%]', icon: 'mdi:code' },
+  { name: 'PHP', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[70%]', icon: 'mdi:code' },
+  { name: 'XAML', text: 'テキスト', good: 'left-[20%]', like: 'bottom-[20%]', icon: 'mdi:code' },
+  { name: 'HTML', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[40%]', icon: 'mdi:code' },
+  { name: 'SCSS', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[90%]', icon: 'mdi:code' },
+  { name: 'TypeScript', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[90%]', icon: 'mdi:code' },
+  { name: 'JavaScript', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[60%]', icon: 'mdi:code' },
+  { name: 'Vue', text: 'テキスト', good: 'left-[30%]', like: 'bottom-[80%]', icon: 'mdi:code' },
+  { name: 'Git', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[100%]', icon: 'mdi:code' },
+  { name: 'React', text: 'テキスト', good: 'left-[60%]', like: 'bottom-[80%]', icon: 'mdi:code' },
+  { name: 'Astro', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[100%]', icon: 'mdi:code' },
+  { name: 'Docker', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[70%]', icon: 'mdi:code' },
+  { name: 'MySQL', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[65%]', icon: 'mdi:code' },
+  { name: 'Prisma', text: 'テキスト', good: 'left-[60%]', like: 'bottom-[50%]', icon: 'mdi:code' },
+  { name: 'Express', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[80%]', icon: 'mdi:code' },
+  { name: 'Laravel', text: 'テキスト', good: 'left-[20%]', like: 'bottom-[50%]', icon: 'mdi:code' },
+  { name: 'ecforce', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[50%]', icon: 'mdi:code' },
+  { name: '.NET MAUI', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[40%]', icon: 'mdi:code' },
+  { name: 'Wordpress', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[75%]', icon: 'mdi:code' },
+  { name: 'Tailwind CSS', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[100%]', icon: 'mdi:code' },
+  { name: 'SEO', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[70%]', icon: 'mdi:code' },
+  { name: 'アクセシビリティ', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[70%]', icon: 'mdi:code' },
+]
+const xData = `
+{
+  transitionClass(element, addClass, removeClass) {
+    if (removeClass) element.classList.remove(...removeClass)
+    if (addClass) element.classList.add(...addClass)
+  },
+
+  handleViewTransition(startCallback, endCallback) {
+    const transition = document.startViewTransition(startCallback)
+    return transition.finished.finally(endCallback)
+  },
+
+  toggleModal(index, action) {
+    const modal = this.$refs['skillModal' + index]
+    const modalIcon = this.$refs['skillModalIcon' + index]
+    const btnIcon = this.$refs['skillBtnIcon' + index]
+
+    const isOpen = action === 'open'
+    const [activeIcon, inactiveIcon] = isOpen ? [btnIcon, modalIcon] : [modalIcon, btnIcon]
+
+    activeIcon.style.viewTransitionName = "modal"
+
+    this.handleViewTransition(() => {
+      activeIcon.style.viewTransitionName = null
+      inactiveIcon.style.viewTransitionName = "modal"
+
+      if (isOpen) {
+        this.transitionClass(activeIcon, ["invisible"], ["visible"])
+        this.transitionClass(inactiveIcon, ["visible"], ["invisible"])
+      } else {
+        this.transitionClass(activeIcon, ["visible"], ["invisible"])
+        this.transitionClass(inactiveIcon, ["visible"], ["invisible"])
+      }
+
+      isOpen ? modal.showModal() : modal.close()
+    }, () => {
+      inactiveIcon.style.viewTransitionName = null
+    })
+  }
+}
+`
+---
+
+<div x-data={xData}>
+  <div class="relative h-dvh max-h-[640px] w-full min-w-[640px]">
+    <div class="divider divider-horizontal absolute left-1/2 m-0 h-full -translate-x-1/2"></div>
+    <div class="divider absolute top-1/2 m-0 w-full -translate-y-1/2"></div>
+    {
+      skills.map((skill, index) => (
+        <div class={`${skill.good} ${skill.like} absolute -translate-x-2/4 translate-y-2/4`}>
+          <div class="tooltip" data-tip={skill.name}>
+            <button
+              class="btn btn-circle btn-ghost"
+              aria-label={`${skill.name}の説明を開く`}
+              x-on:click={`toggleModal(${index}, 'open')`}
+            >
+              <Icon name={skill.icon} width={28} height={28} x-ref={`skillBtnIcon${index}`} />
+            </button>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  {
+    skills.map((skill, index) => (
+      <dialog
+        class="group modal"
+        x-ref={`skillModal${index}`}
+        x-on:click.self={`toggleModal(${index}, 'close')`}
+        x-on:keydown.escape={`toggleModal(${index}, 'close')`}
+      >
+        <div class="modal-box">
+          <div class="flex items-center gap-4">
+            <Icon name={skill.icon} width={28} height={28} x-ref={`skillModalIcon${index}`} />
+            <h3 class="text-lg font-bold">{skill.name}</h3>
+          </div>
+          <p class="py-4" set:html={skill.text} />
+          <button
+            class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 hidden group-open:inline-flex"
+            aria-label={`${skill.name}の説明を閉じる`}
+            x-on:click={`toggleModal(${index}, 'close')`}
+          >
+            ✕
+          </button>
+        </div>
+      </dialog>
+    ))
+  }
+</div>
