@@ -1,8 +1,8 @@
 ---
-import { Icon } from 'astro-icon/components'
 import PageLayout from '@/layouts/PageLayout.astro'
 import Container from '@/components/atoms/Container.astro'
 import Inner from '@/components/atoms/Inner.astro'
+import SkillMatrix from '@/components/organisms/SkillMatrix/SkillMatrix.astro'
 
 const seo: Theme.SEO = {
   title: 'スキルセット',
@@ -10,156 +10,12 @@ const seo: Theme.SEO = {
   permalink: ['skill'],
   breadcrumb: { skill: 'スキルセット' },
 }
-
-const skills = [
-  { name: 'C#', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[20%]', icon: 'mdi:code' },
-  {
-    name: 'CSS',
-    text: 'CSSではなく<button class="js-skill-btn-6 link" onclick="document.getElementById(\'js-skill-modal-6\').showModal()">SCSS</button>を使います',
-    good: 'left-[100%]',
-    like: 'bottom-[20%]',
-    icon: 'mdi:code',
-  },
-  { name: 'Java', text: 'テキスト', good: 'left-[10%]', like: 'bottom-[10%]', icon: 'mdi:code' },
-  { name: 'PHP', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[70%]', icon: 'mdi:code' },
-  { name: 'XAML', text: 'テキスト', good: 'left-[20%]', like: 'bottom-[20%]', icon: 'mdi:code' },
-  { name: 'HTML', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[40%]', icon: 'mdi:code' },
-  { name: 'SCSS', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[90%]', icon: 'mdi:code' },
-  { name: 'TypeScript', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[90%]', icon: 'mdi:code' },
-  { name: 'JavaScript', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[60%]', icon: 'mdi:code' },
-  { name: 'Vue', text: 'テキスト', good: 'left-[30%]', like: 'bottom-[80%]', icon: 'mdi:code' },
-  { name: 'Git', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[100%]', icon: 'mdi:code' },
-  { name: 'React', text: 'テキスト', good: 'left-[60%]', like: 'bottom-[80%]', icon: 'mdi:code' },
-  { name: 'Astro', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[100%]', icon: 'mdi:code' },
-  { name: 'Docker', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[70%]', icon: 'mdi:code' },
-  { name: 'MySQL', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[65%]', icon: 'mdi:code' },
-  { name: 'Prisma', text: 'テキスト', good: 'left-[60%]', like: 'bottom-[50%]', icon: 'mdi:code' },
-  { name: 'Express', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[80%]', icon: 'mdi:code' },
-  { name: 'Laravel', text: 'テキスト', good: 'left-[20%]', like: 'bottom-[50%]', icon: 'mdi:code' },
-  { name: 'ecforce', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[50%]', icon: 'mdi:code' },
-  { name: '.NET MAUI', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[40%]', icon: 'mdi:code' },
-  { name: 'Wordpress', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[75%]', icon: 'mdi:code' },
-  { name: 'Tailwind CSS', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[100%]', icon: 'mdi:code' },
-  { name: 'SEO', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[70%]', icon: 'mdi:code' },
-  { name: 'アクセシビリティ', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[70%]', icon: 'mdi:code' },
-]
 ---
 
 <PageLayout {seo}>
   <Container class="overflow-x-auto">
     <Inner size="full md:base">
-      <div id="js-matrix" class="relative h-dvh max-h-[640px] w-full min-w-[640px]">
-        <div class="divider divider-horizontal absolute left-1/2 m-0 h-full -translate-x-1/2"></div>
-        <div class="divider absolute top-1/2 m-0 w-full -translate-y-1/2"></div>
-        {
-          skills.map((skill, index) => (
-            <div class={`${skill.good} ${skill.like} absolute -translate-x-2/4 translate-y-2/4`}>
-              <div class="tooltip" data-tip={skill.name}>
-                <button
-                  class={`js-skill-btn-${index} btn btn-circle btn-ghost`}
-                  aria-label={`${skill.name}の説明を開く`}
-                >
-                  <Icon name={skill.icon} width={28} height={28} />
-                </button>
-              </div>
-            </div>
-          ))
-        }
-      </div>
+      <SkillMatrix />
     </Inner>
-
-    {
-      skills.map((skill, index) => (
-        <dialog id={`js-skill-modal-${index}`} class="group modal" data-lenis-prevent>
-          <div class="modal-box">
-            <div class="flex items-center gap-4">
-              <Icon name={skill.icon} width={28} height={28} />
-              <h3 class="text-lg font-bold">{skill.name}</h3>
-            </div>
-            <p class="py-4" set:html={skill.text} />
-            <form method="dialog">
-              <button
-                class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 hidden group-open:inline-flex"
-                aria-label={`${skill.name}の説明を閉じる`}
-              >
-                ✕
-              </button>
-            </form>
-          </div>
-          <form method="dialog" class="modal-backdrop">
-            <button tabindex="-1" />
-          </form>
-        </dialog>
-      ))
-    }
   </Container>
 </PageLayout>
-
-<script>
-  // アイコンにViewTransitionを設定
-  const setupIconViewTransition = () => {
-    const modals = document.querySelectorAll('[id^="js-skill-modal-"]') as NodeListOf<HTMLDialogElement>
-    const matrix = document.getElementById('js-matrix') as HTMLDivElement
-    const btns = matrix.querySelectorAll('[class^="js-skill-btn-"]') as NodeListOf<HTMLButtonElement>
-
-    modals.forEach((modal, index) => {
-      // ボタンにクリックイベントリスナーを追加
-      btns[index].addEventListener('click', () => {
-        modal.showModal()
-      })
-
-      // モーダルの状態変化を監視
-      const observer = new MutationObserver((mutationsList: MutationRecord[]) => {
-        const mutation = mutationsList.find((mutation) => mutation.attributeName === 'open')
-        if (mutation) {
-          const isOpen = modal.hasAttribute('open')
-          handleModalState(modal, btns[index], isOpen)
-        }
-      })
-
-      // モーダルのopen属性を監視対象に追加
-      observer.observe(modal, { attributes: true })
-    })
-
-    // モーダルの開閉状態を処理
-    const handleModalState = (modal: HTMLDialogElement, btn: HTMLButtonElement, isOpen: boolean) => {
-      if (!document.startViewTransition) return
-
-      const modalIcon = modal.querySelector('svg') as SVGElement
-      const btnIcon = btn.querySelector('svg') as SVGElement
-
-      const [fromIcon, toIcon, fromClass, toClass] = isOpen
-        ? [btnIcon, modalIcon, 'visible', 'invisible']
-        : [modalIcon, btnIcon, 'invisible', 'visible']
-
-      fromIcon.style.viewTransitionName = 'modal'
-
-      applyTransition(
-        () => {
-          fromIcon.style.viewTransitionName = ''
-          toIcon.style.viewTransitionName = 'modal'
-          btnIcon.classList.remove(fromClass)
-          btnIcon.classList.add(toClass)
-        },
-        () => {
-          fromIcon.style.viewTransitionName = ''
-          toIcon.style.viewTransitionName = ''
-        }
-      )
-    }
-
-    // アニメーションと終了処理を適用
-    const applyTransition = (startCallback: () => void, finishCallback: () => void) => {
-      if (!document.startViewTransition) return
-      document.startViewTransition(startCallback).finished.finally(finishCallback)
-    }
-  }
-
-  // ページ読み込み時に初期化
-  const init = () => {
-    if (window.location.pathname === '/skill/') {
-      setupIconViewTransition()
-    }
-  }
-  document.addEventListener('astro:page-load', init)
-</script>
