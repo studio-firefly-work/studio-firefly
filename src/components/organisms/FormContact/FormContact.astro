@@ -102,13 +102,10 @@ const fields = [
   src={`https://www.google.com/recaptcha/api.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`}
   defer></script>
 <script>
-  import AutoKana from 'vanilla-autokana'
-
-  // ページ読み込み時に初期化
-  const init = () => {
+  import * as AutoKana from 'vanilla-autokana'
+  document.addEventListener('astro:page-load', () => {
     if (window.location.pathname === '/contact/') {
       AutoKana.bind('#name', '#kana', { katakana: true })
     }
-  }
-  document.addEventListener('astro:page-load', init)
+  })
 </script>
