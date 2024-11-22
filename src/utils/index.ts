@@ -1,6 +1,5 @@
 import { form } from '@/utils/form'
 import { post } from '@/utils/post'
-import { schema } from '@/utils/schema'
 
 /**
  * 指定されたパスに基づいて/src/assets/iamges/フォルダ内の画像を取得する関数
@@ -31,6 +30,5 @@ export const utils = {
   getAssetsImage,
   formatDate,
   form,
-  post,
-  schema,
+  post
 }

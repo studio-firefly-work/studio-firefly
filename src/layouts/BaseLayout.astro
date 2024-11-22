@@ -1,6 +1,6 @@
 ---
 import { ViewTransitions } from 'astro:transitions'
-import { GoogleAnalytics } from 'astro-google-analytics'
+import GoogleAnalytics from '@/components/molecules/GoogleAnalytics/GoogleAnalytics.astro'
 import '@fontsource-variable/noto-sans'
 import '@fontsource-variable/noto-sans-jp'
 import '@/styles/global.scss'
@@ -17,7 +17,7 @@ const { seo } = Astro.props
   <head prefix="og: https://ogp.me/ns#">
     <SEOMetaTags {seo} />
     <ViewTransitions />
-    <GoogleAnalytics id={import.meta.env.PUBLIC_GA4_ID} />
+    <GoogleAnalytics />
   </head>
   <body
     class="manipulation grid min-h-dvh grid-cols-1 grid-rows-[auto,1fr,auto] break-words bg-base-200 font-body text-base tracking-normal antialiased"

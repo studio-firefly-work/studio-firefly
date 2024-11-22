@@ -4,12 +4,13 @@ import fs from 'fs'
 import daisyui from 'daisyui'
 import icon from 'astro-icon'
 import htmx from 'astro-htmx'
-import compress from "astro-compress"
+import compress from 'astro-compress'
 import node from '@astrojs/node'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
-import react from '@astrojs/react'
-import alpinejs from '@astrojs/alpinejs';
+import alpinejs from '@astrojs/alpinejs'
+
+import partytown from '@astrojs/partytown'
 
 const { SITE, BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 
@@ -22,13 +23,13 @@ export default defineConfig({
     mode: 'standalone',
   }),
   integrations: [
-    icon({ iconDir: "src/assets/icons" }),
+    icon({ iconDir: 'src/assets/icons' }),
+    partytown({ config: { forward: ['dataLayer.push'] } }),
     htmx(),
     sitemap(),
     tailwind(),
-    react(),
     alpinejs(),
-    compress()
+    compress(),
   ],
   plugins: [daisyui],
   server: {
@@ -37,9 +38,9 @@ export default defineConfig({
   vite: {
     server: {
       https: {
-        key: fs.readFileSync("./localhost-key.pem"),
-        cert: fs.readFileSync("./localhost.pem")
-      }
-    }
+        key: fs.readFileSync('./localhost-key.pem'),
+        cert: fs.readFileSync('./localhost.pem'),
+      },
+    },
   },
 })

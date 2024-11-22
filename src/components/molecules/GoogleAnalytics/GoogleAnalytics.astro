@@ -1,0 +1,17 @@
+---
+const ga4Id: string = import.meta.env.PUBLIC_GA4_ID
+---
+
+<>
+  <script is:inline data-astro-rerun type="text/partytown" src=`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`
+  ></script>
+  <script is:inline data-astro-rerun type="text/partytown" define:vars={{ ga4Id }}>
+    window.dataLayer = window.dataLayer || []
+    function gtag() {
+      dataLayer.push(arguments)
+    }
+    gtag('js', new Date())
+    gtag('config', ga4Id)
+    console.log(ga4Id)
+  </script>
+</>
