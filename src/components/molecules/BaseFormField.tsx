@@ -16,7 +16,9 @@ export const BaseFormField: React.FC<BaseFormFieldProps> = ({ label, id, validat
   const error = errors[validation] as FieldError
 
   // 子要素に<label>タグが含まれているかチェック
-  const childrenHasLabel = React.Children.toArray(children).some((child) => React.isValidElement(child) && child.type === 'label')
+  const childrenHasLabel = React.Children.toArray(children).some(
+    (child) => React.isValidElement(child) && child.type === 'label'
+  )
 
   if (label != '' && childrenHasLabel) {
     return (

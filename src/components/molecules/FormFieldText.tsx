@@ -26,7 +26,15 @@ type FormFieldTextProps = React.InputHTMLAttributes<HTMLInputElement> & {
  * @param placeholder - 入力フィールドのプレースホルダーテキスト。
  * @param icon - 入力フィールドの左側に表示するアイコンの名前。
  */
-export const FormFieldText: React.FC<FormFieldTextProps> = ({ label, id, validation = id, type = 'text', placeholder, icon, ...rest }) => {
+export const FormFieldText: React.FC<FormFieldTextProps> = ({
+  label,
+  id,
+  validation = id,
+  type = 'text',
+  placeholder,
+  icon,
+  ...rest
+}) => {
   const {
     register,
     watch,
@@ -50,7 +58,14 @@ export const FormFieldText: React.FC<FormFieldTextProps> = ({ label, id, validat
     <BaseFormField label={label} id={id} validation={validation}>
       {icon && <Icon icon={icon} className="absolute inset-y-0 left-4 h-full opacity-70" width={20} height={20} />}
 
-      <input {...register(validation)} id={id} type={type === 'password' && isPasswordVisible ? 'text' : type} placeholder={placeholder} className={className} {...rest} />
+      <input
+        {...register(validation)}
+        id={id}
+        type={type === 'password' && isPasswordVisible ? 'text' : type}
+        placeholder={placeholder}
+        className={className}
+        {...rest}
+      />
 
       {type === 'password' && (
         <label className="swap absolute inset-y-0 right-4">

@@ -22,10 +22,27 @@ export const FormLogin = () => {
     <BaseForm<FormSchemaType> onSubmit={onSubmit} schema={schema}>
       {({ formState: { isSubmitting, isValid } }) => (
         <>
-          <FormFieldText label="メールアドレス" id="email" type="email" placeholder="email@example.com" autoComplete="email" icon="mdi:email" />
-          <FormFieldText label="パスワード" id="password" type="password" autoComplete="current-password" icon="mdi:key" />
+          <FormFieldText
+            label="メールアドレス"
+            id="email"
+            type="email"
+            placeholder="email@example.com"
+            autoComplete="email"
+            icon="mdi:email"
+          />
+          <FormFieldText
+            label="パスワード"
+            id="password"
+            type="password"
+            autoComplete="current-password"
+            icon="mdi:key"
+          />
 
-          <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
+          <button
+            type="submit"
+            className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })}
+            aria-disabled={!isValid || isSubmitting}
+          >
             ログイン
           </button>
         </>

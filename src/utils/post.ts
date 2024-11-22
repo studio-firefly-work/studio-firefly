@@ -18,10 +18,16 @@ export const post = {
    * @param {MarkdownInstance<Theme.Frontmatter>[]} allPages - すべてのページ
    * @returns 同一カテゴリーの記事の配列
    */
-  getSameCategory: (count: number, currentPage: MarkdownInstance<Theme.Frontmatter>, allPages: MarkdownInstance<Theme.Frontmatter>[]): MarkdownInstance<Theme.Frontmatter>[] => {
+  getSameCategory: (
+    count: number,
+    currentPage: MarkdownInstance<Theme.Frontmatter>,
+    allPages: MarkdownInstance<Theme.Frontmatter>[]
+  ): MarkdownInstance<Theme.Frontmatter>[] => {
     const posts = allPages
       .filter(
-        (page) => page.frontmatter.category === currentPage.frontmatter.category && page.frontmatter.slug !== currentPage.frontmatter.slug // 自分自身を除外
+        (page) =>
+          page.frontmatter.category === currentPage.frontmatter.category &&
+          page.frontmatter.slug !== currentPage.frontmatter.slug // 自分自身を除外
       )
       .sort(compareDateDistance(new Date(currentPage.frontmatter.date))) // 日数の近さでソート
       .slice(0, count) // 指定した数だけ取得

@@ -21,7 +21,14 @@ type FormFieldTextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> 
  * @param rows - テキストエリアの行数。デフォルトは4。
  * @param placeholder - テキストエリアのプレースホルダーテキスト。
  */
-export const FormFieldTextarea: React.FC<FormFieldTextareaProps> = ({ label, id, validation = id, rows = 4, placeholder, ...rest }) => {
+export const FormFieldTextarea: React.FC<FormFieldTextareaProps> = ({
+  label,
+  id,
+  validation = id,
+  rows = 4,
+  placeholder,
+  ...rest
+}) => {
   const {
     register,
     watch,
@@ -38,7 +45,14 @@ export const FormFieldTextarea: React.FC<FormFieldTextareaProps> = ({ label, id,
 
   return (
     <BaseFormField label={label} id={id} validation={validation}>
-      <textarea {...register(validation)} id={id} rows={rows} placeholder={placeholder} className={className} {...rest}></textarea>
+      <textarea
+        {...register(validation)}
+        id={id}
+        rows={rows}
+        placeholder={placeholder}
+        className={className}
+        {...rest}
+      ></textarea>
     </BaseFormField>
   )
 }

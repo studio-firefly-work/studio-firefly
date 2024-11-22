@@ -17,7 +17,14 @@ const seo: Theme.SEO = {
   <Container>
     <Inner size="slim">
       <div role="tablist" class="tabs tabs-bordered tabs-lg grid-cols-2">
-        <input type="radio" name="toggle-login-signup" role="tab" class="theme-text-md tab" aria-label="ログイン" checked="checked" />
+        <input
+          type="radio"
+          name="toggle-login-signup"
+          role="tab"
+          class="theme-text-md tab"
+          aria-label="ログイン"
+          checked="checked"
+        />
         <div role="tabpanel" class="tab-content py-8 md:p-10">
           <FormLogin client:only="react" />
 

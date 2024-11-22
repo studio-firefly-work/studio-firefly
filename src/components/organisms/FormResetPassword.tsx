@@ -31,9 +31,20 @@ export const FormResetPassword = () => {
           <>
             {formStatus === 'edit' && (
               <>
-                <FormFieldText label="パスワード" id="reset-password" validation="password" type="password" autoComplete="new-password" icon="mdi:key" />
+                <FormFieldText
+                  label="パスワード"
+                  id="reset-password"
+                  validation="password"
+                  type="password"
+                  autoComplete="new-password"
+                  icon="mdi:key"
+                />
 
-                <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
+                <button
+                  type="submit"
+                  className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })}
+                  aria-disabled={!isValid || isSubmitting}
+                >
                   パスワードを変更する
                 </button>
               </>

@@ -26,9 +26,21 @@ export const FormRequestResetPassword = () => {
           <>
             {step === 1 && (
               <>
-                <FormFieldText label="メールアドレス" id="reset-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="mdi:email" />
+                <FormFieldText
+                  label="メールアドレス"
+                  id="reset-email"
+                  validation="email"
+                  type="email"
+                  placeholder="email@example.com"
+                  autoComplete="email"
+                  icon="mdi:email"
+                />
 
-                <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
+                <button
+                  type="submit"
+                  className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })}
+                  aria-disabled={!isValid || isSubmitting}
+                >
                   確認メールを送信
                 </button>
               </>
