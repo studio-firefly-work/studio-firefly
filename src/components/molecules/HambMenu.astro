@@ -1,6 +1,5 @@
 ---
 import { Icon } from 'astro-icon/components'
-import ButtonLoginOrProfile from '@/components/molecules/ButtonLoginOrProfile.astro'
 import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle.astro'
 
 interface Props {
@@ -41,11 +40,6 @@ const currentPath = Astro.url.pathname
           </li>
         ))
       }
-      <li class="js-hamb-link">
-        <ButtonLoginOrProfile
-          class={currentPath.startsWith('/user/') || currentPath.startsWith('/login/') ? 'theme-current-page' : null}
-        />
-      </li>
       <li><ButtonThemeToggle /></li>
     </ul>
   </nav>
