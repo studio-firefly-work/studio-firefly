@@ -50,7 +50,10 @@ export const add = (...args: number[]) => {
             {
               links.map((link: Theme.Link) => (
                 <li>
-                  <a href={link.permalink} class={`btn btn-ghost ${currentPath.startsWith(link.permalink) ? 'theme-current-page' : ''}`}>
+                  <a
+                    href={link.permalink}
+                    class={`btn btn-ghost ${currentPath.startsWith(link.permalink) ? 'theme-current-page' : ''}`}
+                  >
                     <Icon name={link.icon} width={20} height={20} />
                     {link.title}
                   </a>

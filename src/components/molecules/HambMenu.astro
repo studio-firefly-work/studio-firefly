@@ -13,7 +13,16 @@ const currentPath = Astro.url.pathname
 
 <div class="drawer">
   <input id="js-hamb-checkbox" type="checkbox" class="drawer-toggle hidden" />
-  <label for="js-hamb-checkbox" id="js-hamb-button" class="btn btn-ghost drawer-button px-0" tabindex="0" role="button" aria-controls="js-hamb-menu" aria-expanded="false" aria-label="メニューを開く">
+  <label
+    for="js-hamb-checkbox"
+    id="js-hamb-button"
+    class="btn btn-ghost drawer-button px-0"
+    tabindex="0"
+    role="button"
+    aria-controls="js-hamb-menu"
+    aria-expanded="false"
+    aria-label="メニューを開く"
+  >
     <Icon name="mdi:hamburger-menu" width={40} height={40} />
   </label>
   <nav id="js-hamb-menu" class="drawer-side z-50" area-hidden="true" data-lenis-prevent>
@@ -22,14 +31,21 @@ const currentPath = Astro.url.pathname
       {
         links.map((link: Theme.Link) => (
           <li class="js-hamb-link">
-            <a href={link.permalink} class={`btn btn-ghost justify-start ${currentPath.startsWith(link.permalink) ? 'theme-current-page w-fit' : undefined}`}>
+            <a
+              href={link.permalink}
+              class={`btn btn-ghost justify-start ${currentPath.startsWith(link.permalink) ? 'theme-current-page w-fit' : undefined}`}
+            >
               <Icon name={link.icon} width={28} height={28} />
               {link.title}
             </a>
           </li>
         ))
       }
-      <li class="js-hamb-link"><ButtonLoginOrProfile class={currentPath.startsWith('/user/') || currentPath.startsWith('/login/') ? 'theme-current-page' : null} /></li>
+      <li class="js-hamb-link">
+        <ButtonLoginOrProfile
+          class={currentPath.startsWith('/user/') || currentPath.startsWith('/login/') ? 'theme-current-page' : null}
+        />
+      </li>
       <li><ButtonThemeToggle /></li>
     </ul>
   </nav>

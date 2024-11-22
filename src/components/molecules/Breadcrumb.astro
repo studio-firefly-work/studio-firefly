@@ -29,7 +29,13 @@ const last = itemList.length - 1
     {
       itemList.map((link, index) => (
         <li itemscope itemprop="itemListElement" itemtype="http://schema.org/ListItem">
-          <a href={link.item} itemscope itemtype="http://schema.org/Thing" itemprop="item" {...(index === last ? { 'aria-current': 'page' } : {})}>
+          <a
+            href={link.item}
+            itemscope
+            itemtype="http://schema.org/Thing"
+            itemprop="item"
+            {...(index === last ? { 'aria-current': 'page' } : {})}
+          >
             <span itemprop="name">{link.name}</span>
             <meta itemprop="position" content={`${index + 1}`} />
           </a>

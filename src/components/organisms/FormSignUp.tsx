@@ -52,13 +52,43 @@ export const FormSignUp = () => {
           <>
             {step === 1 && (
               <>
-                <FormFieldText label="お名前" id="name" placeholder="山田太郎" autoComplete="name" icon="mdi:user" onInput={() => setValue('kana', kana.getFurigana())} />
+                <FormFieldText
+                  label="お名前"
+                  id="name"
+                  placeholder="山田太郎"
+                  autoComplete="name"
+                  icon="mdi:user"
+                  onInput={() => setValue('kana', kana.getFurigana())}
+                />
                 <FormFieldText label="フリガナ" id="kana" placeholder="ヤマダタロウ" />
-                <FormFieldText label="メールアドレス" id="new-email" validation="email" type="email" placeholder="email@example.com" autoComplete="email" icon="mdi:email" />
-                <FormFieldText label="パスワード" id="new-password" validation="password" type="password" autoComplete="new-password" icon="mdi:key" />
-                <FormFieldCheckbox label="" id="privacy" items={['<a href="/privacy/" class="link" target="_blank">プライバシーポリシー</a>に同意する']} />
+                <FormFieldText
+                  label="メールアドレス"
+                  id="new-email"
+                  validation="email"
+                  type="email"
+                  placeholder="email@example.com"
+                  autoComplete="email"
+                  icon="mdi:email"
+                />
+                <FormFieldText
+                  label="パスワード"
+                  id="new-password"
+                  validation="password"
+                  type="password"
+                  autoComplete="new-password"
+                  icon="mdi:key"
+                />
+                <FormFieldCheckbox
+                  label=""
+                  id="privacy"
+                  items={['<a href="/privacy/" class="link" target="_blank">プライバシーポリシー</a>に同意する']}
+                />
 
-                <button type="submit" className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })} aria-disabled={!isValid || isSubmitting}>
+                <button
+                  type="submit"
+                  className={classNames('btn btn-primary', { 'btn-disabled': !isValid || isSubmitting })}
+                  aria-disabled={!isValid || isSubmitting}
+                >
                   入力内容の確認
                 </button>
               </>

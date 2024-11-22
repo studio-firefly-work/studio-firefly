@@ -57,6 +57,7 @@
     "@types/html-escaper": "^3.0.2",
     "@types/node": "^20.12.7",
     "@vitest/ui": "^2.1.4",
+    "astro-compress": "2.3.5",
     "daisyui": "^4.12.10",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.13.0",

@@ -20,9 +20,24 @@ const seo: Theme.SEO = {
     <Inner>
       <FormUserEdit client:only="react" />
 
-      <button class="btn btn-neutral" hx-delete={`${import.meta.env.PUBLIC_API_BASE_URL}/auth/logout/`} hx-trigger="click" hx-request='"credentials": true' hx-on="htmx:afterRequest: if (event.detail.successful) window.location.href = '/'" hx-swap="none">ログアウト</button>
+      <button
+        class="btn btn-neutral"
+        hx-delete={`${import.meta.env.PUBLIC_API_BASE_URL}/auth/logout/`}
+        hx-trigger="click"
+        hx-request='"credentials": true'
+        hx-on="htmx:afterRequest: if (event.detail.successful) window.location.href = '/'"
+        hx-swap="none">ログアウト</button
+      >
 
-      <button class="btn btn-error" hx-delete={`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/`} hx-trigger="click" hx-request='"credentials": true' hx-ext="ignore:json-enc" hx-on="htmx:afterRequest: if (event.detail.successful) window.location.href = '/'" hx-swap="none">退会</button>
+      <button
+        class="btn btn-error"
+        hx-delete={`${import.meta.env.PUBLIC_API_BASE_URL}/users/me/`}
+        hx-trigger="click"
+        hx-request='"credentials": true'
+        hx-ext="ignore:json-enc"
+        hx-on="htmx:afterRequest: if (event.detail.successful) window.location.href = '/'"
+        hx-swap="none">退会</button
+      >
     </Inner>
   </Container>
 </PageLayout>

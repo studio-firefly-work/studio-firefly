@@ -1,6 +1,5 @@
 ---
 import { SEO } from 'astro-seo'
-import { GoogleAnalytics } from 'astro-google-analytics'
 
 interface Props {
   seo: Theme.SEO
@@ -74,5 +73,9 @@ if (!seo.permalink) {
     ],
   }}
 />
-{seo.schemaOrg && seo.schemaOrg.map((structuredData: []) => <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />)}
-<GoogleAnalytics id={import.meta.env.PUBLIC_GA4_ID} />
+{
+  seo.schemaOrg &&
+    seo.schemaOrg.map((structuredData: []) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    ))
+}

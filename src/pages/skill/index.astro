@@ -13,7 +13,13 @@ const seo: Theme.SEO = {
 
 const skills = [
   { name: 'C#', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[20%]', icon: 'mdi:code' },
-  { name: 'CSS', text: 'CSSではなく<button class="js-skill-btn-6 link" onclick="document.getElementById(\'js-skill-modal-6\').showModal()">SCSS</button>を使います', good: 'left-[100%]', like: 'bottom-[20%]', icon: 'mdi:code' },
+  {
+    name: 'CSS',
+    text: 'CSSではなく<button class="js-skill-btn-6 link" onclick="document.getElementById(\'js-skill-modal-6\').showModal()">SCSS</button>を使います',
+    good: 'left-[100%]',
+    like: 'bottom-[20%]',
+    icon: 'mdi:code',
+  },
   { name: 'Java', text: 'テキスト', good: 'left-[10%]', like: 'bottom-[10%]', icon: 'mdi:code' },
   { name: 'PHP', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[70%]', icon: 'mdi:code' },
   { name: 'XAML', text: 'テキスト', good: 'left-[20%]', like: 'bottom-[20%]', icon: 'mdi:code' },
@@ -45,12 +51,14 @@ const skills = [
       <div id="js-matrix" class="relative h-dvh max-h-[640px] w-full min-w-[640px]">
         <div class="divider divider-horizontal absolute left-1/2 m-0 h-full -translate-x-1/2"></div>
         <div class="divider absolute top-1/2 m-0 w-full -translate-y-1/2"></div>
-
         {
           skills.map((skill, index) => (
             <div class={`${skill.good} ${skill.like} absolute -translate-x-2/4 translate-y-2/4`}>
               <div class="tooltip" data-tip={skill.name}>
-                <button class={`js-skill-btn-${index} btn btn-circle btn-ghost`} aria-label={`${skill.name}の説明を開く`}>
+                <button
+                  class={`js-skill-btn-${index} btn btn-circle btn-ghost`}
+                  aria-label={`${skill.name}の説明を開く`}
+                >
                   <Icon name={skill.icon} width={28} height={28} />
                 </button>
               </div>
@@ -70,7 +78,10 @@ const skills = [
             </div>
             <p class="py-4" set:html={skill.text} />
             <form method="dialog">
-              <button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 hidden group-open:inline-flex" aria-label={`${skill.name}の説明を閉じる`}>
+              <button
+                class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 hidden group-open:inline-flex"
+                aria-label={`${skill.name}の説明を閉じる`}
+              >
                 ✕
               </button>
             </form>
@@ -117,7 +128,9 @@ const skills = [
       const modalIcon = modal.querySelector('svg') as SVGElement
       const btnIcon = btn.querySelector('svg') as SVGElement
 
-      const [fromIcon, toIcon, fromClass, toClass] = isOpen ? [btnIcon, modalIcon, 'visible', 'invisible'] : [modalIcon, btnIcon, 'invisible', 'visible']
+      const [fromIcon, toIcon, fromClass, toClass] = isOpen
+        ? [btnIcon, modalIcon, 'visible', 'invisible']
+        : [modalIcon, btnIcon, 'invisible', 'visible']
 
       fromIcon.style.viewTransitionName = 'modal'
 
@@ -148,6 +161,5 @@ const skills = [
       setupIconViewTransition()
     }
   }
-  init()
-  document.addEventListener('astro:after-swap', init)
+  document.addEventListener('astro:page-load', init)
 </script>

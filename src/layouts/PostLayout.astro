@@ -26,7 +26,9 @@ const { seo, frontmatter, prev, next } = Astro.props
       <Inner class="relative">
         <h1 class="theme-text-xl font-bold">{seo.title}</h1>
         <p class="mt-4">{seo.description}</p>
-        <time datetime={frontmatter.date} class="theme-text-sm absolute -top-4 right-0">{utils.formatDate(frontmatter.date)}</time>
+        <time datetime={frontmatter.date} class="theme-text-sm absolute -top-4 right-0"
+          >{utils.formatDate(frontmatter.date)}</time
+        >
       </Inner>
     </Container>
 
@@ -35,7 +37,11 @@ const { seo, frontmatter, prev, next } = Astro.props
     <Container>
       <Inner>
         <article class="prose max-w-screen-xl">
-          <Image src={utils.getAssetsImage(frontmatter.image.src)} alt={frontmatter.image.alt} transition:name={`image-${frontmatter.slug}`} />
+          <Image
+            src={utils.getAssetsImage(frontmatter.image.src)}
+            alt={frontmatter.image.alt}
+            transition:name={`image-${frontmatter.slug}`}
+          />
           <slot />
         </article>
       </Inner>

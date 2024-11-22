@@ -1,9 +1,9 @@
 ---
 import { ViewTransitions } from 'astro:transitions'
+import { GoogleAnalytics } from 'astro-google-analytics'
 import '@fontsource-variable/noto-sans'
 import '@fontsource-variable/noto-sans-jp'
 import '@/styles/global.scss'
-import SplashScreen from '@/components/molecules/SplashScreen.astro'
 import SEOMetaTags from '@/components/molecules/SEOMetaTags.astro'
 
 interface Props {
@@ -16,12 +16,12 @@ const { seo } = Astro.props
 <html lang="ja-JP">
   <head prefix="og: https://ogp.me/ns#">
     <SEOMetaTags {seo} />
+    <GoogleAnalytics id={import.meta.env.PUBLIC_GA4_ID} />
     <ViewTransitions />
   </head>
   <body
     class="manipulation grid min-h-dvh grid-cols-1 grid-rows-[auto,1fr,auto] break-words bg-base-200 font-body text-base tracking-normal antialiased"
   >
-    <SplashScreen />
     <slot />
     <script>
       document.addEventListener('astro:page-load', () => {

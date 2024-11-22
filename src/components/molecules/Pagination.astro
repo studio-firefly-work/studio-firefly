@@ -4,7 +4,9 @@ const totalPages = Math.ceil(page.total / page.size)
 ---
 
 <nav class="join" aria-label="Page navigation">
-  <a href={`${page.url.prev}/`} class={`btn btn-ghost join-item ${page.url.prev ? null : 'pointer-events-none'}`}> ＜ </a>
+  <a href={`${page.url.prev}/`} class={`btn btn-ghost join-item ${page.url.prev ? null : 'pointer-events-none'}`}>
+    ＜
+  </a>
   {
     [...Array(totalPages)].map((_, index) => {
       const pageNum = index + 1
@@ -18,5 +20,7 @@ const totalPages = Math.ceil(page.total / page.size)
       )
     })
   }
-  <a href={`${page.url.next}/`} class={`btn btn-ghost join-item ${page.url.next ? null : 'pointer-events-none'}`}> ＞ </a>
+  <a href={`${page.url.next}/`} class={`btn btn-ghost join-item ${page.url.next ? null : 'pointer-events-none'}`}>
+    ＞
+  </a>
 </nav>
