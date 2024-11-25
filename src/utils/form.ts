@@ -4,7 +4,7 @@ export const form = {
    * @param {Theme.FormField[]} fields - フィールドの情報
    * @returns {string} - x-data
    */
-  createXData: (fields: Theme.FormField[]) => {
+  createXData: (fields: Theme.FormField[]): string => {
     const dataStr = fields
       .map((field: any) => (field.type === 'checkbox' ? `${field.id}: []` : `${field.id}: ''`))
       .join(', ')
@@ -20,18 +20,18 @@ export const form = {
         return `validate${field.id.charAt(0).toUpperCase() + field.id.slice(1)}() {
           let errorText = ''
         ${field.validations
-          .map((validation: any) => {
-            if (validation.pattern instanceof RegExp) {
-              return `if (!${validation.pattern}.test(this.${field.id})) {
+            .map((validation: any) => {
+              if (validation.pattern instanceof RegExp) {
+                return `if (!${validation.pattern}.test(this.${field.id})) {
               errorText = '${validation.text}'
             }`
-            } else {
-              return `if (!${validation.pattern}) {
+              } else {
+                return `if (!${validation.pattern}) {
               errorText = '${validation.text}'
             }`
-            }
-          })
-          .join(' else ')}
+              }
+            })
+            .join(' else ')}
           if (errorText) {
             this.errors.${field.id} = errorText
           } else {
