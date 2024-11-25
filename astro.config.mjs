@@ -5,23 +5,17 @@ import daisyui from 'daisyui'
 import icon from 'astro-icon'
 import htmx from 'astro-htmx'
 import compress from 'astro-compress'
-import node from '@astrojs/node'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 import alpinejs from '@astrojs/alpinejs'
-
 import partytown from '@astrojs/partytown'
-
+import playformInline from '@playform/inline';
 const { SITE, BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 
 // https://astro.build/config
 export default defineConfig({
   site: SITE,
   base: BASE,
-  output: 'hybrid',
-  adapter: node({
-    mode: 'standalone',
-  }),
   integrations: [
     icon({ iconDir: 'src/assets/icons' }),
     partytown({ config: { forward: ['dataLayer.push'] } }),
@@ -30,6 +24,7 @@ export default defineConfig({
     tailwind(),
     alpinejs(),
     compress(),
+    playformInline(),
   ],
   plugins: [daisyui],
   server: {
