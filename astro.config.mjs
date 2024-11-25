@@ -16,6 +16,7 @@ const { SITE, BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 export default defineConfig({
   site: SITE,
   base: BASE,
+  output: 'hybrid',
   integrations: [
     icon({ iconDir: 'src/assets/icons' }),
     partytown({ config: { forward: ['dataLayer.push'] } }),
