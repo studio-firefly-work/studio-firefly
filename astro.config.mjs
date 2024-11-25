@@ -10,6 +10,7 @@ import tailwind from '@astrojs/tailwind'
 import alpinejs from '@astrojs/alpinejs'
 import partytown from '@astrojs/partytown'
 import playformInline from '@playform/inline'
+import cloudflare from '@astrojs/cloudflare';
 const { SITE, BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 
 // https://astro.build/config
@@ -17,6 +18,7 @@ export default defineConfig({
   site: SITE,
   base: BASE,
   output: 'hybrid',
+
   integrations: [
     icon({ iconDir: 'src/assets/icons' }),
     partytown({ config: { forward: ['dataLayer.push'] } }),
@@ -27,8 +29,12 @@ export default defineConfig({
     compress(),
     playformInline(),
   ],
+
   plugins: [daisyui],
+
   server: {
     host: true,
   },
+
+  adapter: cloudflare(),
 })
