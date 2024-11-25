@@ -9,7 +9,7 @@ import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 import alpinejs from '@astrojs/alpinejs'
 import partytown from '@astrojs/partytown'
-import playformInline from '@playform/inline';
+import playformInline from '@playform/inline'
 const { SITE, BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 
 // https://astro.build/config
@@ -29,13 +29,5 @@ export default defineConfig({
   plugins: [daisyui],
   server: {
     host: true,
-  },
-  vite: {
-    server: {
-      https: {
-        key: fs.readFileSync('./localhost-key.pem'),
-        cert: fs.readFileSync('./localhost.pem'),
-      },
-    },
   },
 })
