@@ -10,9 +10,6 @@
         "./src/*",
       ]
     },
-    "types": [
-      "vitest/globals"
-    ],
     "typeRoots": [
       "./types",
       "./node_modules/@types"
