@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config'
 import { loadEnv } from 'vite'
-import fs from 'fs'
 import daisyui from 'daisyui'
 import icon from 'astro-icon'
 import htmx from 'astro-htmx'
@@ -27,15 +26,4 @@ export default defineConfig({
     playformInline(),
   ],
   plugins: [daisyui],
-  server: {
-    host: true,
-  },
-  vite: {
-    server: {
-      https: {
-        key: fs.readFileSync('./localhost-key.pem'),
-        cert: fs.readFileSync('./localhost.pem'),
-      },
-    },
-  },
 })
