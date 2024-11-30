@@ -7,7 +7,6 @@ import compress from 'astro-compress'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 import alpinejs from '@astrojs/alpinejs'
-import partytown from '@astrojs/partytown'
 import playformInline from '@playform/inline';
 const { SITE, BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 
@@ -17,7 +16,6 @@ export default defineConfig({
   base: BASE,
   integrations: [
     icon({ iconDir: 'src/assets/icons' }),
-    partytown({ config: { forward: ['dataLayer.push'] } }),
     htmx(),
     sitemap(),
     tailwind(),

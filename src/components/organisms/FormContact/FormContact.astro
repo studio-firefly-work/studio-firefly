@@ -2,6 +2,7 @@
 import BaseForm from '@/components/molecules/BaseForm/BaseForm.astro'
 import FormFieldArea from '@/components/molecules/FormFieldArea/FormFieldArea.astro'
 
+const turnstileSiteKey: string = import.meta.env.PUBLIC_TURNSTYLE_SITE_KEY
 const fields = [
   {
     label: { text: '名前', required: true },
@@ -65,8 +66,9 @@ const fields = [
   hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`}
   @success="step = 3"
 >
-  <div x-show="step == 1">
+  <div x-show="step == 1" id="contact">
     <FormFieldArea {fields} />
+    <div class="cf-turnstile" data-sitekey=`${import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}`></div>
     <div class="mt-6">
       <button
         type="button"
@@ -96,11 +98,16 @@ const fields = [
   <div x-show="step == 3">送信完了</div>
 </BaseForm>
 
-<script
-  is:inline
-  data-astro-rerun
-  src={`https://www.google.com/recaptcha/api.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`}
-  defer></script>
+<script is:inline data-astro-rerun src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
+<script is:inline data-astro-rerun define:vars={{ turnstileSiteKey }}>
+  turnstile.render('#contact', {
+    sitekey: turnstileSiteKey,
+    callback: function (token) {
+      console.log(`Challenge Success ${token}`)
+    },
+  })
+</script>
+
 <script>
   import * as AutoKana from 'vanilla-autokana'
   document.addEventListener('astro:page-load', () => {
