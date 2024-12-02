@@ -19,8 +19,6 @@ const { fields, steps, ...rest } = Astro.props
     x-on:htmx:after-request.camel="if(event.detail.successful){$dispatch('success')}"
     {...rest}
   >
-    <input type="hidden" name="g-recaptcha-response" x-ref="token" />
-
     <slot />
   </form>
 </div>
