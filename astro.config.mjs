@@ -7,7 +7,7 @@ import compress from 'astro-compress'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
 import alpinejs from '@astrojs/alpinejs'
-import playformInline from '@playform/inline';
+import partytown from '@astrojs/partytown';
 const { SITE, BASE } = loadEnv(process.env.NODE_ENV, process.cwd(), '')
 
 // https://astro.build/config
@@ -21,7 +21,10 @@ export default defineConfig({
     tailwind(),
     alpinejs(),
     compress(),
-    playformInline(),
+    partytown({ config: { forward: ['dataLayer.ush'], }, })
   ],
   plugins: [daisyui],
+  build: {
+    inlineStylesheets: 'always',
+  }
 })
