@@ -40,21 +40,19 @@ const turnstileSiteKey: string = import.meta.env.PUBLIC_TURNSTYLE_SITE_KEY
       <>
         <div id="cf-turnstile" class="mt-2" />
         <script is:inline define:vars={{ turnstileSiteKey }}>
-          {
-            let firstRun = true;
-            document.addEventListener('astro:page-load', () => {
-              if (!firstRun) return;
-              firstRun = false;
+          {document.addEventListener('astro:page-load', () => {
+            const element = document.getElementById('cf-turnstile')
+            if (element) {
+              turnstile.remove()
               turnstile.render('#cf-turnstile', {
                 sitekey: turnstileSiteKey,
                 callback: () => {
-                  const element = document.getElementById('cf-turnstile')
                   const xData = Alpine.$data(element)
                   delete xData.errors.turnstile
                 },
               })
-            })
-          }
+            }
+          })}
         </script>
       </>
     )
