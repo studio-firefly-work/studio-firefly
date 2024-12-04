@@ -2,7 +2,6 @@
 import BaseForm from '@/components/molecules/BaseForm/BaseForm.astro'
 import FormFieldArea from '@/components/molecules/FormFieldArea/FormFieldArea.astro'
 
-const turnstileSiteKey: string = import.meta.env.PUBLIC_TURNSTYLE_SITE_KEY
 const fields = [
   {
     label: { text: '名前', required: true },
@@ -67,8 +66,7 @@ const fields = [
   @success="step = 3"
 >
   <div x-show="step == 1" id="contact">
-    <FormFieldArea {fields} />
-    <div class="cf-turnstile" data-sitekey=`${import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}`></div>
+    <FormFieldArea {fields} turnstyle={true} />
     <div class="mt-6">
       <button
         type="button"
@@ -97,16 +95,6 @@ const fields = [
 
   <div x-show="step == 3">送信完了</div>
 </BaseForm>
-
-<script is:inline data-astro-rerun src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
-<script is:inline data-astro-rerun define:vars={{ turnstileSiteKey }}>
-  turnstile.render('#contact', {
-    sitekey: turnstileSiteKey,
-    callback: function (token) {
-      console.log(`Challenge Success ${token}`)
-    },
-  })
-</script>
 
 <script>
   import * as AutoKana from 'vanilla-autokana'
