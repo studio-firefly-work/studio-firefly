@@ -16,7 +16,7 @@ const { id, label, placeholder, validations, ...rest } = Astro.props
     {placeholder}
     rows={4}
     name={id}
-    class="textarea textarea-bordered w-full"
+    class="textarea textarea-bordered h-full w-full"
     x-model={id}
     x-bind:class={`errors.${id} ? 'textarea-error' : ($el.value ? 'textarea-success' : '')`}
     x-on:input={`validate${id.charAt(0).toUpperCase() + id.slice(1)}`}

@@ -9,7 +9,7 @@ export const form = {
       .map((field: any) => (field.type === 'checkbox' ? `${field.id}: []` : `${field.id}: ''`))
       .join(', ')
 
-    const errStr = fields.map((field: any) => `${field.id}: ''`).join(', ')
+    const errStr = [fields.map((field: any) => `${field.id}: ''`), "turnstile: ''"].join(', ')
 
     const validStr = fields
       .map((field: any) => {
@@ -20,18 +20,18 @@ export const form = {
         return `validate${field.id.charAt(0).toUpperCase() + field.id.slice(1)}() {
           let errorText = ''
         ${field.validations
-            .map((validation: any) => {
-              if (validation.pattern instanceof RegExp) {
-                return `if (!${validation.pattern}.test(this.${field.id})) {
+          .map((validation: any) => {
+            if (validation.pattern instanceof RegExp) {
+              return `if (!${validation.pattern}.test(this.${field.id})) {
               errorText = '${validation.text}'
             }`
-              } else {
-                return `if (!${validation.pattern}) {
+            } else {
+              return `if (!${validation.pattern}) {
               errorText = '${validation.text}'
             }`
-              }
-            })
-            .join(' else ')}
+            }
+          })
+          .join(' else ')}
           if (errorText) {
             this.errors.${field.id} = errorText
           } else {
@@ -48,15 +48,6 @@ export const form = {
         ${errStr}
       },
       ${validStr}
-      onClick(e) {
-        e.preventDefault()
-        grecaptcha.ready(function() {
-          grecaptcha.execute('${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}', {action: 'submit'}).then(function(token) {
-            $refs.token.value = token
-            htmx.trigger($refs.form, 'submit')
-          })
-        })
-      }
     }`
 
     return xData

@@ -6,9 +6,11 @@ import FormFieldCheckbox from '@/components/molecules/FormFieldCheckbox/FormFiel
 interface Props {
   fields: Theme.FormField[]
   mode?: string
+  turnstyle?: boolean
 }
 
-const { fields, mode = 'input' } = Astro.props
+const { fields, mode = 'input', turnstyle = false } = Astro.props
+const turnstileSiteKey: string = import.meta.env.PUBLIC_TURNSTYLE_SITE_KEY
 ---
 
 <div class="grid gap-2">
@@ -32,5 +34,29 @@ const { fields, mode = 'input' } = Astro.props
         )
       }
     })
+  }
+  {
+    turnstyle && (
+      <>
+        <div id="cf-turnstile" class="mt-2" />
+        <script is:inline define:vars={{ turnstileSiteKey }}>
+          {
+            let firstRun = true;
+            document.addEventListener('astro:page-load', () => {
+              if (!firstRun) return;
+              firstRun = false;
+              turnstile.render('#cf-turnstile', {
+                sitekey: turnstileSiteKey,
+                callback: () => {
+                  const element = document.getElementById('cf-turnstile')
+                  const xData = Alpine.$data(element)
+                  delete xData.errors.turnstile
+                },
+              })
+            })
+          }
+        </script>
+      </>
+    )
   }
 </div>
