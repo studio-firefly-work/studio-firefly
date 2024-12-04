@@ -85,7 +85,7 @@ const fields = [
       <button
         class="btn btn-disabled btn-accent w-full md:order-2"
         x-bind:class="{'btn-disabled': Object.keys(errors).length}"
-        x-on:click="if(!Object.keys(errors).length){onClick($event)}"
+        x-on:click="if(!Object.keys(errors).length){ return true }"
       >
         お問い合わせを送信
       </button>
