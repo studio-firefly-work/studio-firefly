@@ -62,7 +62,7 @@ const fields = [
 <BaseForm
   {fields}
   steps={['入力', '確認', '完了']}
-  hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send/`}
+  hx-post={`${import.meta.env.PUBLIC_API_BASE_URL}/mail/send`}
   @success="step = 3"
 >
   <div x-show="step == 1" id="contact">
