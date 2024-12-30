@@ -22,17 +22,22 @@ const { seo, frontmatter, prev, next } = Astro.props
 <BaseLayout {seo}>
   <Header />
   <main>
-    <Container size="tall" class="h-56">
+    <Container size="short">
       <Inner class="relative">
         <h1 class="theme-text-xl font-bold">{seo.title}</h1>
-        <p class="mt-4">{seo.description}</p>
-        <time datetime={frontmatter.date} class="theme-text-sm absolute -top-4 right-0"
+        <time datetime={frontmatter.date} class="theme-text-sm absolute -top-6 right-0"
           >{utils.formatDate(frontmatter.date)}</time
         >
       </Inner>
     </Container>
 
     {seo.breadcrumb && <Breadcrumb {seo} />}
+
+    <Container size="short">
+      <Inner>
+        <p set:html={seo.description} />
+      </Inner>
+    </Container>
 
     <Container>
       <Inner>

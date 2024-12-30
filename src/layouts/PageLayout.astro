@@ -15,13 +15,20 @@ const { seo } = Astro.props
 <BaseLayout {seo}>
   <Header />
   <main>
-    <Container size="tall" class="h-56">
+    <Container size="short">
       <Inner>
         <h1 class="theme-text-xl font-bold">{seo.title}</h1>
       </Inner>
     </Container>
 
     {seo.breadcrumb && <Breadcrumb {seo} />}
+
+    <Container size="short">
+      <Inner>
+        <p set:html={seo.description} />
+      </Inner>
+    </Container>
+
     <slot />
   </main>
   <Footer />
