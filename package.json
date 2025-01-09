@@ -36,9 +36,11 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@iconify-json/devicon": "^1.2.7",
+    "@iconify-json/logos": "^1.2.4",
     "@iconify-json/mdi": "^1.2.1",
     "@iconify-json/tabler": "^1.2.7",
-    "@iconify-json/devicon": "^1.2.7",
+    "@iconify-json/vscode-icons": "^1.2.6",
     "@playwright/test": "^1.48.2",
     "@tailwindcss/typography": "^0.5.15",
     "@types/cssesc": "^3.0.2",
