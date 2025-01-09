@@ -22,30 +22,32 @@ const { seo, frontmatter, prev, next } = Astro.props
 <BaseLayout {seo}>
   <Header />
   <main>
-    <Container size="tall" class="h-56">
-      <Inner class="relative">
-        <h1 class="theme-text-xl font-bold">{seo.title}</h1>
-        <p class="mt-4">{seo.description}</p>
-        <time datetime={frontmatter.date} class="theme-text-sm absolute -top-4 right-0"
-          >{utils.formatDate(frontmatter.date)}</time
-        >
-      </Inner>
-    </Container>
-
     {seo.breadcrumb && <Breadcrumb {seo} />}
 
-    <Container>
-      <Inner>
-        <article class="prose max-w-screen-xl">
+    <article itemscope itemtype="https://schema.org/Article">
+      <Container size="short">
+        <Inner class="relative">
+          <time datetime={frontmatter.date} class="theme-text-sm absolute -top-6 right-0" itemprop="datePublished">
+            {utils.formatDate(frontmatter.date)}
+          </time>
+
+          <h1 class="theme-text-xl font-bold" itemprop="headline">{seo.title}</h1>
+          <p set:html={seo.description} itemprop="description" />
+        </Inner>
+      </Container>
+
+      <Container>
+        <Inner class="prose max-w-screen-xl" itemprop="articleBody">
           <Image
             src={utils.getAssetsImage(frontmatter.image.src)}
             alt={frontmatter.image.alt}
             transition:name={`image-${frontmatter.slug}`}
+            itemprop="image"
           />
           <slot />
-        </article>
-      </Inner>
-    </Container>
+        </Inner>
+      </Container>
+    </article>
 
     <Container>
       <Inner>
