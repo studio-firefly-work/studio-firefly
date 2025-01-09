@@ -6,15 +6,17 @@ import SkillMatrix from '@/components/organisms/SkillMatrix/SkillMatrix.astro'
 
 const seo: Theme.SEO = {
   title: 'スキルセット',
-  description: 'スキルセットページのdescriptionです',
+  description:
+    'このページでは、私のプログラミングスキルを「好き/嫌い」を縦軸、「得意/不得意」を横軸にした2軸のマトリクスで評価し、それぞれのスキルをアイコンで視覚的に配置しています。<br/>アイコンをクリックすると、そのスキルの詳細情報を確認することができます。',
   permalink: ['skill'],
   breadcrumb: { skill: 'スキルセット' },
+  itemtype: 'WebPage',
 }
 ---
 
 <PageLayout {seo}>
-  <Container class="overflow-x-auto">
-    <Inner size="full md:base">
+  <Container>
+    <Inner size="full" class="md:max-w-screen-lg">
       <SkillMatrix />
     </Inner>
   </Container>

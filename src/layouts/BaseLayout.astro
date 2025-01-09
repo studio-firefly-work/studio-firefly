@@ -20,6 +20,8 @@ const { seo } = Astro.props
   </head>
   <body
     class="manipulation grid min-h-dvh grid-cols-1 grid-rows-[auto,1fr,auto] break-words bg-base-200 font-body text-base tracking-normal antialiased"
+    itemtype=`https://schema.org/${seo.itemtype}`
+    itemscope
   >
     <slot />
     <script>
