@@ -31,7 +31,7 @@ const { seo, frontmatter, prev, next } = Astro.props
             {utils.formatDate(frontmatter.date)}
           </time>
 
-          <h1 class="theme-text-xl font-bold" itemprop="headline">{seo.title}</h1>
+          <h1 class="theme-text-xl mb-6 font-bold" itemprop="headline">{seo.title}</h1>
           <p set:html={seo.description} itemprop="description" />
         </Inner>
       </Container>
