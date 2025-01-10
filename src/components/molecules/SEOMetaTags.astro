@@ -8,14 +8,12 @@ const { seo } = Astro.props
 
 if (!seo.permalink) {
   // ホームの場合
-  seo.schemaOrg = (seo.schemaOrg || []).concat(
-    {
-      '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      name: import.meta.env.PUBLIC_SITE_NAME,
-      url: Astro.site,
-    }
-  )
+  seo.schemaOrg = (seo.schemaOrg || []).concat({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: import.meta.env.PUBLIC_SITE_NAME,
+    url: Astro.site,
+  })
 }
 ---
 
@@ -49,8 +47,7 @@ if (!seo.permalink) {
   }}
   extend={{
     link: [
-      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
-      { rel: 'icon', type: 'image/svg+xml', sizes: 'any', href: '/favicon.svg' },
+      { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
       { rel: 'manifest', href: '/manifest.json', crossorigin: 'use-credentials' },
     ],

@@ -19,7 +19,7 @@ const { seo } = Astro.props
 
     <Container size="short">
       <Inner>
-        <h1 class="theme-text-xl font-bold" itemprop="name">{seo.title}</h1>
+        <h1 class="theme-text-xl font-bold mb-8" itemprop="name">{seo.title}</h1>
         <p set:html={seo.description} itemprop="description" />
       </Inner>
     </Container>
