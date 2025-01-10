@@ -31,22 +31,20 @@ const { seo, frontmatter, prev, next } = Astro.props
             {utils.formatDate(frontmatter.date)}
           </time>
 
-          <h1 class="theme-text-xl font-bold" itemprop="headline">{seo.title}</h1>
+          <h1 class="theme-text-xl mb-8 font-bold" itemprop="headline">{seo.title}</h1>
           <p set:html={seo.description} itemprop="description" />
         </Inner>
       </Container>
 
-      <Container>
-        <Inner class="prose max-w-screen-xl" itemprop="articleBody">
-          <Image
-            src={utils.getAssetsImage(frontmatter.image.src)}
-            alt={frontmatter.image.alt}
-            transition:name={`image-${frontmatter.slug}`}
-            itemprop="image"
-          />
-          <slot />
-        </Inner>
-      </Container>
+      <Inner class="prose max-w-screen-xl" itemprop="articleBody">
+        <Image
+          src={utils.getAssetsImage(frontmatter.image.src)}
+          alt={frontmatter.image.alt}
+          transition:name={`image-${frontmatter.slug}`}
+          itemprop="image"
+        />
+        <slot />
+      </Inner>
     </article>
 
     <Container>

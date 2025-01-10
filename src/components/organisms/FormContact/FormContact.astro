@@ -61,12 +61,7 @@ const fields = [
 const api = import.meta.env.PUBLIC_API_BASE_URL
 ---
 
-<BaseForm
-  {fields}
-  steps={['入力', '確認', '完了']}
-  hx-post={`${api}/mail/send`}
-  @success="step = 3"
->
+<BaseForm {fields} steps={['入力', '確認', '完了']} hx-post={`${api}/mail/send`} @success="step = 3">
   <div x-show="step == 1" id="contact">
     <FormFieldArea {fields} turnstyle={true} />
     <div class="mt-6">
@@ -95,7 +90,14 @@ const api = import.meta.env.PUBLIC_API_BASE_URL
     </div>
   </div>
 
-  <div x-show="step == 3">送信完了</div>
+  <div x-show="step == 3">
+    <p>お問い合わせありがとうございます！ 🎉✨</p>
+    <p>
+      この度はお問い合わせいただき、誠にありがとうございます！<br />
+      入力された内容を確認し、折り返しご連絡させていただきます。<br />
+      また、入力されたメールアドレスへ自動返信メールをお送りしておりますので、ご確認ください。
+    </p>
+  </div>
 </BaseForm>
 
 <script>
