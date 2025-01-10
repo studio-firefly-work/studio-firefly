@@ -24,8 +24,12 @@ const itemList = generateBreadcrumbs(seo.breadcrumb!)
 const last = itemList.length - 1
 ---
 
-<Inner size="full md:base" class="theme-text-sm breadcrumbs">
-  <ol itemtype="http://schema.org/BreadcrumbList" itemscope>
+<Inner class="theme-text-sm breadcrumbs w-full md:w-10/12">
+  <ol
+    class="overflow-x-auto px-[calc(((1-11/12)*100%)/2)] md:mx-0"
+    itemtype="http://schema.org/BreadcrumbList"
+    itemscope
+  >
     {
       itemList.map(({ item, name }, index) => (
         <li itemprop="itemListElement" itemtype="http://schema.org/ListItem" itemscope>
