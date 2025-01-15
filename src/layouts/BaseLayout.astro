@@ -3,7 +3,7 @@ import { ViewTransitions } from 'astro:transitions'
 import '@fontsource-variable/noto-sans'
 import '@fontsource-variable/noto-sans-jp'
 import '@/styles/global.scss'
-import SEOMetaTags from '@/components/molecules/SEOMetaTags.astro'
+import SEOMetaTags from '@/components/molecules/SEOMetaTags/SEOMetaTags.astro'
 
 interface Props {
   seo: Theme.SEO
@@ -12,8 +12,8 @@ const { seo } = Astro.props
 ---
 
 <!doctype html>
-<html lang="ja-JP">
-  <head prefix="og: https://ogp.me/ns#">
+<html lang="ja-JP" prefix=`${seo.ogtype}: https://ogp.me/ns/${seo.ogtype}#`>
+  <head>
     <SEOMetaTags {seo} />
     <ViewTransitions />
     <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>

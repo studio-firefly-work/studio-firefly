@@ -1,25 +1,24 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import Container from '@/components/atoms/Container.astro'
-import Footer from '@/components/organisms/Footer.astro'
+import Footer from '@/components/organisms/Footer/Footer.astro'
 import Header from '@/components/organisms/Header/Header.astro'
-import Inner from '@/components/atoms/Inner.astro'
-import Particle from '@/components/molecules/Particle.astro'
+import Inner from '@/components/atoms/Inner/Inner.astro'
+import Particle from '@/components/molecules/Particle/Particle.astro'
 
 const seo: Theme.SEO = {
+  title: import.meta.env.PUBLIC_SITE_NAME,
   description: 'ホームページのdescriptionです',
-  itemtype: 'Website',
+  ogtype: 'website',
+  itemtype: 'WebSite',
 }
 ---
 
 <BaseLayout {seo}>
   <Header />
   <main>
-    <Container size="tall">
-      <Inner>
-        <h1 class="theme-text-xl font-bold">{seo.title}</h1>
-      </Inner>
-    </Container>
+    <Inner>
+      <h1 class="theme-text-xl font-bold">{seo.title}</h1>
+    </Inner>
   </main>
   <Footer />
   <Particle />

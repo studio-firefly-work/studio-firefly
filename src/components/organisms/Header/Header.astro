@@ -1,9 +1,8 @@
 ---
 import { Icon } from 'astro-icon/components'
-import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle.astro'
-import Container from '@/components/atoms/Container.astro'
-import Inner from '@/components/atoms/Inner.astro'
-import HambMenu from '@/components/molecules/HambMenu.astro'
+import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle/ButtonThemeToggle.astro'
+import Inner from '@/components/atoms/Inner/Inner.astro'
+import HambMenu from '@/components/molecules/HambMenu/HambMenu.astro'
 
 const currentPath = Astro.url.pathname
 export const links: Theme.Link[] = [
@@ -34,38 +33,37 @@ export const add = (...args: number[]) => {
 }
 ---
 
-<header>
-  <Container class="py-4 md:py-4">
-    <Inner size="wide">
-      <nav class="flex">
-        <div class="flex-1">
-          <a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>
-            <Icon name="logo" width={140} height={60} />
-          </a>
-        </div>
+<header class="py-4 md:py-4">
+  <Inner size="wide">
+    <nav class="flex">
+      <div class="flex-1">
+        <a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>
+          <Icon name="logo" width={140} height={60} />
+        </a>
+      </div>
 
-        <div class="hidden flex-none md:inline-flex">
-          <ul class="menu menu-horizontal">
-            {
-              links.map((link: Theme.Link) => (
-                <li>
-                  <a
-                    href={link.permalink}
-                    class={`btn btn-ghost ${currentPath.startsWith(link.permalink) ? 'theme-current-page' : ''}`}
-                  >
-                    <Icon name={link.icon} width={20} height={20} />
-                    {link.title}
-                  </a>
-                </li>
-              ))
-            }
-            <li><ButtonThemeToggle /></li>
-          </ul>
-        </div>
-        <div class="flex-none md:hidden">
-          <HambMenu {links} />
-        </div>
-      </nav>
-    </Inner>
-  </Container>
+      <div class="hidden flex-none md:inline-flex">
+        <ul class="menu menu-horizontal">
+          {
+            links.map((link: Theme.Link) => (
+              <li>
+                <a
+                  href={link.permalink}
+                  class={`btn btn-ghost ${currentPath.startsWith(link.permalink) ? 'theme-current-page' : ''}`}
+                >
+                  <Icon name={link.icon} width={20} height={20} />
+                  {link.title}
+                </a>
+              </li>
+            ))
+          }
+          <li><ButtonThemeToggle /></li>
+        </ul>
+      </div>
+
+      <div class="flex-none md:hidden">
+        <HambMenu {links} />
+      </div>
+    </nav>
+  </Inner>
 </header>

@@ -1,34 +1,21 @@
 ---
 import PageLayout from '@/layouts/PageLayout.astro'
-import Container from '@/components/atoms/Container.astro'
-import Inner from '@/components/atoms/Inner.astro'
+import Inner from '@/components/atoms/Inner/Inner.astro'
 import FormContact from '@/components/organisms/FormContact/FormContact.astro'
 
 const seo: Theme.SEO = {
   title: 'お問い合わせ',
-  description: 'お問い合わせページのdescriptionです',
+  description:
+    'お問い合わせ内容は、平日18:00～20:00 / 土日祝日9:00～15:00に確認させていただいております。<br/>上記時間内で3日以内の折り返しのご連絡を心掛けておりますが、内容により返信までにお時間をいただく場合がございます。<br/>あらかじめご了承くださいますようお願いいたします。',
   permalink: ['contact'],
   breadcrumb: { contact: 'お問い合わせ' },
+  ogtype: 'website',
   itemtype: 'ContactPage',
 }
 ---
 
 <PageLayout {seo}>
-  <Container>
-    <Inner size="slim">
-      <ul class="mb-4 flex flex-col gap-4 rounded-sm bg-neutral p-4">
-        <li>
-          お問い合わせ内容は、平日18:00～20:00 / 土日祝日9:00～17:00に確認させていただいております。<br />
-          上記時間内で3日以内の折り返しのご連絡を心掛けておりますが、内容により返信までにお時間をいただく場合がございます。<br
-          />
-          あらかじめご了承くださいますようお願いいたします。
-        </li>
-        <li>
-          スマートフォンや携帯電話でドメイン指定受信をされている方は、「@studio-firefly.com」からのメールを受信できるように設定をお願いいたします。
-        </li>
-      </ul>
-
-      <FormContact />
-    </Inner>
-  </Container>
+  <Inner size="slim">
+    <FormContact />
+  </Inner>
 </PageLayout>
