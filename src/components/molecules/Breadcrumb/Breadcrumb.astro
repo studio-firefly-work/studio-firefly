@@ -24,23 +24,25 @@ const itemList = generateBreadcrumbs(seo.breadcrumb!)
 const last = itemList.length - 1
 ---
 
-<Inner class="w-full md:w-10/12">
-  <nav class="theme-text-sm breadcrumbs">
-    <ol
-      class="overflow-x-auto px-[calc(((1-11/12)*100%)/2)] md:px-0"
-      itemtype="http://schema.org/BreadcrumbList"
-      itemscope
-    >
-      {
-        itemList.map(({ item, name }, index) => (
-          <li itemprop="itemListElement" itemtype="http://schema.org/ListItem" itemscope>
-            <a href={item} itemprop="item" {...(index === last ? { 'aria-current': 'page' } : {})}>
-              <span itemprop="name">{name}</span>
-            </a>
-            <meta itemprop="position" content={`${index + 1}`} />
-          </li>
-        ))
-      }
-    </ol>
-  </nav>
-</Inner>
+<nav>
+  <Inner class="w-full md:w-10/12">
+    <div class="theme-text-sm breadcrumbs">
+      <ol
+        class="overflow-x-auto px-[calc(((1-11/12)*100%)/2)] md:px-0"
+        itemtype="http://schema.org/BreadcrumbList"
+        itemscope
+      >
+        {
+          itemList.map(({ item, name }, index) => (
+            <li itemprop="itemListElement" itemtype="http://schema.org/ListItem" itemscope>
+              <a href={item} itemprop="item" {...(index === last ? { 'aria-current': 'page' } : {})}>
+                <span itemprop="name">{name}</span>
+              </a>
+              <meta itemprop="position" content={`${index + 1}`} />
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </Inner>
+</nav>

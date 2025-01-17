@@ -61,9 +61,8 @@ seo.schemaOrg = (seo.schemaOrg || []).concat({
   }}
 />
 {
-  seo.schemaOrg &&
-    seo.schemaOrg.map((structuredData: []) => (
-      <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-    ))
+  seo.schemaOrg.map((structuredData: []) => (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  ))
 }
 <script is:inline data-astro-rerun type="text/partytown" src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>
