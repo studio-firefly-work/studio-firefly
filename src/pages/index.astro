@@ -1,25 +1,93 @@
 ---
+import { Icon } from 'astro-icon/components'
 import BaseLayout from '@/layouts/BaseLayout.astro'
+import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle/ButtonThemeToggle.astro'
 import Footer from '@/components/organisms/Footer/Footer.astro'
-import Header from '@/components/organisms/Header/Header.astro'
 import Inner from '@/components/atoms/Inner/Inner.astro'
 import Particle from '@/components/molecules/Particle/Particle.astro'
 
 const seo: Theme.SEO = {
-  title: import.meta.env.PUBLIC_SITE_NAME,
+  title: '',
   description: 'ホームページのdescriptionです',
   ogtype: 'website',
   itemtype: 'WebSite',
 }
+export const links: Theme.Link[] = [
+  {
+    title: '自己紹介',
+    icon: 'mdi:human-handsup',
+    permalink: '/profile/',
+  },
+  {
+    title: 'スキルセット',
+    icon: 'mdi:code',
+    permalink: '/skill/',
+  },
+  {
+    title: '制作事例',
+    icon: 'mdi:work',
+    permalink: '/works/',
+  },
+  {
+    title: 'お問い合わせ',
+    icon: 'mdi:email',
+    permalink: '/contact/',
+  },
+]
 ---
 
 <BaseLayout {seo}>
-  <Header />
-  <main>
+  <header>
     <Inner>
-      <h1 class="theme-text-xl font-bold">{seo.title}</h1>
+      <ButtonThemeToggle />
+    </Inner>
+  </header>
+  <div></div>
+  <main class="my-12 flex flex-col items-center justify-center">
+    <Inner>
+      <div class="flex flex-col items-center justify-center">
+        <h1 class="mb-10" transition:name="header-logo">
+          <Icon name="logo" title="スタジオfirefly" width={210} height={90} />
+        </h1>
+        <nav class="mb-10">
+          <ul class="theme-text-xl grid grid-cols-2 grid-rows-2">
+            {
+              links.map((link: Theme.Link) => (
+                <li>
+                  <a href={link.permalink} class="btn btn-ghost" transition:name={`header-${link.permalink}`}>
+                    <Icon name={link.icon} width={20} height={20} />
+                    {link.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <p>{seo.description}</p>
+      </div>
     </Inner>
   </main>
   <Footer />
   <Particle />
 </BaseLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const links = document.querySelectorAll('a[data-transition="home"]');
+
+    links.forEach((link) => {
+      link.addEventListener('click', (event) => {
+        const isFromHome = window.location.pathname === '/'; // ホームから遷移するかチェック
+        if (isFromHome) {
+          event.preventDefault(); // 通常のリンク動作を停止
+          const url = link.getAttribute('href'); // 遷移先URLを取得
+
+          // View Transition APIを開始
+          document.startViewTransition(() => {
+            window.location.href = url; // 遷移を実行
+          });
+        }
+      });
+    });
+  });
+</script>

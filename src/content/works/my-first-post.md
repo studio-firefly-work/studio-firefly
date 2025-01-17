@@ -6,7 +6,7 @@ category: news
 date: 2024-01-01
 image:
   src: works/post1_fv.png
-  alt: 'My First Post Featured Image'
+  alt: 'My First Post Featured'
 ---
 
 ## Why I Started Blogging

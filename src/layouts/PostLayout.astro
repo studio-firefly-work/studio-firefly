@@ -24,7 +24,7 @@ const { seo, frontmatter, prev, next } = Astro.props
   <main class="mb-12">
     <article class="mb-12" itemtype="http://schema.org/Article" itemscope>
       <Inner class="relative py-12">
-        <time datetime={frontmatter.date} class="theme-text-sm absolute -top-6 right-0" itemprop="datePublished">
+        <time datetime={frontmatter.date} class="theme-text-sm absolute top-6 right-0" itemprop="datePublished">
           {utils.formatDate(frontmatter.date)}
         </time>
 
@@ -36,6 +36,7 @@ const { seo, frontmatter, prev, next } = Astro.props
         <Image
           src={utils.getAssetsImage(frontmatter.image.src)}
           alt={frontmatter.image.alt}
+          loading="eager"
           transition:name={`image-${frontmatter.slug}`}
           itemprop="image"
         />
