@@ -41,6 +41,7 @@ const seo: Theme.SEO = {
                 <Image
                   src={utils.getAssetsImage(post.frontmatter.image.src)}
                   alt={post.frontmatter.image.alt}
+                  loading="eager"
                   transition:name={`image-${post.frontmatter.slug}`}
                   class="duration-300 group-hover:scale-110"
                 />

@@ -6,7 +6,7 @@ category: web
 date: 2024-03-10
 image:
   src: works/post3_fv.png
-  alt: 'My First Post Featured Image'
+  alt: 'My First Post Featured'
 ---
 
 ## Key Trends

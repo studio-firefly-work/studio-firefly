@@ -37,7 +37,7 @@ export const add = (...args: number[]) => {
   <Inner size="wide">
     <nav class="flex">
       <div class="flex-1">
-        <a href="/" aria-current={currentPath === '/' ? 'page' : undefined}>
+        <a href="/" aria-current={currentPath === '/' ? 'page' : undefined} transition:name="header-logo">
           <Icon name="logo" title="スタジオfirefly" width={140} height={60} />
         </a>
       </div>
@@ -50,6 +50,7 @@ export const add = (...args: number[]) => {
                 <a
                   href={link.permalink}
                   class={`btn btn-ghost ${currentPath.startsWith(link.permalink) ? 'theme-current-page' : ''}`}
+                  transition:name={`header-${link.permalink}`}
                 >
                   <Icon name={link.icon} width={20} height={20} />
                   {link.title}
@@ -67,3 +68,14 @@ export const add = (...args: number[]) => {
     </nav>
   </Inner>
 </header>
+
+<script>
+  document.addEventListener('astro:before-preparation', (event) => {
+    const links = document.querySelectorAll('[data-astro-transition-scope]') as NodeListOf<HTMLElement>
+    if (event.to.pathname !== '/') {
+      links.forEach((link) => {
+        link.removeAttribute('data-astro-transition-scope')
+      })
+    }
+  })
+</script>

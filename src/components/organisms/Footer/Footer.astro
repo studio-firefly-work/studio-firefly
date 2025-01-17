@@ -7,16 +7,14 @@ import Inner from '@/components/atoms/Inner/Inner.astro'
   <Inner size="wide">
     <nav class="footer footer-center rounded text-base-content">
       <div class="grid grid-flow-col gap-4">
-        <a href="/">
-          <Icon name="mdi:github" title="github" width={20} height={20} />
+        <a href="https://github.com/studio-firefly-work" target="_blank">
+          <Icon name="mdi:github" title="github" width={32} height={32} />
         </a>
       </div>
       <div class="grid grid-flow-col gap-4">
         <a href="/privacy/" class="link-hover link text-base">プライバシーポリシー</a>
       </div>
-      <aside>
-        <p class="theme-text-sm">&copy; {new Date().getFullYear()} Studio Firefly</p>
-      </aside>
+      <small class="theme-text-sm">&copy; {new Date().getFullYear()} Studio Firefly</small>
     </nav>
   </Inner>
 </footer>

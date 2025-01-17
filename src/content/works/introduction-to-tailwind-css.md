@@ -6,7 +6,7 @@ category: web
 date: 2024-04-05
 image:
   src: works/post4_fv.png
-  alt: 'My First Post Featured Image'
+  alt: 'My First Post Featured'
 ---
 
 ## Why Tailwind?

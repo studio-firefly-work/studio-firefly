@@ -6,7 +6,7 @@ category: web
 date: 2024-02-15
 image:
   src: works/post2_fv.png
-  alt: 'My First Post Featured Image'
+  alt: 'My First Post Featured'
 ---
 
 ## Features of Astro
