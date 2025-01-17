@@ -9,11 +9,8 @@ import Pagination from '@/components/molecules/Pagination/Pagination.astro'
 
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const pages: MarkdownInstance<Theme.Frontmatter>[] = await Astro.glob<Theme.Frontmatter>('../../content/works/*.md')
-
-  // 新しい順にソート
-  pages.sort(utils.post.sortByDate)
-
-  return paginate(pages, { pageSize: 3 })
+  pages.sort(utils.post.sortByDate) // 新しい順にソート
+  return paginate(pages, { pageSize: 12 })
 }
 const { page } = Astro.props
 
