@@ -68,14 +68,3 @@ export const add = (...args: number[]) => {
     </nav>
   </Inner>
 </header>
-
-<script>
-  document.addEventListener('astro:before-preparation', (event) => {
-    const links = document.querySelectorAll('[data-astro-transition-scope]') as NodeListOf<HTMLElement>
-    if (event.to.pathname !== '/') {
-      links.forEach((link) => {
-        link.removeAttribute('data-astro-transition-scope')
-      })
-    }
-  })
-</script>

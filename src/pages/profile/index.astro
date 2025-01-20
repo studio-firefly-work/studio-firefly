@@ -5,7 +5,7 @@ import Inner from '@/components/atoms/Inner/Inner.astro'
 
 const seo: Theme.SEO = {
   title: '自己紹介',
-  description: '自己紹介ページのdescriptionです',
+  description: '企画・デザイン段階からプロジェクトに参画することで、コーディング時の手戻りを最小限に抑えます。このフロントローディング型のアプローチにより、短期間で高品質なWeb開発を実現し、最高効率のパフォーマンスを発揮します。',
   permalink: ['profile'],
   breadcrumb: { profile: '自己紹介' },
   ogtype: 'profile',
@@ -13,16 +13,18 @@ const seo: Theme.SEO = {
 }
 
 const name = 'ほたる'
-const description = 'description'
 import profile from '@/assets/images/profile/profile.png'
 ---
 
 <PageLayout {seo}>
   <section itemprop="mainEntity" itemtype="https://schema.org/Person" itemscope>
     <Inner>
-      <h2 itemprop="name">{name}</h2>
-      <p itemprop="description">{description}</p>
-      <Image src={profile} alt=`${name}の写真` itemprop="image" />
+      <div class="flex flex-col items-center gap-4 md:flex-row">
+        <Image src={profile} alt=`${name}の写真` itemprop="image" />
+        <div class="flex-1">
+          <h2 itemprop="name">{name}</h2>
+        </div>
+      </div>
 
       <ul class="timeline timeline-vertical timeline-snap-icon max-md:timeline-compact">
         <li>
