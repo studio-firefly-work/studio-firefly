@@ -13,7 +13,7 @@ const gridStyle = prev && next ? 'grid-rows-3' : !prev && !next ? 'grid-rows-1' 
   >
     {
       prev && (
-        <a href={`/${parent}/${prev.frontmatter.slug}`} class="btn btn-neutral btn-md w-fit gap-2 pl-2 lg:gap-3">
+        <a href={`/${parent}/${prev.frontmatter.slug}`} class="btn btn-md w-fit gap-2 pl-2 lg:gap-3">
           <Icon name="mdi:keyboard-arrow-left" width={28} height={28} />
           <div class="flex flex-col items-start">
             <span class="theme-text-xs font-normal">前へ</span>
@@ -26,7 +26,7 @@ const gridStyle = prev && next ? 'grid-rows-3' : !prev && !next ? 'grid-rows-1' 
       next && (
         <a
           href={`/${parent}/${next.frontmatter.slug}`}
-          class={`btn btn-neutral btn-md ml-auto w-fit gap-2 pr-2 md:col-start-2 md:row-start-1 lg:col-start-3 lg:gap-3`}
+          class={`btn btn-md ml-auto w-fit gap-2 pr-2 md:col-start-2 md:row-start-1 lg:col-start-3 lg:gap-3`}
         >
           <div class="flex flex-col items-end">
             <span class="theme-text-xs font-normal">次へ</span>
