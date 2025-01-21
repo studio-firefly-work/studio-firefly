@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "adrianwilczynski.alpine-js-intellisense",
+    "sperovita.alpinejs-syntax-highlight",
+    "astro-build.astro-vscode",
+    "risingstack.astro-alpinejs-syntax-highlight",
+    "dbaeumer.vscode-eslint",
+    "otovo-oss.htmx-tags",
+    "esbenp.prettier-vscode",
+    "ms-playwright.playwright",
+    "bradlc.vscode-tailwindcss",
+    "vitest.explorer"
+  ]
+}
