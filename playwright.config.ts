@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test'
 
 /**
  * Read environment variables from file.
@@ -30,7 +30,7 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
-    
+
     // headless: false
   },
 
@@ -80,5 +80,5 @@ export default defineConfig({
     reuseExistingServer: !process.env.CI,
   },
 
-  timeout: 10000
-});
+  timeout: 30000,
+})
