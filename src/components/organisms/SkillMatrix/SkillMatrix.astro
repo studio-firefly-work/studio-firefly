@@ -1,38 +1,171 @@
 ---
 import { Icon } from 'astro-icon/components'
+import '/node_modules/scroll-hint/css/scroll-hint.css'
 
 const skills = [
-  { name: 'C#', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[20%]', icon: 'mdi:code' },
+  {
+    name: '.NET MAUI',
+    text: 'クロスプラットフォーム開発で1度だけ採用しました。<br/>学習コストの高さに課題を感じます。<br/>技術選定の縛りが無ければPWAを採用すると思います。',
+    good: 'left-[40%]',
+    like: 'bottom-[40%]',
+    icon: 'logos:dotnet',
+  },
+  {
+    name: 'Alpine.js',
+    text: 'クライアントサイドでの動的な振る舞いを手軽に追加するために使用しています。<br/>軽量で直感的に操作でき、HTMLの構造を保ちながらスクリプトを組み込むことで、保守性を意識しています。<br/>AHAスタックの中で、シンプルなクライアントサイドの動作を実現するために使っています。',
+    good: 'left-[85%]',
+    like: 'bottom-[100%]',
+    icon: 'devicon:alpinejs',
+  },
+  {
+    name: 'Astro',
+    text: 'HTMLファーストな開発を重視し、読み込み速度を最大限に高められる点を評価しています。<br/>軽量な環境で効率的な開発ができ、モダンなWeb制作には欠かせません。<br/>AHAスタックの中核として静的サイト生成を効率化し、コンポーネントベースでの開発が可能です。<br/>本サイトではviewtransitionsを活用していますが、まだ主流な技術とは言えず、ブラウザ間の互換性やパフォーマンスへの影響を考慮しながら試行錯誤しています。',
+    good: 'left-[95%]',
+    like: 'bottom-[100%]',
+    icon: 'devicon:astro',
+  },
+  {
+    name: 'C#',
+    text: '堅牢な構文で信頼性の高いコードが書ける点は良いですが、時々静的型チェックに縛られる感覚があります。<br/>それでも、大規模プロジェクトでは安心感があり、活用しています。',
+    good: 'left-[40%]',
+    like: 'bottom-[20%]',
+    icon: 'devicon:csharp',
+  },
   {
     name: 'CSS',
-    text: 'CSSではなく<button class="link" x-on:click="toggleModal(6, \'open\')">SCSS</button>を使います',
+    text: 'CSSそのものよりもSCSSを使用しています。',
     good: 'left-[100%]',
     like: 'bottom-[20%]',
-    icon: 'mdi:code',
+    icon: 'devicon:css3',
   },
-  { name: 'Java', text: 'テキスト', good: 'left-[10%]', like: 'bottom-[10%]', icon: 'mdi:code' },
-  { name: 'PHP', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[70%]', icon: 'mdi:code' },
-  { name: 'XAML', text: 'テキスト', good: 'left-[20%]', like: 'bottom-[20%]', icon: 'mdi:code' },
-  { name: 'HTML', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[40%]', icon: 'mdi:code' },
-  { name: 'SCSS', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[90%]', icon: 'mdi:code' },
-  { name: 'TypeScript', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[90%]', icon: 'mdi:code' },
-  { name: 'JavaScript', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[60%]', icon: 'mdi:code' },
-  { name: 'Vue', text: 'テキスト', good: 'left-[30%]', like: 'bottom-[80%]', icon: 'mdi:code' },
-  { name: 'Git', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[100%]', icon: 'mdi:code' },
-  { name: 'React', text: 'テキスト', good: 'left-[60%]', like: 'bottom-[80%]', icon: 'mdi:code' },
-  { name: 'Astro', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[100%]', icon: 'mdi:code' },
-  { name: 'Docker', text: 'テキスト', good: 'left-[90%]', like: 'bottom-[70%]', icon: 'mdi:code' },
-  { name: 'MySQL', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[65%]', icon: 'mdi:code' },
-  { name: 'Prisma', text: 'テキスト', good: 'left-[60%]', like: 'bottom-[50%]', icon: 'mdi:code' },
-  { name: 'Express', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[80%]', icon: 'mdi:code' },
-  { name: 'Laravel', text: 'テキスト', good: 'left-[20%]', like: 'bottom-[50%]', icon: 'mdi:code' },
-  { name: 'ecforce', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[50%]', icon: 'mdi:code' },
-  { name: '.NET MAUI', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[40%]', icon: 'mdi:code' },
-  { name: 'Wordpress', text: 'テキスト', good: 'left-[100%]', like: 'bottom-[75%]', icon: 'mdi:code' },
-  { name: 'Tailwind CSS', text: 'テキスト', good: 'left-[80%]', like: 'bottom-[100%]', icon: 'mdi:code' },
-  { name: 'SEO', text: 'テキスト', good: 'left-[70%]', like: 'bottom-[70%]', icon: 'mdi:code' },
-  { name: 'アクセシビリティ', text: 'テキスト', good: 'left-[40%]', like: 'bottom-[70%]', icon: 'mdi:code' },
+  {
+    name: 'Docker',
+    text: '環境構築が容易で再現性が高いのが魅力です。<br/>主にWordPressの開発環境を構築する際に使用しています。',
+    good: 'left-[85%]',
+    like: 'bottom-[70%]',
+    icon: 'devicon:docker',
+  },
+  {
+    name: 'Express',
+    text: '本サイトのバックエンドとして当初開発していましたが、フロントエンドをCloudflareへデプロイすると決めた後にバックエンドをHonoで作り直したため、世には出ませんでした。<br/>シンプルで柔軟な反面、ディレクトリ構成やコードの整理を心掛けました。',
+    good: 'left-[70%]',
+    like: 'bottom-[60%]',
+    icon: 'devicon:express',
+  },
+  {
+    name: 'Git',
+    text: '特に語ることはありませんが、ソースコードの管理やチームメンバーとの協力には必須であり、開発においてはなくてはならない存在だと考えています。',
+    good: 'left-[100%]',
+    like: 'bottom-[100%]',
+    icon: 'devicon:git',
+  },
+  {
+    name: 'HONO',
+    text: '本サイトのフォームのバックエンドとしてCloudflare Workersで使用しました。<br/>Expressからの乗り換えでしたがCORSなどよく使用するであろう機能がビルトインミドルウェアとして備わっているおかげでつまずくことなく直感的にコーディングできました。',
+    good: 'left-[60%]',
+    like: 'bottom-[70%]',
+    icon: 'logos:hono',
+  },
+  {
+    name: 'HTML',
+    text: 'SEO・アクセシビリティを重視し、構造化データマークアップや適切なセマンティクスの使用を常に意識しています。<br/>また、Alpine.js・HTMXを用いたHTMLファーストな開発によって、保守性を考慮した構造を心掛けています。',
+    good: 'left-[100%]',
+    like: 'bottom-[80%]',
+    icon: 'devicon:html5',
+  },
+  {
+    name: 'HTMX',
+    text: 'サーバーとの通信や動的なコンテンツ更新に使用しています。<br/>HTML属性だけで記述できるため、コードの見通しが良く、サーバー側ロジックと連携した保守しやすい設計を意識しています。<br/>AHAスタックでサーバーとクライアントの効率的な連携を実現するために活用しています。',
+    good: 'left-[75%]',
+    like: 'bottom-[100%]',
+    icon: 'devicon:htmx',
+  },
+  {
+    name: 'Java',
+    text: '冗長な記述が多いところが少し苦手な言語です。<br/>それでも、バックエンド開発では一定の信頼性があります。',
+    good: 'left-[10%]',
+    like: 'bottom-[10%]',
+    icon: 'devicon:java',
+  },
+  {
+    name: 'JavaScript',
+    text: 'ライブラリやフレームワークと組み合わせることでその柔軟性を最大限に活用しています。<br/>柔軟な記述ができる点は魅力的ですが、予期しない挙動に悩まされることもあります。<br/>可能な限りTypeScriptで書くことで、型安全性を確保し、予期しないエラーを減らすよう心掛けています。',
+    good: 'left-[100%]',
+    like: 'bottom-[50%]',
+    icon: 'devicon:javascript',
+  },
+  {
+    name: 'Laravel',
+    text: '柔軟で強力なフレームワークですが、構成が重く感じることがあります。<br/>REST APIのバックエンドとして採用しています。',
+    good: 'left-[30%]',
+    like: 'bottom-[50%]',
+    icon: 'devicon:laravel',
+  },
+  {
+    name: 'MySQL',
+    text: 'データベースの構造設計に自由度があり、WordPress案件で採用することが多いです。<br/>幅広いプロジェクトで信頼できるデータベースです。',
+    good: 'left-[90%]',
+    like: 'bottom-[80%]',
+    icon: 'devicon:mysql',
+  },
+  {
+    name: 'Pug',
+    text: '過去に1度だけ採用しましたが、今ならAstroを使うことで代替できるため、あまり使う機会はありません。',
+    good: 'left-[60%]',
+    like: 'bottom-[60%]',
+    icon: 'vscode-icons:file-type-pug',
+  },
+  {
+    name: 'PHP',
+    text: '主にWordPressの案件で利用しています。<br/>気軽に動作確認ができる軽量さは好きですが、コードの整理を怠ると可読性が下がりがちになるため注意しています。',
+    good: 'left-[100%]',
+    like: 'bottom-[70%]',
+    icon: 'devicon:php',
+  },
+  {
+    name: 'React',
+    text: 'AstroのIslandでReactコンポーネントを利用できる点を評価しており、サーバーサイドレンダリングの利点を活かしつつ、動的なインタラクションを提供できる点が気に入っています。',
+    good: 'left-[50%]',
+    like: 'bottom-[80%]',
+    icon: 'devicon:react',
+  },
+  {
+    name: 'SCSS',
+    text: 'BEMの設計思想を取り入れ、明確で一貫性のあるクラス命名を心掛けています。<br/>HTMLとの親和性を高めながら、保守性と拡張性を両立するスタイル設計を意識しています。',
+    good: 'left-[100%]',
+    like: 'bottom-[90%]',
+    icon: 'devicon:sass',
+  },
+  {
+    name: 'Tailwind CSS',
+    text: 'HTMLファーストなスタイル設計を実現しやすいのが魅力です。<br/>ユーティリティクラスで冗長なCSSを避けつつ、保守性とスピードを両立しています。',
+    good: 'left-[90%]',
+    like: 'bottom-[100%]',
+    icon: 'devicon:tailwindcss',
+  },
+  {
+    name: 'TypeScript',
+    text: '静的型付けでコードの信頼性が高まるのが魅力です。<br/>自由度が低いと感じる場面もありますが、その分デバッグにかける時間を減らせています。',
+    good: 'left-[80%]',
+    like: 'bottom-[90%]',
+    icon: 'devicon:typescript',
+  },
+  {
+    name: 'Vue',
+    text: 'コンポーネントベースで効率よく開発できる点が気に入っています。<br/>柔軟で小規模なプロジェクトにも適しています。<br/>AstroのIslandでも利用できますが、Islandで使うならReactかな。',
+    good: 'left-[60%]',
+    like: 'bottom-[80%]',
+    icon: 'devicon:vuejs',
+  },
+  {
+    name: 'Wordpress',
+    text: '多くの案件で採用してきました。<br/>セキュリティやパフォーマンスの面で課題を感じることもありますが、WordPressのエコシステムは非常に大きく、多くのプラグインが提供されているため、柔軟な開発が可能な点は高く評価します。<br/>CMSとしてのみ利用し、フロントはAstroで構築するといった運用にシフトできないか検討中です。',
+    good: 'left-[90%]',
+    like: 'bottom-[50%]',
+    icon: 'devicon:wordpress',
+  },
 ]
+
 const xData = `
 {
   transitionClass(element, addClass, removeClass) {
@@ -77,24 +210,50 @@ const xData = `
 ---
 
 <div x-data={xData}>
-  <div class="relative h-dvh max-h-[640px] w-full min-w-[640px]">
-    <div class="divider divider-horizontal absolute left-1/2 m-0 h-full -translate-x-1/2"></div>
-    <div class="divider absolute top-1/2 m-0 w-full -translate-y-1/2"></div>
-    {
-      skills.map((skill, index) => (
-        <div class={`${skill.good} ${skill.like} absolute -translate-x-2/4 translate-y-2/4`}>
-          <div class="tooltip" data-tip={skill.name}>
-            <button
-              class="btn btn-circle btn-ghost"
-              aria-label={`${skill.name}の説明を開く`}
-              x-on:click={`toggleModal(${index}, 'open')`}
-            >
-              <Icon name={skill.icon} width={28} height={28} x-ref={`skillBtnIcon${index}`} />
-            </button>
+  <div class="js-scrollable overflow-x-auto p-16">
+    <div class="relative h-dvh max-h-[640px] w-full min-w-[640px]">
+      <div class="divider divider-horizontal absolute left-1/2 m-0 h-full -translate-x-1/2"></div>
+      <div class="divider absolute top-1/2 m-0 w-full -translate-y-1/2"></div>
+      <Icon
+        name="icon-park-outline:like"
+        width={32}
+        height={32}
+        class="absolute -top-12 left-1/2 -translate-x-1/2 text-pink-500"
+      />
+      <Icon
+        name="icon-park-outline:dislike"
+        width={32}
+        height={32}
+        class="absolute -bottom-12 left-1/2 -translate-x-1/2 text-purple-500"
+      />
+      <Icon
+        name="icon-park-outline:good-two"
+        width={32}
+        height={32}
+        class="absolute -right-12 top-1/2 -translate-y-1/2 text-green-500"
+      />
+      <Icon
+        name="icon-park-outline:bad-two"
+        width={32}
+        height={32}
+        class="absolute -left-12 top-1/2 -translate-y-1/2 text-red-500"
+      />
+      {
+        skills.map((skill, index) => (
+          <div class={`${skill.good} ${skill.like} absolute -translate-x-2/4 translate-y-2/4`}>
+            <div class="tooltip" data-tip={skill.name}>
+              <button
+                class="btn btn-circle btn-ghost"
+                aria-label={`${skill.name}の説明を開く`}
+                x-on:click={`toggleModal(${index}, 'open')`}
+              >
+                <Icon name={skill.icon} width={28} height={28} x-ref={`skillBtnIcon${index}`} />
+              </button>
+            </div>
           </div>
-        </div>
-      ))
-    }
+        ))
+      }
+    </div>
   </div>
 
   {
@@ -106,11 +265,11 @@ const xData = `
         x-on:keydown.escape={`toggleModal(${index}, 'close')`}
       >
         <div class="modal-box">
-          <div class="flex items-center gap-4">
+          <div class="mb-6 flex items-center gap-4">
             <Icon name={skill.icon} width={28} height={28} x-ref={`skillModalIcon${index}`} />
-            <h3 class="text-lg font-bold">{skill.name}</h3>
+            <h3 class="text-xl font-bold">{skill.name}</h3>
           </div>
-          <p class="py-4" set:html={skill.text} />
+          <p set:html={skill.text} />
           <button
             class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 hidden group-open:inline-flex"
             aria-label={`${skill.name}の説明を閉じる`}
@@ -123,3 +282,16 @@ const xData = `
     ))
   }
 </div>
+
+<script>
+  import ScrollHint from 'scroll-hint'
+  document.addEventListener('astro:page-load', () => {
+    if (window.location.pathname === '/skill/') {
+      new ScrollHint('.js-scrollable', {
+        i18n: {
+          scrollable: 'スクロールできます',
+        },
+      })
+    }
+  })
+</script>

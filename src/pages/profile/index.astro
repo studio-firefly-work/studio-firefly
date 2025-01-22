@@ -1,19 +1,44 @@
 ---
+import { Image } from 'astro:assets'
 import PageLayout from '@/layouts/PageLayout.astro'
-import Container from '@/components/atoms/Container.astro'
-import Inner from '@/components/atoms/Inner.astro'
+import Inner from '@/components/atoms/Inner/Inner.astro'
 
 const seo: Theme.SEO = {
   title: '自己紹介',
-  description: '自己紹介ページのdescriptionです',
+  description:
+    '4年目のWebエンジニア。<br/>1993年生まれ富山県出身。関西大学システム理工学部を卒業。YKK AP株式会社に新卒入社し、商品開発として7年間窓の設計に従事。とあるセミナーでIT技術の進化に衝撃を受け、株式会社キャンバスに転職し、Webエンジニアとして3年間コーディングに従事。現在に至る。',
   permalink: ['profile'],
   breadcrumb: { profile: '自己紹介' },
+  ogtype: 'profile',
+  itemtype: 'ProfilePage',
 }
+
+const name = 'ほたる'
+import profile from '@/assets/images/profile/profile.png'
 ---
 
 <PageLayout {seo}>
-  <Container>
+  <section itemprop="mainEntity" itemtype="https://schema.org/Person" itemscope>
     <Inner>
+      <div class="flex flex-col items-center gap-4 md:flex-row">
+        <Image src={profile} alt=`${name}の写真` class="w-56" itemprop="image" />
+        <div class="flex-1">
+          <h2 itemprop="name">{name}</h2>
+          <ul>
+            <li>
+
+            </li>
+            <li>
+              <p>座右の銘</p>
+              <blockquote>
+                <p>"1日ひとつだけ、強くなる。"</p>
+                <cite>- 梅原大吾(ウメハラ), <span>プロゲーマー </span></cite>
+              </blockquote>
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <ul class="timeline timeline-vertical timeline-snap-icon max-md:timeline-compact">
         <li>
           <div class="timeline-middle">
@@ -26,11 +51,8 @@ const seo: Theme.SEO = {
           </div>
           <div class="timeline-start !mb-10 md:text-end">
             <time class="font-mono italic">1984</time>
-            <div class="text-lg font-black">First Macintosh computer</div>
-            The Apple Macintosh—later rebranded as the Macintosh 128K—is the original Apple Macintosh personal computer.
-            It played a pivotal role in establishing desktop publishing as a general office function. The motherboard, a
-            9 in (23 cm) CRT monitor, and a floppy drive were housed in a beige case with integrated carrying handle; it
-            came with a keyboard and single-button mouse.
+            <div class="text-lg font-black">関西大学システム理工学部機械工学科を卒業</div>
+            プロジェクトの企画・デザイン段階から参画するフロントローディング型のアプローチにより、コーディング時の手戻りを最小限に抑え、短期間で高品質な最高効率のWeb開発を実現します。
           </div>
           <hr />
         </li>
@@ -112,5 +134,5 @@ const seo: Theme.SEO = {
         </li>
       </ul>
     </Inner>
-  </Container>
+  </section>
 </PageLayout>

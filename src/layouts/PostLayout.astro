@@ -1,13 +1,12 @@
 ---
 import { utils } from '@/utils'
 import { Image } from 'astro:assets'
-import Inner from '@/components/atoms/Inner.astro'
+import Inner from '@/components/atoms/Inner/Inner.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import Header from '@/components/organisms/Header/Header.astro'
-import Footer from '@/components/organisms/Footer.astro'
-import Container from '@/components/atoms/Container.astro'
-import Breadcrumb from '@/components/molecules/Breadcrumb.astro'
-import ArticleNavigation from '@/components/molecules/ArticleNavigation.astro'
+import Footer from '@/components/organisms/Footer/Footer.astro'
+import Breadcrumb from '@/components/molecules/Breadcrumb/Breadcrumb.astro'
+import ArticleNavigation from '@/components/molecules/ArticleNavigation/ArticleNavigation.astro'
 import type { MarkdownInstance } from 'astro'
 
 interface Props {
@@ -21,37 +20,31 @@ const { seo, frontmatter, prev, next } = Astro.props
 
 <BaseLayout {seo}>
   <Header />
-  <main>
-    <Container size="tall" class="h-56">
-      <Inner class="relative">
-        <h1 class="theme-text-xl font-bold">{seo.title}</h1>
-        <p class="mt-4">{seo.description}</p>
-        <time datetime={frontmatter.date} class="theme-text-sm absolute -top-4 right-0"
-          >{utils.formatDate(frontmatter.date)}</time
-        >
-      </Inner>
-    </Container>
+  {seo.breadcrumb && <Breadcrumb {seo} />}
+  <main class="mb-12">
+    <article class="mb-12" itemtype="http://schema.org/Article" itemscope>
+      <Inner class="relative py-12">
+        <time datetime={frontmatter.date} class="theme-text-sm absolute top-6 right-0" itemprop="datePublished">
+          {utils.formatDate(frontmatter.date)}
+        </time>
 
-    {seo.breadcrumb && <Breadcrumb {seo} />}
-
-    <Container>
-      <Inner>
-        <article class="prose max-w-screen-xl">
-          <Image
-            src={utils.getAssetsImage(frontmatter.image.src)}
-            alt={frontmatter.image.alt}
-            transition:name={`image-${frontmatter.slug}`}
-          />
-          <slot />
-        </article>
+        <h1 class="theme-text-xl mb-8 font-bold" itemprop="headline">{seo.title}</h1>
+        <p set:html={seo.description} itemprop="description" />
       </Inner>
-    </Container>
 
-    <Container>
-      <Inner>
-        <ArticleNavigation {seo} {prev} {next} />
+      <Inner class="prose max-w-screen-xl" itemprop="articleBody">
+        <Image
+          src={utils.getAssetsImage(frontmatter.image.src)}
+          alt={frontmatter.image.alt}
+          loading="eager"
+          transition:name={`image-${frontmatter.slug}`}
+          itemprop="image"
+        />
+        <slot />
       </Inner>
-    </Container>
+    </article>
+
+    <ArticleNavigation {seo} {prev} {next} />
   </main>
   <Footer />
 </BaseLayout>

@@ -14,7 +14,7 @@ export const getStaticPaths = async () => {
     const next = index < pages.length - 1 ? pages[index + 1] : null
 
     // 同一カテゴリーの記事を取得
-    const sameCatPosts = utils.post.getSameCategory(3, page, pages)
+    // const sameCatPosts = utils.post.getSameCategory(3, page, pages)
 
     return {
       params: {
@@ -23,28 +23,25 @@ export const getStaticPaths = async () => {
       props: {
         page,
         prev,
-        next,
-        sameCatPosts,
+        next
       },
     }
   })
 }
 
 const { Content, frontmatter } = Astro.props.page
-const { prev, next, sameCatPosts } = Astro.props
+const { prev, next } = Astro.props
 
 const seo: Theme.SEO = {
   title: frontmatter.title,
   description: frontmatter.description,
   permalink: ['works', frontmatter.slug],
   breadcrumb: { works: '制作事例', [frontmatter.slug]: frontmatter.title },
+  ogtype: 'article',
+  itemtype: 'ItemPage',
 }
 ---
 
 <PostLayout {seo} {frontmatter} {prev} {next}>
   <Content />
-
-  <nav>
-    {sameCatPosts.map((post) => <div>{post.frontmatter.title}</div>)}
-  </nav>
 </PostLayout>

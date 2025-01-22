@@ -3,66 +3,61 @@ import { utils } from '@/utils'
 import { Image } from 'astro:assets'
 import type { MarkdownInstance } from 'astro'
 import type { GetStaticPathsOptions } from 'astro'
-import Inner from '@/components/atoms/Inner.astro'
+import Inner from '@/components/atoms/Inner/Inner.astro'
 import PageLayout from '@/layouts/PageLayout.astro'
-import Container from '@/components/atoms/Container.astro'
-import Pagination from '@/components/molecules/Pagination.astro'
+import Pagination from '@/components/molecules/Pagination/Pagination.astro'
 
 export const getStaticPaths = async ({ paginate }: GetStaticPathsOptions) => {
   const pages: MarkdownInstance<Theme.Frontmatter>[] = await Astro.glob<Theme.Frontmatter>('../../content/works/*.md')
-
-  // 新しい順にソート
-  pages.sort(utils.post.sortByDate)
-
-  return paginate(pages, { pageSize: 3 })
+  pages.sort(utils.post.sortByDate) // 新しい順にソート
+  return paginate(pages, { pageSize: 12 })
 }
 const { page } = Astro.props
 
 const seo: Theme.SEO = {
   title: '制作事例',
-  description: '制作事例ページのdescriptionです',
+  description: '私が手掛けたWebサイトの事例を紹介しています。なお、著作権の関係上、会社名義で作成したWebサイトは掲載していませんが、お問い合わせいただければ、詳細をご連絡いたします。',
   permalink: page.currentPage == 1 ? ['works'] : ['works', page.currentPage],
   breadcrumb: { works: '制作事例' },
+  ogtype: 'website',
+  itemtype: 'CollectionPage',
 }
 ---
 
 <PageLayout {seo}>
-  <Container>
-    <Inner>
-      <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {
-          page.data.map((post) => (
-            <li>
-              <a
-                href={`/works/${post.frontmatter.slug}/`}
-                class="group btn card btn-ghost h-full rounded-none bg-base-100 p-0 text-left font-normal shadow-xl"
-              >
-                <figure class="overflow-hidden">
-                  <Image
-                    src={utils.getAssetsImage(post.frontmatter.image.src)}
-                    alt={post.frontmatter.image.alt}
-                    transition:name={`image-${post.frontmatter.slug}`}
-                    class="duration-300 group-hover:scale-110"
-                  />
-                </figure>
-                <div class="card-body w-full py-4">
-                  <div class="card-actions">
-                    <div class="badge badge-outline">{post.frontmatter.category}</div>
-                  </div>
-                  <h2 class="card-title flex-1 items-start">{post.frontmatter.title}</h2>
-                  <time datetime={post.frontmatter.date} class="theme-text-sm text-right">
-                    {utils.formatDate(post.frontmatter.date)}
-                  </time>
+  <Inner>
+    <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {
+        page.data.map((post) => (
+          <li>
+            <a
+              href={`/works/${post.frontmatter.slug}/`}
+              class="group btn card btn-ghost h-full rounded-none bg-base-100 p-0 text-left font-normal shadow-xl"
+            >
+              <figure class="overflow-hidden">
+                <Image
+                  src={utils.getAssetsImage(post.frontmatter.image.src)}
+                  alt={post.frontmatter.image.alt}
+                  loading="eager"
+                  transition:name={`image-${post.frontmatter.slug}`}
+                  class="duration-300 group-hover:scale-110"
+                />
+              </figure>
+              <div class="card-body w-full py-4">
+                <div class="card-actions">
+                  <div class="badge badge-outline">{post.frontmatter.category}</div>
                 </div>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </Inner>
-  </Container>
-
-  <Inner class="text-center">
-    <Pagination {page} permalink="/works" />
+                <h2 class="card-title flex-1 items-start">{post.frontmatter.title}</h2>
+                <time datetime={post.frontmatter.date} class="theme-text-sm text-right">
+                  {utils.formatDate(post.frontmatter.date)}
+                </time>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
   </Inner>
+
+  <Pagination {page} permalink="/works" />
 </PageLayout>
