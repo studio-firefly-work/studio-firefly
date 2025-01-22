@@ -4,13 +4,13 @@ import FormFieldArea from '@/components/molecules/FormFieldArea/FormFieldArea.as
 
 const fields = [
   {
-    label: { text: '名前', required: true },
+    label: { text: 'お名前', required: true },
     id: 'name',
     type: 'text',
     placeholder: '山田太郎',
     autocomplete: 'name',
     icon: 'mdi:user',
-    validations: [{ pattern: /^(?!s*$).+/, text: '名前は必須です' }],
+    validations: [{ pattern: /^(?!s*$).+/, text: 'お名前は必須です' }],
     '@change': '$refs.kana.dispatchEvent(new Event("input"))', // AutoKanaの結果を評価するため
     '@blur': '$refs.kana.dispatchEvent(new Event("input"))', // AutoKanaの結果を評価するため
   },
@@ -21,7 +21,7 @@ const fields = [
     placeholder: 'ヤマダタロウ',
     validations: [
       { pattern: /^(?!s*$).+/, text: 'カナは必須です' },
-      { pattern: /^[ァ-ヶー]+$/, text: 'カタカナで入力してください' },
+      { pattern: /^[ぁ-んァ-ヶー]+$/, text: 'カタカナでご入力ください' },
     ],
     'x-ref': 'kana', // AutoKanaの結果を評価させるため
   },
@@ -34,14 +34,18 @@ const fields = [
     icon: 'mdi:email',
     validations: [
       { pattern: /^(?!s*$).+/, text: 'メールアドレスは必須です' },
-      { pattern: /^[\w\.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, text: 'メールアドレスの形式で入力してください' },
+      {
+        pattern:
+          /^(?!\.)(?!.*\.\.)(?!.*\.$)[a-zA-Z0-9._%+-]+(?<!\.)@[a-zA-Z0-9](?!.*--)[a-zA-Z0-9-]*(?<!-)\.[a-zA-Z]{2,63}$/,
+        text: 'メールアドレスの形式でご入力ください',
+      },
     ],
   },
   {
-    label: { text: '問い合わせ内容', required: true },
+    label: { text: 'お問い合わせ内容', required: true },
     id: 'message',
     type: 'textarea',
-    placeholder: 'お問い合わせ内容を入力してください。',
+    placeholder: 'お問い合わせ内容をご入力ください。',
     validations: [{ pattern: /^(?!s*$).+/, text: 'お問い合わせ内容は必須です' }],
   },
   {

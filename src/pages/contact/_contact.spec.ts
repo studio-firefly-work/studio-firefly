@@ -9,7 +9,7 @@ test.describe('お問い合わせページ', () => {
     confirmBtn = page.getByRole('button', { name: '入力内容の確認' })
   })
 
-  test('全てのフィールドが正しく入力されているとき、ボタンが有効', async ({ page }) => {
+  test('全てのフィールドが正しく入力されているとボタンが有効', async ({ page }) => {
     await fillForm(page, {})
     await confirmBtn.click()
   })
@@ -21,8 +21,8 @@ test.describe('お問い合わせページ', () => {
     }
   })
 
-  test('カタカナ以外のふりがなが入力されるとボタンが無効', async ({ page }) => {
-    const invalidKanaInputs = ['さとうはなこ', '佐藤花子', 'satohanako', '123456', '!@#$%', 'サトウ123']
+  test('ひらがな又はカタカナ以外のふりがなが入力されるとボタンが無効', async ({ page }) => {
+    const invalidKanaInputs = ['佐藤花子', 'satohanako', '123456', '!@#$%', 'さとう123', 'サトウ123']
     for (const kana of invalidKanaInputs) {
       await fillForm(page, { kana })
       await confirmBtnIsDisabled(confirmBtn)
@@ -31,12 +31,28 @@ test.describe('お問い合わせページ', () => {
 
   test('無効なメールアドレスが入力されるとボタンが無効', async ({ page }) => {
     const invalidEmailInputs = [
-      'invalidEmail',
-      'plainaddress',
-      '@missingusername.com',
-      'missingat.com',
-      'user@domain',
-      'user@domain.',
+      'user',             // ローカルパートもドメインも不足
+      '@domain.com',      // ローカルパートが空
+      'user@',            // ドメイン部分が空
+      'domain.com',       // 「@」がない
+      'user@.com',        // ドメインがドットで始まる
+      'user@domain..com', // ドメインに連続したドット
+      '.user@domain.com', // ローカルパートがドットで始まる
+      'user.@domain.com', // ローカルパートがドットで終わる
+      'user@domain.com.', // ドメインがドットで終わる
+      'user@domain.-com', // ドメインラベルがハイフンで始まる
+      'user@domain-.com', // ドメインラベルがハイフンで終わる
+      'user@domain_com',  // ドメインにアンダースコア
+      'user@domain..com', // ドメインに連続したドット
+      'user@domain.c',    // TLDが1文字（2文字未満）
+      'user@domain.toolongtldtoolongtldtoolongtldtoolongtldtoolongtldtoolongtldtool', // TLDが64文字以上
+      'user@localhost',   // ドメインがローカルホスト（TLDなし）
+      'user@domain,com',  // ドメイン部分にカンマ（`,`）
+      'user@domain com',  // ドメイン部分にスペース
+      'user@-domain.com', // ドメインがハイフンで始まる
+      'user@domain.-com', // サブドメイン部分がハイフンで始まる
+      'user@123.123.123', // ドット区切りの数字（IPv4形式ではない）
+      'user@domain..com', // ドメインに連続したドット
     ]
     for (const email of invalidEmailInputs) {
       await fillForm(page, { email })
@@ -61,7 +77,7 @@ const fillForm = async (
   await page.getByPlaceholder('山田太郎').fill(name)
   await page.getByPlaceholder('ヤマダタロウ').fill(kana)
   await page.getByPlaceholder('taro.yamada@example.com').fill(email)
-  await page.getByPlaceholder('お問い合わせ内容を入力してください。').fill(message)
+  await page.getByPlaceholder('お問い合わせ内容をご入力ください。').fill(message)
 
   const checkboxPrivacy = page.getByRole('checkbox', { name: 'プライバシーポリシーに同意する' })
   agreePrivacy ? await checkboxPrivacy.check() : await checkboxPrivacy.uncheck()
