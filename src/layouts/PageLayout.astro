@@ -1,10 +1,9 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import Breadcrumb from '@/components/molecules/Breadcrumb.astro'
-import Container from '@/components/atoms/Container.astro'
-import Footer from '@/components/organisms/Footer.astro'
+import Breadcrumb from '@/components/molecules/Breadcrumb/Breadcrumb.astro'
+import Footer from '@/components/organisms/Footer/Footer.astro'
 import Header from '@/components/organisms/Header/Header.astro'
-import Inner from '@/components/atoms/Inner.astro'
+import Inner from '@/components/atoms/Inner/Inner.astro'
 
 interface Props {
   seo: Theme.SEO
@@ -14,14 +13,13 @@ const { seo } = Astro.props
 
 <BaseLayout {seo}>
   <Header />
-  <main>
-    <Container size="tall" class="h-56">
-      <Inner>
-        <h1 class="theme-text-xl font-bold">{seo.title}</h1>
-      </Inner>
-    </Container>
+  {seo.breadcrumb && <Breadcrumb {seo} />}
+  <main class="mb-12">
+    <Inner class="py-12">
+      <h1 class="theme-text-xl mb-8 font-bold" itemprop="name">{seo.title}</h1>
+      <p set:html={seo.description} itemprop="description" />
+    </Inner>
 
-    {seo.breadcrumb && <Breadcrumb {seo} />}
     <slot />
   </main>
   <Footer />

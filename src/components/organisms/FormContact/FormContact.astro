@@ -4,13 +4,13 @@ import FormFieldArea from '@/components/molecules/FormFieldArea/FormFieldArea.as
 
 const fields = [
   {
-    label: { text: '名前', required: true },
+    label: { text: 'お名前', required: true },
     id: 'name',
     type: 'text',
     placeholder: '山田太郎',
     autocomplete: 'name',
     icon: 'mdi:user',
-    validations: [{ pattern: /^(?!s*$).+/, text: '名前は必須です' }],
+    validations: [{ pattern: /^(?!s*$).+/, text: 'お名前は必須です' }],
     '@change': '$refs.kana.dispatchEvent(new Event("input"))', // AutoKanaの結果を評価するため
     '@blur': '$refs.kana.dispatchEvent(new Event("input"))', // AutoKanaの結果を評価するため
   },
@@ -21,7 +21,7 @@ const fields = [
     placeholder: 'ヤマダタロウ',
     validations: [
       { pattern: /^(?!s*$).+/, text: 'カナは必須です' },
-      { pattern: /^[ァ-ヶー]+$/, text: 'カタカナで入力してください' },
+      { pattern: /^[ぁ-んァ-ヶー]+$/, text: 'カタカナでご入力ください' },
     ],
     'x-ref': 'kana', // AutoKanaの結果を評価させるため
   },
@@ -29,19 +29,23 @@ const fields = [
     label: { text: 'メールアドレス', required: true },
     id: 'email',
     type: 'email',
-    placeholder: 'email@example.com',
+    placeholder: 'taro.yamada@example.com',
     autocomplete: 'email',
     icon: 'mdi:email',
     validations: [
       { pattern: /^(?!s*$).+/, text: 'メールアドレスは必須です' },
-      { pattern: /.+@.+..+/, text: 'メールアドレスの形式で入力してください' },
+      {
+        pattern:
+          /^(?!\.)(?!.*\.\.)(?!.*\.$)[a-zA-Z0-9._%+-]+(?<!\.)@[a-zA-Z0-9](?!.*--)[a-zA-Z0-9-]*(?<!-)\.[a-zA-Z]{2,63}$/,
+        text: 'メールアドレスの形式でご入力ください',
+      },
     ],
   },
   {
-    label: { text: '問い合わせ内容', required: true },
-    id: 'contact',
+    label: { text: 'お問い合わせ内容', required: true },
+    id: 'message',
     type: 'textarea',
-    placeholder: 'お問い合わせ内容を入力してください。',
+    placeholder: 'お問い合わせ内容をご入力ください。',
     validations: [{ pattern: /^(?!s*$).+/, text: 'お問い合わせ内容は必須です' }],
   },
   {
@@ -61,12 +65,7 @@ const fields = [
 const api = import.meta.env.PUBLIC_API_BASE_URL
 ---
 
-<BaseForm
-  {fields}
-  steps={['入力', '確認', '完了']}
-  hx-post={`${api}/mail/send`}
-  @success="step = 3"
->
+<BaseForm {fields} steps={['入力', '確認', '完了']} hx-post={`${api}/mail/send`} @success="step = 3">
   <div x-show="step == 1" id="contact">
     <FormFieldArea {fields} turnstyle={true} />
     <div class="mt-6">
@@ -95,7 +94,14 @@ const api = import.meta.env.PUBLIC_API_BASE_URL
     </div>
   </div>
 
-  <div x-show="step == 3">送信完了</div>
+  <div x-show="step == 3">
+    <p>お問い合わせありがとうございます！ 🎉✨</p>
+    <p>
+      この度はお問い合わせいただき、誠にありがとうございます！<br />
+      入力された内容を確認し、折り返しご連絡させていただきます。<br />
+      また、入力されたメールアドレスへ自動返信メールをお送りしておりますので、ご確認ください。
+    </p>
+  </div>
 </BaseForm>
 
 <script>

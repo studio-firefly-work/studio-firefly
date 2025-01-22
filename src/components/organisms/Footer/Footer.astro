@@ -1,0 +1,20 @@
+---
+import { Icon } from 'astro-icon/components'
+import Inner from '@/components/atoms/Inner/Inner.astro'
+---
+
+<footer class="mt-auto bg-base-300 py-10">
+  <Inner size="wide">
+    <nav class="footer footer-center rounded text-base-content">
+      <div class="grid grid-flow-col gap-4">
+        <a href="https://github.com/studio-firefly-work" target="_blank">
+          <Icon name="mdi:github" title="github" width={32} height={32} />
+        </a>
+      </div>
+      <div class="grid grid-flow-col gap-4">
+        <a href="/privacy/" class="link-hover link text-base">プライバシーポリシー</a>
+      </div>
+      <small class="theme-text-sm">&copy; {new Date().getFullYear()} Studio Firefly</small>
+    </nav>
+  </Inner>
+</footer>

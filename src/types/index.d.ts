@@ -2,6 +2,8 @@ declare namespace Theme {
   type SEO = {
     title?: string
     description: string
+    ogtype: string
+    itemtype: string
     permalink?: (string | number)[]
     breadcrumb?: Breadcrumb
     noindex?: boolean
