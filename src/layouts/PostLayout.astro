@@ -18,13 +18,13 @@ interface Props {
 const { seo, frontmatter, prev, next } = Astro.props
 ---
 
-<BaseLayout {seo}>
+<BaseLayout {seo} {frontmatter}>
   <Header />
   {seo.breadcrumb && <Breadcrumb {seo} />}
   <main class="mb-12">
     <article class="mb-12" itemtype="http://schema.org/Article" itemscope>
       <Inner class="relative py-12">
-        <time datetime={frontmatter.date} class="theme-text-sm absolute top-6 right-0" itemprop="datePublished">
+        <time datetime=`${frontmatter.date}T00:00:00+09:00` class="theme-text-sm absolute right-0 top-6" itemprop="datePublished">
           {utils.formatDate(frontmatter.date)}
         </time>
 
@@ -41,6 +41,13 @@ const { seo, frontmatter, prev, next } = Astro.props
           itemprop="image"
         />
         <slot />
+      </Inner>
+
+      <Inner>
+        <a href={Astro.site} class="ml-auto" itemprop="author" itemtype="https://schema.org/Organization" itemscope>
+          <meta itemprop="url" content={Astro.site} />
+          <span itemprop="name">{import.meta.env.PUBLIC_SITE_NAME}</span>
+        </a>
       </Inner>
     </article>
 
