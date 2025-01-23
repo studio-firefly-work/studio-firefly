@@ -3,15 +3,16 @@ import { SEO } from 'astro-seo'
 
 interface Props {
   seo: Theme.SEO
+  frontmatter?: Theme.Frontmatter
 }
-const { seo } = Astro.props
+const { seo, frontmatter } = Astro.props
 
 seo.schemaOrg = (seo.schemaOrg || []).concat({
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: import.meta.env.PUBLIC_SITE_NAME,
   url: Astro.site,
-  description: '構造化マークアップのdescriptionです。',
+  description: 'Webエンジニアのポートフォリオサイト兼技術検証サイト',
 })
 ---
 
@@ -28,11 +29,11 @@ seo.schemaOrg = (seo.schemaOrg || []).concat({
     basic: {
       title: seo.title ? seo.title + ' | ' + import.meta.env.PUBLIC_SITE_NAME : import.meta.env.PUBLIC_SITE_NAME,
       type: seo.ogtype,
-      image: seo.image ?? Astro.url.origin + '/og_image.png',
+      image: `${Astro.url.origin}/${seo.image ?? 'og_image.png'}`,
       url: seo.permalink ? new URL(`${seo.permalink.join('/')}/`, Astro.site) : Astro.site,
     },
     optional: {
-      description: seo.description,
+      description: seo.description.replace(/<br\s*\/?>/gi, '').trim(),
       locale: 'ja_JP',
       siteName: import.meta.env.PUBLIC_SITE_NAME,
     },
@@ -40,8 +41,18 @@ seo.schemaOrg = (seo.schemaOrg || []).concat({
       type: 'image/png',
       width: 1200,
       height: 630,
-      alt: seo.alt ?? 'デフォルトで設定したaltです',
+      alt: seo.alt ?? import.meta.env.PUBLIC_SITE_NAME,
     },
+    article: {
+      publishedTime: frontmatter ? `${frontmatter.date}+09:00` : undefined,
+      authors: frontmatter ? [import.meta.env.PUBLIC_SITE_NAME] : undefined,
+    },
+  }}
+  twitter={{
+    card: 'summary_large_image',
+    title: seo.title,
+    image: `${Astro.url.origin}/${seo.image ?? 'og_image.png'}`,
+    description: seo.description.replace(/<br\s*\/?>/gi, '').trim(),
   }}
   extend={{
     link: [
