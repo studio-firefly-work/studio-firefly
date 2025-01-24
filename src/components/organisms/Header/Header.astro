@@ -37,7 +37,12 @@ export const add = (...args: number[]) => {
   <Inner size="wide">
     <nav class="flex">
       <div class="flex-1">
-        <a href="/" aria-current={currentPath === '/' ? 'page' : undefined} transition:name="header-logo">
+        <a
+          href="/"
+          class="flex w-fit"
+          aria-current={currentPath === '/' ? 'page' : undefined}
+          transition:name="header-logo"
+        >
           <Icon name="logo" title="スタジオfirefly" width={140} height={60} />
         </a>
       </div>

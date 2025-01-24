@@ -7,13 +7,15 @@ interface Props {
 }
 const { seo, frontmatter } = Astro.props
 
-seo.schemaOrg = (seo.schemaOrg || []).concat({
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: import.meta.env.PUBLIC_SITE_NAME,
-  url: Astro.site,
-  description: '富山のIT企業で働くWebエンジニアのポートフォリオサイト兼技術検証サイト',
-})
+if (seo.title == '') {
+  seo.schemaOrg = (seo.schemaOrg || []).concat({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: import.meta.env.PUBLIC_SITE_NAME,
+    url: Astro.site,
+    description: '富山のIT企業で働くWebエンジニアのポートフォリオサイト兼技術検証サイト',
+  })
+}
 ---
 
 <SEO
@@ -73,8 +75,9 @@ seo.schemaOrg = (seo.schemaOrg || []).concat({
   }}
 />
 {
-  seo.schemaOrg.map((structuredData: []) => (
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-  ))
+  seo.schemaOrg &&
+    seo.schemaOrg.map((structuredData: []) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    ))
 }
 <script is:inline data-astro-rerun type="text/partytown" src="/cdn-cgi/zaraz/i.js" referrerpolicy="origin"></script>
