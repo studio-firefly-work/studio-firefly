@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components'
-import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle.astro'
+import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle/ButtonThemeToggle.astro'
 
 interface Props {
   links: Theme.Link[]
@@ -32,7 +32,7 @@ const currentPath = Astro.url.pathname
           <li class="js-hamb-link">
             <a
               href={link.permalink}
-              class={`btn btn-ghost justify-start ${currentPath.startsWith(link.permalink) ? 'theme-current-page w-fit' : undefined}`}
+              class={`btn btn-ghost justify-start ${currentPath.startsWith(link.permalink) ? 'theme-current-page' : undefined}`}
             >
               <Icon name={link.icon} width={28} height={28} />
               {link.title}

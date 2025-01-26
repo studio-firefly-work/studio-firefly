@@ -1,24 +1,74 @@
 ---
+import { Icon } from 'astro-icon/components'
 import BaseLayout from '@/layouts/BaseLayout.astro'
-import Container from '@/components/atoms/Container.astro'
-import Footer from '@/components/organisms/Footer.astro'
-import Header from '@/components/organisms/Header/Header.astro'
-import Inner from '@/components/atoms/Inner.astro'
-import Particle from '@/components/molecules/Particle.astro'
+import ButtonThemeToggle from '@/components/molecules/ButtonThemeToggle/ButtonThemeToggle.astro'
+import Footer from '@/components/organisms/Footer/Footer.astro'
+import Inner from '@/components/atoms/Inner/Inner.astro'
+import Particle from '@/components/molecules/Particle/Particle.astro'
 
 const seo: Theme.SEO = {
-  description: 'ホームページのdescriptionです',
+  title: '',
+  description: '富山のIT企業で働くWebエンジニアのポートフォリオサイト兼技術検証サイト',
+  ogtype: 'website',
+  itemtype: 'WebPage',
 }
+export const links: Theme.Link[] = [
+  {
+    title: '自己紹介',
+    icon: 'mdi:human-handsup',
+    permalink: '/profile/',
+  },
+  {
+    title: 'スキルセット',
+    icon: 'mdi:code',
+    permalink: '/skill/',
+  },
+  {
+    title: '制作事例',
+    icon: 'mdi:work',
+    permalink: '/works/',
+  },
+  {
+    title: 'お問い合わせ',
+    icon: 'mdi:email',
+    permalink: '/contact/',
+  },
+]
 ---
 
 <BaseLayout {seo}>
-  <Header />
-  <main>
-    <Container size="tall">
-      <Inner>
-        <h1 class="theme-text-xl font-bold">{seo.title}</h1>
-      </Inner>
-    </Container>
+  <header class="py-4 md:py-4">
+    <Inner size="wide">
+      <div class="flex h-16 justify-end md:items-center">
+        <ButtonThemeToggle />
+      </div>
+    </Inner>
+  </header>
+  <div></div>
+  <main class="my-12 flex flex-col items-center justify-center">
+    <Inner>
+      <div class="flex flex-col items-center justify-center">
+        <h1 class="mb-10" transition:name="header-logo">
+          <meta itemprop="name" content="スタジオfirefly" />
+          <Icon name="logo" title="スタジオfirefly" width={210} height={90} />
+        </h1>
+        <nav class="mb-10">
+          <ul class="theme-text-xl grid grid-cols-1 grid-rows-4 gap-4 md:grid-cols-2 md:grid-rows-2">
+            {
+              links.map((link: Theme.Link) => (
+                <li>
+                  <a href={link.permalink} class="btn btn-ghost" transition:name={`header-${link.permalink}`}>
+                    <Icon name={link.icon} width={20} height={20} />
+                    {link.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <p itemprop="description">{seo.description}</p>
+      </div>
+    </Inner>
   </main>
   <Footer />
   <Particle />
