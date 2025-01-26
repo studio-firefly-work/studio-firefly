@@ -7,14 +7,15 @@ import SEOMetaTags from '@/components/molecules/SEOMetaTags/SEOMetaTags.astro'
 
 interface Props {
   seo: Theme.SEO
+  frontmatter?: Theme.Frontmatter
 }
-const { seo } = Astro.props
+const { seo, frontmatter } = Astro.props
 ---
 
 <!doctype html>
 <html lang="ja-JP" prefix=`${seo.ogtype}: https://ogp.me/ns/${seo.ogtype}#`>
   <head>
-    <SEOMetaTags {seo} />
+    <SEOMetaTags {seo} {frontmatter}/>
     <ViewTransitions />
     <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"></script>
   </head>

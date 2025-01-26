@@ -21,7 +21,7 @@ const fields = [
     placeholder: 'ヤマダタロウ',
     validations: [
       { pattern: /^(?!s*$).+/, text: 'カナは必須です' },
-      { pattern: /^[ぁ-んァ-ヶー]+$/, text: 'カタカナでご入力ください' },
+      { pattern: /^[ぁ-んァ-ヶー]+$/, text: 'ひらがな又はカタカナでご入力ください' },
     ],
     'x-ref': 'kana', // AutoKanaの結果を評価させるため
   },
