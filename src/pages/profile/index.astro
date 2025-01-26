@@ -1,138 +1,99 @@
 ---
 import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
 import PageLayout from '@/layouts/PageLayout.astro'
 import Inner from '@/components/atoms/Inner/Inner.astro'
 
 const seo: Theme.SEO = {
   title: '自己紹介',
   description:
-    '4年目のWebエンジニア。<br/>1993年生まれ富山県出身。関西大学システム理工学部を卒業。YKK AP株式会社に新卒入社し、商品開発として7年間窓の設計に従事。とあるセミナーでIT技術の進化に衝撃を受け、株式会社キャンバスに転職し、Webエンジニアとして3年間コーディングに従事。現在に至る。',
+    '4年目のWebエンジニア。<br/>1993年生まれ富山県出身。関西大学システム理工学部を卒業。YKK AP株式会社に新卒入社し、商品開発として7年間窓の設計に従事。とあるセミナーでIT技術の進化に感銘を受け、株式会社キャンバスに転職し、Webエンジニアとして3年間従事。現在に至る。',
   permalink: ['profile'],
   breadcrumb: { profile: '自己紹介' },
   ogtype: 'profile',
   itemtype: 'ProfilePage',
 }
 
-const name = 'ほたる'
-import profile from '@/assets/images/profile/profile.png'
+const name = '生地 一鷹'
+import profile from '@/assets/images/profile/profile.jpg'
 ---
 
 <PageLayout {seo}>
   <section itemprop="mainEntity" itemtype="https://schema.org/Person" itemscope>
     <Inner>
-      <div class="flex flex-col items-center gap-4 md:flex-row">
+      <div class="mb-12 flex flex-col items-start gap-4 md:flex-row">
         <Image src={profile} alt=`${name}の写真` class="w-56" itemprop="image" />
-        <div class="flex-1">
-          <h2 itemprop="name">{name}</h2>
-          <ul>
-            <li>
-
+        <div class="flex-1 md:ml-8">
+          <h2 class="py-8 text-4xl font-black" itemprop="name">{name}</h2>
+          <ul class="list-inside list-disc space-y-2">
+            <li class="pl-[1.5em] -indent-[1.5em]">4年目のWebエンジニア</li>
+            <li class="pl-[1.5em] -indent-[1.5em]">フロントエンドを中心に、バックエンド、インフラ幅広く対応</li>
+            <li class="pl-[1.5em] -indent-[1.5em]">
+              スキルセット: <a href="/skill/" class="btn-link">スキルセットページ</a>をご覧ください
             </li>
-            <li>
-              <p>座右の銘</p>
-              <blockquote>
-                <p>"1日ひとつだけ、強くなる。"</p>
-                <cite>- 梅原大吾(ウメハラ), <span>プロゲーマー </span></cite>
-              </blockquote>
+            <li class="pl-[1.5em] -indent-[1.5em]">
+              好きなWEBサイト: <a href="https://www.digital.go.jp/" class="btn-link" target="_blank"
+                >デジタル庁ホームページ</a
+              >
             </li>
+            <li class="pl-[1.5em] -indent-[1.5em]">MBTI: INTJ(建築家)</li>
+            <li class="pl-[1.5em] -indent-[1.5em]">座右の銘: "1日ひとつだけ、強くなる。" - 梅原大吾(ウメハラ)</li>
           </ul>
         </div>
       </div>
 
-      <ul class="timeline timeline-vertical timeline-snap-icon max-md:timeline-compact">
+      <ol class="timeline timeline-vertical timeline-snap-icon max-md:timeline-compact">
         <li>
           <div class="timeline-middle">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clip-rule="evenodd"></path>
-            </svg>
+            <Icon name="check" />
           </div>
           <div class="timeline-start !mb-10 md:text-end">
-            <time class="font-mono italic">1984</time>
-            <div class="text-lg font-black">関西大学システム理工学部機械工学科を卒業</div>
-            プロジェクトの企画・デザイン段階から参画するフロントローディング型のアプローチにより、コーディング時の手戻りを最小限に抑え、短期間で高品質な最高効率のWeb開発を実現します。
+            <time class="mb-2 inline-block italic">2011～2015</time>
+            <h3 class="mb-2 text-lg font-black">関西大学 システム理工学部 機械工学科</h3>
+            <p class="text-left">
+              ものづくりに興味があり、機械工学科に進学。<br />
+              卒業研究では、蚊の針の構造を模倣した痛くない注射針の研究に参画しました。<br />
+              この研究を通じて、仮説を立て、検証し、結果を分析しながらPDCAサイクルを回すことの重要性を学びました。<br />
+              問題解決に向けた試行錯誤のプロセスは、ものづくりだけでなく、どのような仕事においても求められるスキルだと実感しています。
+            </p>
           </div>
           <hr />
         </li>
         <li>
           <hr />
           <div class="timeline-middle">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clip-rule="evenodd"></path>
-            </svg>
+            <Icon name="check" />
           </div>
           <div class="timeline-end !mb-10">
-            <time class="font-mono italic">1998</time>
-            <div class="text-lg font-black">iMac</div>
-            iMac is a family of all-in-one Mac desktop computers designed and built by Apple Inc. It has been the primary
-            part of Apple's consumer desktop offerings since its debut in August 1998, and has evolved through seven distinct
-            forms
+            <time class="mb-2 inline-block italic">2015～2022</time>
+            <h3 class="mb-2 text-lg font-black">YKK AP株式会社</h3>
+            <p class="text-left">
+              商品開発として住宅用の窓に関連する新商品の設計や既存商品の改善を担当。<br />
+              この際に経験したフロントローディング型の開発フローでは、企画や仕様決めといった初期段階に十分な時間を割くことで、手戻りを最小限に抑えつつ、効率的なプロジェクト進行を実現しました。<br
+              />
+              現在はWebエンジニアとして、企画・仕様決め・デザイン・コーディング・納品といったプロセスを進める中で、このアプローチを活かし、仕様の見落としや修正作業を減らすことで、スムーズなプロジェクト進行に貢献しています。
+            </p>
           </div>
           <hr />
         </li>
         <li>
           <hr />
           <div class="timeline-middle">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clip-rule="evenodd"></path>
-            </svg>
+            <Icon name="check" />
           </div>
           <div class="timeline-start !mb-10 md:text-end">
-            <time class="font-mono italic">2001</time>
-            <div class="text-lg font-black">iPod</div>
-            The iPod is a discontinued series of portable media players and multi-purpose mobile devices designed and marketed
-            by Apple Inc. The first version was released on October 23, 2001, about 8+1⁄2 months after the Macintosh version
-            of iTunes was released. Apple sold an estimated 450 million iPod products as of 2022. Apple discontinued the
-            iPod product line on May 10, 2022. At over 20 years, the iPod brand is the oldest to be discontinued by Apple
+            <time class="mb-2 inline-block italic">2022～現在</time>
+            <h3 class="mb-2 text-lg font-black">株式会社キャンバス</h3>
+            <p class="text-left">
+              とあるセミナーでIT技術の進化に感銘を受け、未経験ながらIT業界への転身を決意。<br />
+              Webエンジニアとして、WordPressを活用したコーポレートサイトのフルスクラッチ開発を中心に、バックエンド、インフラ幅広く携わっています。<br
+              />
+              技術の習得と実践を重ね、ユーザーの課題解決に向けたサイト構築に貢献しています。
+            </p>
           </div>
           <hr />
         </li>
-        <li>
-          <hr />
-          <div class="timeline-middle">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clip-rule="evenodd"></path>
-            </svg>
-          </div>
-          <div class="timeline-end !mb-10">
-            <time class="font-mono italic">2007</time>
-            <div class="text-lg font-black">iPhone</div>
-            iPhone is a line of smartphones produced by Apple Inc. that use Apple's own iOS mobile operating system. The
-            first-generation iPhone was announced by then-Apple CEO Steve Jobs on January 9, 2007. Since then, Apple has
-            annually released new iPhone models and iOS updates. As of November 1, 2018, more than 2.2 billion iPhones had
-            been sold. As of 2022, the iPhone accounts for 15.6% of global smartphone market share
-          </div>
-          <hr />
-        </li>
-        <li>
-          <hr />
-          <div class="timeline-middle">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5">
-              <path
-                fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                clip-rule="evenodd"></path>
-            </svg>
-          </div>
-          <div class="timeline-start !mb-10 md:text-end">
-            <time class="font-mono italic">2015</time>
-            <div class="text-lg font-black">Apple Watch</div>
-            The Apple Watch is a line of smartwatches produced by Apple Inc. It incorporates fitness tracking, health-oriented
-            capabilities, and wireless telecommunication, and integrates with iOS and other Apple products and services
-          </div>
-        </li>
-      </ul>
+      </ol>
     </Inner>
   </section>
 </PageLayout>
