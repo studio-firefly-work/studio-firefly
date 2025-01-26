@@ -23,7 +23,7 @@ export const getStaticPaths = async () => {
       props: {
         page,
         prev,
-        next
+        next,
       },
     }
   })
@@ -38,6 +38,8 @@ const seo: Theme.SEO = {
   permalink: ['works', frontmatter.slug],
   breadcrumb: { works: '制作事例', [frontmatter.slug]: frontmatter.title },
   ogtype: 'article',
+  image: frontmatter.image.src,
+  alt: frontmatter.image.alt,
   itemtype: 'ItemPage',
 }
 ---
