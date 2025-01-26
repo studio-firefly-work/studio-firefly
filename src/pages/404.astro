@@ -1,0 +1,15 @@
+---
+import PageLayout from '@/layouts/PageLayout.astro'
+
+const seo: Theme.SEO = {
+  title: 'ページが見つかりません',
+  description: 'お探しのページは見つかりませんでした。(´・ω・`)',
+  permalink: [],
+  breadcrumb: {},
+  ogtype: 'website',
+  itemtype: 'WebPage',
+  noindex: true,
+}
+---
+
+<PageLayout {seo} />

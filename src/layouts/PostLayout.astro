@@ -1,13 +1,13 @@
 ---
 import { utils } from '@/utils'
 import { Image } from 'astro:assets'
-import Inner from '@/components/atoms/Inner.astro'
+import { Icon } from 'astro-icon/components'
+import Inner from '@/components/atoms/Inner/Inner.astro'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import Header from '@/components/organisms/Header/Header.astro'
-import Footer from '@/components/organisms/Footer.astro'
-import Container from '@/components/atoms/Container.astro'
-import Breadcrumb from '@/components/molecules/Breadcrumb.astro'
-import ArticleNavigation from '@/components/molecules/ArticleNavigation.astro'
+import Footer from '@/components/organisms/Footer/Footer.astro'
+import Breadcrumb from '@/components/molecules/Breadcrumb/Breadcrumb.astro'
+import ArticleNavigation from '@/components/molecules/ArticleNavigation/ArticleNavigation.astro'
 import type { MarkdownInstance } from 'astro'
 
 interface Props {
@@ -19,39 +19,51 @@ interface Props {
 const { seo, frontmatter, prev, next } = Astro.props
 ---
 
-<BaseLayout {seo}>
+<BaseLayout {seo} {frontmatter}>
   <Header />
-  <main>
-    <Container size="tall" class="h-56">
-      <Inner class="relative">
-        <h1 class="theme-text-xl font-bold">{seo.title}</h1>
-        <p class="mt-4">{seo.description}</p>
-        <time datetime={frontmatter.date} class="theme-text-sm absolute -top-4 right-0"
-          >{utils.formatDate(frontmatter.date)}</time
+  {seo.breadcrumb && <Breadcrumb {seo} />}
+  <main class="mb-12">
+    <article class="mb-12" itemtype="http://schema.org/Article" itemscope>
+      <Inner class="relative py-12">
+        <time
+          datetime=`${frontmatter.date}T00:00:00+09:00`
+          class="theme-text-sm absolute right-0 top-6"
+          itemprop="datePublished"
         >
+          {utils.formatDate(frontmatter.date)}
+        </time>
+
+        <h1 class="theme-text-xl mb-8 font-bold" itemprop="headline">{seo.title}</h1>
+        <p set:html={seo.description} itemprop="description" />
       </Inner>
-    </Container>
 
-    {seo.breadcrumb && <Breadcrumb {seo} />}
+      <Inner class="prose max-w-screen-xl" itemprop="articleBody">
+        <Image
+          src={utils.getAssetsImage(frontmatter.image.src)}
+          alt={frontmatter.image.alt}
+          loading="eager"
+          transition:name={`image-${frontmatter.slug}`}
+          itemprop="image"
+        />
+        <slot />
+      </Inner>
 
-    <Container>
       <Inner>
-        <article class="prose max-w-screen-xl">
-          <Image
-            src={utils.getAssetsImage(frontmatter.image.src)}
-            alt={frontmatter.image.alt}
-            transition:name={`image-${frontmatter.slug}`}
-          />
-          <slot />
-        </article>
+        <a
+          href={Astro.site}
+          class="btn-link mt-8 flex items-center justify-end gap-2"
+          itemprop="author"
+          itemtype="https://schema.org/Organization"
+          itemscope
+        >
+          <Icon name="mdi:edit-outline" width={20} height={20} />
+          <meta itemprop="url" content={Astro.site} />
+          <span itemprop="name">{import.meta.env.PUBLIC_SITE_NAME}</span>
+        </a>
       </Inner>
-    </Container>
+    </article>
 
-    <Container>
-      <Inner>
-        <ArticleNavigation {seo} {prev} {next} />
-      </Inner>
-    </Container>
+    <ArticleNavigation {seo} {prev} {next} />
   </main>
   <Footer />
 </BaseLayout>
