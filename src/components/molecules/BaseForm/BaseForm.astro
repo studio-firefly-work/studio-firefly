@@ -27,7 +27,7 @@ const { fields, steps, ...rest } = Astro.props
   <form
     hx-swap="none"
     x-ref="form"
-    x-on:htmx:after-request.camel="if(event.detail.successful){$dispatch('success')}"
+    x-on:htmx:after-request.camel="if(event.detail.successful) { $dispatch('success'); } else { $dispatch('failed'); }"
     {...rest}
   >
     <slot />
