@@ -55,11 +55,11 @@ export const links: Theme.Link[] = [
         <nav class="mb-10">
           <ul class="theme-text-xl grid grid-cols-1 grid-rows-4 gap-4 md:grid-cols-2 md:grid-rows-2">
             {
-              links.map((link: Theme.Link) => (
+              links.map(({ title, icon, permalink }) => (
                 <li>
-                  <a href={link.permalink} class="btn btn-ghost" transition:name={`header-${link.permalink}`}>
-                    <Icon name={link.icon} width={20} height={20} />
-                    {link.title}
+                  <a href={permalink} class="btn btn-ghost" transition:name={`header-${permalink}`}>
+                    <Icon name={icon} width={20} height={20} />
+                    {title}
                   </a>
                 </li>
               ))

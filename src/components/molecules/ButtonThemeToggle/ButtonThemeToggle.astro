@@ -11,7 +11,7 @@ import { Icon } from 'astro-icon/components'
 <script>
   // 全てのチェックボックスの状態を切り替える関数
   const toggleAllCheckboxes = (theme: string, checkboxes: NodeListOf<HTMLInputElement>) => {
-    checkboxes.forEach((checkbox: HTMLInputElement) => {
+    checkboxes.forEach((checkbox) => {
       checkbox.checked = theme == 'dark' ? true : false
     })
   }
@@ -20,9 +20,7 @@ import { Icon } from 'astro-icon/components'
   const getTheme = () => {
     // ローカルストレージのテーマを取得
     const savedTheme = localStorage.getItem('theme')
-    if (savedTheme) {
-      return savedTheme
-    }
+    if (savedTheme) return savedTheme
 
     // システムのテーマを取得
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -45,7 +43,7 @@ import { Icon } from 'astro-icon/components'
     toggleAllCheckboxes(theme, checkboxes)
 
     // チェックボックスの状態変化時テーマを切り替える
-    checkboxes.forEach((checkbox: HTMLInputElement) => {
+    checkboxes.forEach((checkbox) => {
       checkbox.addEventListener('change', () => {
         theme = checkbox.checked ? 'dark' : 'light'
         setTheme(theme)

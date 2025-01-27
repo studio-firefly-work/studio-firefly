@@ -6,36 +6,35 @@ export const form = {
    */
   createXData: (fields: Theme.FormField[]): string => {
     const dataStr = fields
-      .map((field: any) => (field.type === 'checkbox' ? `${field.id}: []` : `${field.id}: ''`))
+      .map(({ type, id }) => (type === 'checkbox' ? `${id}: []` : `${id}: ''`))
       .join(', ')
 
-    const errStr = [fields.map((field: any) => `${field.id}: ''`), "turnstile: ''"].join(', ')
+    const errStr = [fields.map(({ id }) => `${id}: ''`), "turnstile: ''"].join(', ')
 
     const validStr = fields
-      .map((field: any) => {
-        if (!field.validations) {
-          return '' // validationsが無ければ何もしない
-        }
+      .map(({ id, validations }) => {
+        if (!validations) return '' // validationsが無ければ何もしない
 
-        return `validate${field.id.charAt(0).toUpperCase() + field.id.slice(1)}() {
+        return `validate${id.charAt(0).toUpperCase() + id.slice(1)}() {
           let errorText = ''
-        ${field.validations
-          .map((validation: any) => {
-            if (validation.pattern instanceof RegExp) {
-              return `if (!${validation.pattern}.test(this.${field.id})) {
-              errorText = '${validation.text}'
-            }`
-            } else {
-              return `if (!${validation.pattern}) {
-              errorText = '${validation.text}'
-            }`
-            }
-          })
-          .join(' else ')}
+          ${validations
+            .map((validation: any) => {
+              if (validation.pattern instanceof RegExp) {
+                return `if (!${validation.pattern}.test(this.${id})) {
+                  errorText = '${validation.text}'
+                }`
+              } else {
+                return `if (!${validation.pattern}) {
+                  errorText = '${validation.text}'
+                }`
+              }
+            })
+            .join(' else ')
+          }
           if (errorText) {
-            this.errors.${field.id} = errorText
+            this.errors.${id} = errorText
           } else {
-            delete this.errors.${field.id}
+            delete this.errors.${id}
           }
         },`
       })
