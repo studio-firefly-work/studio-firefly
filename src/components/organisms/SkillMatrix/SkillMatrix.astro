@@ -2,7 +2,15 @@
 import { Icon } from 'astro-icon/components'
 import '/node_modules/scroll-hint/css/scroll-hint.css'
 
-const skills = [
+type Skill = {
+  name: string
+  text: string
+  good: string
+  like: string
+  icon: string
+}
+
+export const skills: Skill[] = [
   {
     name: '.NET MAUI',
     text: 'AndroidとWindowsのクロスプラットフォーム業務用モバイルアプリ開発で1度だけ使用しました。<br/>当時リリースから間もない時期ということもあり情報が少なく苦労しました。<br/>技術選定の縛りが無ければPWAを使用していたと思います。',
@@ -90,7 +98,7 @@ const skills = [
   {
     name: 'JavaScript',
     text: 'できる限りAlpine.jsやhtmxを使用し、JSが必要な場合はTypeScriptで書くことで型安全性を確保し、予期しないエラーを減らすよう心掛けています。',
-    good: 'left-[100%]',
+    good: 'left-[95%]',
     like: 'bottom-[70%]',
     icon: 'devicon:javascript',
   },
@@ -118,7 +126,7 @@ const skills = [
   {
     name: 'PHP',
     text: '主にWordPressの案件で利用しています。<br/>コードの整理を怠ると可読性が下がりがちになるため注意しています。',
-    good: 'left-[100%]',
+    good: 'left-[95%]',
     like: 'bottom-[60%]',
     icon: 'devicon:php',
   },
@@ -239,15 +247,15 @@ const xData = `
         class="absolute -left-12 top-1/2 -translate-y-1/2 text-red-500"
       />
       {
-        skills.map((skill, index) => (
-          <div class={`${skill.good} ${skill.like} absolute -translate-x-2/4 translate-y-2/4`}>
-            <div class="tooltip" data-tip={skill.name}>
+        skills.map(({ name, good, like, icon }, index) => (
+          <div class={`${good} ${like} absolute -translate-x-2/4 translate-y-2/4`}>
+            <div class="tooltip" data-tip={name}>
               <button
                 class="btn btn-circle btn-ghost"
-                aria-label={`${skill.name}の説明を開く`}
+                aria-label={`${name}の説明を開く`}
                 x-on:click={`toggleModal(${index}, 'open')`}
               >
-                <Icon name={skill.icon} width={28} height={28} x-ref={`skillBtnIcon${index}`} />
+                <Icon name={icon} width={28} height={28} x-ref={`skillBtnIcon${index}`} />
               </button>
             </div>
           </div>
@@ -257,7 +265,7 @@ const xData = `
   </div>
 
   {
-    skills.map((skill, index) => (
+    skills.map(({ name, text, icon }, index) => (
       <dialog
         class="group modal"
         x-ref={`skillModal${index}`}
@@ -266,13 +274,13 @@ const xData = `
       >
         <div class="modal-box">
           <div class="mb-6 flex items-center gap-4">
-            <Icon name={skill.icon} width={28} height={28} x-ref={`skillModalIcon${index}`} />
-            <h3 class="text-xl font-bold">{skill.name}</h3>
+            <Icon name={icon} width={28} height={28} x-ref={`skillModalIcon${index}`} />
+            <h3 class="text-xl font-bold">{name}</h3>
           </div>
-          <p set:html={skill.text} />
+          <p set:html={text} />
           <button
             class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2 hidden group-open:inline-flex"
-            aria-label={`${skill.name}の説明を閉じる`}
+            aria-label={`${name}の説明を閉じる`}
             x-on:click={`toggleModal(${index}, 'close')`}
           >
             ✕

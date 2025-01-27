@@ -1,11 +1,14 @@
 ---
+interface Props {
+  steps: string[]
+}
 const { steps } = Astro.props
 ---
 
 <div class="mb-4 text-center">
   <ol class="steps w-full">
     {
-      steps.map((name: string, index: number) => (
+      steps.map((name, index) => (
         <li class="step" x-bind:class={`{'step-secondary': ${index + 1} <= step}`}>
           {name}
         </li>

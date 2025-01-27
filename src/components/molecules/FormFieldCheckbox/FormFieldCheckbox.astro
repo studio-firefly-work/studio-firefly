@@ -13,7 +13,7 @@ const { id, label, items, validations, ...rest } = Astro.props
 
 <BaseFormField {id} {label}>
   {
-    items.map((item: string, index: number) => (
+    items.map((item, index) => (
       <label class="label w-fit cursor-pointer justify-start gap-2">
         <input
           id={`${id}-${index}`}

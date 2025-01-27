@@ -16,7 +16,8 @@ const { page } = Astro.props
 
 const seo: Theme.SEO = {
   title: '制作事例',
-  description: '私が手掛けたWebサイトの事例を紹介しています。なお、著作権の関係上、会社名義で作成したWebサイトは掲載していませんが、お問い合わせいただければ、詳細をご連絡いたします。',
+  description:
+    '私が手掛けたWebサイトの事例を紹介しています。なお、著作権の関係上、会社名義で作成したWebサイトは掲載していませんが、お問い合わせいただければ、詳細をご連絡いたします。',
   permalink: page.currentPage == 1 ? ['works'] : ['works', page.currentPage],
   breadcrumb: { works: '制作事例' },
   ogtype: 'website',
@@ -28,28 +29,28 @@ const seo: Theme.SEO = {
   <Inner>
     <ul class="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {
-        page.data.map((post) => (
+        page.data.map(({ frontmatter: { slug, image, category, title, date } }) => (
           <li>
             <a
-              href={`/works/${post.frontmatter.slug}/`}
+              href={`/works/${slug}/`}
               class="group btn card btn-ghost h-full rounded-none bg-base-100 p-0 text-left font-normal shadow-xl"
             >
               <figure class="overflow-hidden">
                 <Image
-                  src={utils.getAssetsImage(post.frontmatter.image.src)}
-                  alt={post.frontmatter.image.alt}
+                  src={utils.getAssetsImage(image.src)}
+                  alt={image.alt}
                   loading="eager"
-                  transition:name={`image-${post.frontmatter.slug}`}
+                  transition:name={`image-${slug}`}
                   class="duration-300 group-hover:scale-110"
                 />
               </figure>
               <div class="card-body w-full py-4">
                 <div class="card-actions">
-                  <div class="badge badge-outline">{post.frontmatter.category}</div>
+                  <div class="badge badge-outline">{category}</div>
                 </div>
-                <h2 class="card-title flex-1 items-start">{post.frontmatter.title}</h2>
-                <time datetime={post.frontmatter.date} class="theme-text-sm text-right">
-                  {utils.formatDate(post.frontmatter.date)}
+                <h2 class="card-title flex-1 items-start">{title}</h2>
+                <time datetime={date} class="theme-text-sm text-right">
+                  {utils.formatDate(date)}
                 </time>
               </div>
             </a>

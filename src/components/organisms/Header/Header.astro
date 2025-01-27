@@ -27,10 +27,6 @@ export const links: Theme.Link[] = [
     permalink: '/contact/',
   },
 ]
-
-export const add = (...args: number[]) => {
-  return args.reduce((a, b) => a + b, 0)
-}
 ---
 
 <header class="py-4 md:py-4">
@@ -50,15 +46,15 @@ export const add = (...args: number[]) => {
       <div class="hidden flex-none lg:inline-flex">
         <ul class="menu menu-horizontal">
           {
-            links.map((link: Theme.Link) => (
+            links.map(({ title, icon, permalink }) => (
               <li>
                 <a
-                  href={link.permalink}
-                  class={`btn btn-ghost ${currentPath.startsWith(link.permalink) ? 'theme-current-page' : ''}`}
-                  transition:name={`header-${link.permalink}`}
+                  href={permalink}
+                  class:list={['btn btn-ghost', { 'theme-current-page': currentPath.startsWith(permalink) }]}
+                  transition:name={`header-${permalink}`}
                 >
-                  <Icon name={link.icon} width={20} height={20} />
-                  {link.title}
+                  <Icon name={icon} width={20} height={20} />
+                  {title}
                 </a>
               </li>
             ))
