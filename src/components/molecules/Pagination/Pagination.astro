@@ -13,7 +13,11 @@ const totalPages = Math.ceil(page.total / page.size)
 
 <Inner class="mt-12 text-center">
   <nav class="join" aria-label="Page navigation">
-    <a href={`${page.url.prev}/`} class:list={['btn btn-ghost join-item', { 'pointer-events-none': !page.url.prev }]}>
+    <a
+      href={`${page.url.prev}/`}
+      class:list={['btn btn-ghost join-item', { 'pointer-events-none': !page.url.prev }]}
+      aria-label="前の制作事例へ"
+    >
       <Icon name="mdi:keyboard-arrow-left" width={28} height={28} />
     </a>
     {
@@ -29,7 +33,11 @@ const totalPages = Math.ceil(page.total / page.size)
         )
       })
     }
-    <a href={`${page.url.next}/`} class:list={['btn btn-ghost join-item', { 'pointer-events-none': !page.url.next }]}>
+    <a
+      href={`${page.url.next}/`}
+      class:list={['btn btn-ghost join-item', { 'pointer-events-none': !page.url.next }]}
+      aria-label="次の制作事例へ"
+    >
       <Icon name="mdi:keyboard-arrow-right" width={28} height={28} />
     </a>
   </nav>
