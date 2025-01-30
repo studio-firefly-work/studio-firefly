@@ -12,20 +12,19 @@ const currentPath = Astro.url.pathname
 
 <div class="drawer">
   <input id="js-hamb-checkbox" type="checkbox" class="drawer-toggle hidden" />
-  <label
-    for="js-hamb-checkbox"
+  <button
+    class="btn btn-ghost px-0"
     id="js-hamb-button"
-    class="btn btn-ghost drawer-button px-0"
-    tabindex="0"
-    role="button"
     aria-controls="js-hamb-menu"
     aria-expanded="false"
     aria-label="メニューを開く"
   >
-    <Icon name="mdi:hamburger-menu" width={40} height={40} />
-  </label>
-  <nav id="js-hamb-menu" class="drawer-side z-50" area-hidden="true" data-lenis-prevent>
-    <label for="js-hamb-checkbox" aria-label="close sidebar" class="drawer-overlay"></label>
+    <label for="js-hamb-checkbox" class="drawer-button cursor-pointer">
+      <Icon name="mdi:hamburger-menu" width={40} height={40} />
+    </label>
+  </button>
+  <nav id="js-hamb-menu" class="drawer-side z-50" area-hidden="true">
+    <label for="js-hamb-checkbox" aria-label="メニューを閉じる" class="drawer-overlay"></label>
     <ul class="menu min-h-full w-80 bg-base-200 p-4 text-base-content">
       {
         links.map(({ title, icon, permalink }) => (
@@ -34,7 +33,7 @@ const currentPath = Astro.url.pathname
               href={permalink}
               class:list={['btn btn-ghost justify-start', { 'theme-current-page': currentPath.startsWith(permalink) }]}
             >
-              <Icon name={icon} width={28} height={28} />
+              <Icon name={icon} width={28} height={28} aria-hidden="true" />
               {title}
             </a>
           </li>
@@ -81,7 +80,7 @@ const currentPath = Astro.url.pathname
   }
 
   // メニューの状態を切り替える関数
-  const toggleMenuState = (isExpanded: boolean, button: HTMLLabelElement, menu: HTMLElement) => {
+  const toggleMenuState = (isExpanded: boolean, button: HTMLButtonElement, menu: HTMLElement) => {
     button.setAttribute('aria-expanded', isExpanded.toString())
     button.setAttribute('aria-label', isExpanded ? 'メニューを閉じる' : 'メニューを開く')
     menu.setAttribute('aria-hidden', (!isExpanded).toString())
@@ -90,7 +89,7 @@ const currentPath = Astro.url.pathname
   // 初期化関数
   const init = () => {
     const checkbox = document.getElementById('js-hamb-checkbox') as HTMLInputElement
-    const button = document.getElementById('js-hamb-button') as HTMLLabelElement
+    const button = document.getElementById('js-hamb-button') as HTMLButtonElement
     const menu = document.getElementById('js-hamb-menu') as HTMLElement
     const links = document.querySelectorAll('.js-hamb-link') as NodeListOf<HTMLLIElement>
 
